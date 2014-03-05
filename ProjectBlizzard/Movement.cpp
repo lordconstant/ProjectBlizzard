@@ -1,0 +1,189 @@
+#include "Movement.h"
+Movement::Movement(Vector& pos, float& angle, float xVel, float yVel, float zVel){
+	m_pos = &pos;
+	m_angle = &angle;
+
+	m_xVel = xVel;
+	m_yVel = yVel;
+	m_zVel = zVel;
+
+	stopMoving();
+}
+
+
+Movement::~Movement(){
+	m_pos = NULL;
+	m_angle = NULL;
+}
+
+Vector Movement::getPos(){
+	return *m_pos;
+}
+
+float Movement::getAngle(){
+	return *m_angle;
+}
+
+void Movement::definePos(Vector& pos){
+	if (!&pos){
+		return;
+	}
+
+	m_pos = &pos;
+}
+
+void Movement::defineAngle(float& angle){
+	if (!&angle){
+		return;
+	}
+
+	m_angle = &angle;
+}
+
+void Movement::setPos(Vector pos){
+	*m_pos = pos;
+}
+
+void Movement::setPos(float x, float y, float z){
+	m_pos->x = x;
+	m_pos->y = y;
+	m_pos->z = z;
+}
+
+void Movement::setXvel(float speed){
+	m_xVel = speed;
+}
+
+void Movement::setYvel(float speed){
+	m_yVel = speed;
+}
+
+void Movement::setZvel(float speed){
+	m_zVel = speed;
+}
+
+void Movement::setAllVel(float speed){
+	m_xVel = m_yVel = m_zVel = speed;
+}
+
+void Movement::setAllVel(float xSpeed, float ySpeed, float zSpeed){
+	m_xVel = xSpeed;
+	m_yVel = ySpeed;
+	m_zVel = zSpeed;
+}
+
+void Movement::moveXPos(float speed){
+	m_pos->x += TimeControl::getInstance().getDeltaTime() * speed;
+}
+
+void Movement::moveYPos(float speed){
+	m_pos->y += TimeControl::getInstance().getDeltaTime() * speed;
+}
+
+void Movement::moveZPos(float speed){
+	m_pos->z += TimeControl::getInstance().getDeltaTime() * speed;
+}
+
+void Movement::moveX(){
+	if(m_right){
+		moveXPos(m_xVel);
+	}
+
+	if(m_left){
+		moveXPos(-m_xVel);
+	}
+}
+
+void Movement::moveY(){
+	if(m_up){
+		moveYPos(m_yVel);
+	}
+
+	if(m_down){
+		moveYPos(-m_yVel);
+	}
+}
+
+void Movement::moveZ(){
+	if(m_forwards){
+		moveZPos(m_zVel);
+	}
+
+	if(m_backwards){
+		moveZPos(-m_zVel);
+	}
+}
+
+void Movement::move(float xSpeed, float ySpeed, float zSpeed){
+	moveXPos(xSpeed);
+	moveYPos(ySpeed);
+	moveZPos(zSpeed);
+}
+
+void Movement::rotateBy(float angle, int axis){
+	rotateTo(*m_angle + angle, axis);
+}
+
+void Movement::rotateTo(float angle, int axis){
+	*m_angle = angle;
+
+	while (*m_angle > 360){
+		*m_angle -= 360;
+	}
+
+	while (*m_angle < -360){
+		*m_angle += 360;
+	}
+}
+
+void Movement::smoothRotateBy(float angle, float speed, int axis){
+	smoothRotateTo(*m_angle + angle, speed, axis);
+}
+
+void Movement::smoothRotateTo(float angle, float speed, int axis){
+	if (speed <= 0 || *m_angle == angle){
+		return;
+	}
+
+	if (*m_angle < angle){
+		while (*m_angle < angle){
+			*m_angle += TimeControl::getInstance().getDeltaTime() * speed;
+		}
+	}
+
+	if (*m_angle > angle){
+		while (*m_angle > angle){
+			*m_angle -= TimeControl::getInstance().getDeltaTime() * speed;
+		}
+	}
+
+	rotateTo(angle, axis);
+}
+
+void Movement::right(bool dir){
+	m_right = dir;
+}
+
+void Movement::left(bool dir){
+	m_left = dir;
+}
+
+void Movement::up(bool dir){
+	m_up = dir;
+}
+
+void Movement::down(bool dir){
+	m_down = dir;
+}
+
+void Movement::forward(bool dir){
+	m_forwards = dir;
+}
+
+void Movement::backward(bool dir){
+	m_backwards = dir;
+}
+
+void Movement::stopMoving(){
+	m_left = m_right = m_up = m_down = m_forwards = m_backwards = false;
+}

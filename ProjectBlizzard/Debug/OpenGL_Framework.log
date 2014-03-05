@@ -1,0 +1,29 @@
+﻿Build started 27/02/2014 19:19:40.
+     1>Project "H:\Programming\Project Blizzard\OpenGL_Framework\OpenGL_Framework.vcxproj" on node 2 (Rebuild target(s)).
+     1>PrepareForBuild:
+         Creating directory "H:\Programming\Project Blizzard\Debug\".
+         Creating directory "Debug\ProjectBlizzard.tlog\".
+       InitializeBuildStatus:
+         Creating "Debug\ProjectBlizzard.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt BaseGame.cpp BFont.cpp Game.cpp Main.cpp
+         Main.cpp
+         Game.cpp
+         BFont.cpp
+         BaseGame.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"H:\Programming\Project Blizzard\Debug\ProjectBlizzard.exe" /INCREMENTAL /NOLOGO opengl32.lib glu32.lib odbc32.lib odbccp32.lib winmm.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"H:\Programming\Project Blizzard\Debug\ProjectBlizzard.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"H:\Programming\Project Blizzard\Debug\ProjectBlizzard.lib" /MACHINE:X86 /SAFESEH Debug\BaseGame.obj
+         Debug\BFont.obj
+         Debug\Game.obj
+         Debug\Main.obj
+     1>BaseGame.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+         OpenGL_Framework.vcxproj -> H:\Programming\Project Blizzard\Debug\ProjectBlizzard.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\ProjectBlizzard.tlog\unsuccessfulbuild".
+         Touching "Debug\ProjectBlizzard.tlog\ProjectBlizzard.lastbuildstate".
+     1>Done Building Project "H:\Programming\Project Blizzard\OpenGL_Framework\OpenGL_Framework.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:05.99
