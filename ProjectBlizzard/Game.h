@@ -3,7 +3,7 @@
 #include "DebugPrint.h"
 #include "Sphere.h"
 #include "Cube.h"
-#include "Rectangle.h"
+#include "Button3D.h"
 #include "Camera.h"
 #include "TimeControl.h"
 #include "Explosion.h"
@@ -32,6 +32,7 @@ private:
 	vector<Model*> m_sphere;
 	Camera* m_cam;
 	Explosion* explo;
+	Button3D* m_btn;
 public:
 	Game(void);
 	virtual ~Game(void);

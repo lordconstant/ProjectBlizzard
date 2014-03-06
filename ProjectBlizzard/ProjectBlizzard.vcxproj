@@ -89,10 +89,12 @@
   <ItemGroup>
     <ClCompile Include="BaseGame.cpp" />
     <ClCompile Include="BFont.cpp" />
+    <ClCompile Include="Button3D.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="LoadTextures.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Movement.cpp" />
@@ -107,11 +109,13 @@
   <ItemGroup>
     <ClInclude Include="BaseGame.h" />
     <ClInclude Include="BFont.h" />
+    <ClInclude Include="Button3D.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="DebugPrint.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="LoadTextures.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Movement.h" />
     <ClInclude Include="Physics.h" />

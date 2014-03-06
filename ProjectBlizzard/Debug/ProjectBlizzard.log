@@ -1,17 +1,24 @@
-﻿Build started 05/03/2014 23:12:05.
+﻿Build started 06/03/2014 13:44:05.
      1>Project "H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\ProjectBlizzard.vcxproj" on node 2 (Build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\ProjectBlizzard.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Rectangle.cpp
-         Rectangle.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Button3D.cpp
+         Button3D.cpp
+     1>h:\programming\github\projectblizzard\projectblizzard\button3d.cpp(5): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>h:\programming\github\projectblizzard\projectblizzard\button3d.cpp(22): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(357) : see declaration of 'sprintf'
+     1>h:\programming\github\projectblizzard\projectblizzard\button3d.cpp(24): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\program files (x86)\microsoft visual studio 11.0\vc\include\stdio.h(357) : see declaration of 'sprintf'
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"H:\Programming\GitHub\ProjectBlizzard\Debug\ProjectBlizzard.exe" /INCREMENTAL /NOLOGO opengl32.lib glu32.lib odbc32.lib odbccp32.lib winmm.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"H:\Programming\GitHub\ProjectBlizzard\Debug\ProjectBlizzard.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"H:\Programming\GitHub\ProjectBlizzard\Debug\ProjectBlizzard.lib" /MACHINE:X86 /SAFESEH Debug\BaseGame.obj
          Debug\BFont.obj
+         Debug\Button3D.obj
          Debug\Camera.obj
          Debug\Cube.obj
          Debug\Explosion.obj
          Debug\Game.obj
+         Debug\LoadTextures.obj
          Debug\Main.obj
          Debug\Model.obj
          Debug\Movement.obj
@@ -30,4 +37,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:18.11
+Time Elapsed 00:00:19.94

@@ -26,6 +26,8 @@ void Game::Initialise(){
 
 	m_cam = new Camera();
 	explo = new Explosion(m_sphere, m_sphere);
+	m_btn = new Button3D("Images/Buttons/new_game.bmp", 4, 1, 0.05);
+	m_btn->getRect()->setPos(6.4, 6.4, 0);
 }
 
 void Game::Shutdown(){
@@ -34,6 +36,8 @@ void Game::Shutdown(){
 
 void Game::Update(){
 	TimeControl::getInstance().updateTime();
+
+	m_btn->update(mouseX, mouseY);
 }
 
 // Render the objects in their current state.
@@ -45,6 +49,8 @@ void Game::Render(){
 	for(int i = 0; i < m_sphere.size(); i++){
 		m_sphere[i]->Render();
 	}
+
+	m_btn->render();
 
 	glFlush();
 }

@@ -4,6 +4,7 @@
 #include <gl/glu.h>
 
 #include "vector.h"
+#include "LoadTextures.h"
 
 class Model{
 	Vector m_pos;

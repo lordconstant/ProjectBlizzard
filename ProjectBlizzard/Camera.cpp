@@ -29,7 +29,7 @@ void Camera::update(){
 	m_move->moveY();
 	m_move->moveZ();
 
-	gluLookAt(m_pos.x, m_pos.z + m_pos.y+2, m_pos.z + 2,m_pos.x,m_pos.z + m_pos.y, m_pos.z, 0.0f, 1.0f, 0.0f);
+	gluLookAt(m_pos.x, m_pos.z + m_pos.y, m_pos.z + 2,m_pos.x,m_pos.z + m_pos.y, m_pos.z, 0.0f, 1.0f, 0.0f);
 
 	m_move->forward(false);
 	m_move->backward(false);
