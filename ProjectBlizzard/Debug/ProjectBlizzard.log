@@ -1,13 +1,12 @@
-﻿Build started 04/03/2014 01:33:31.
-     1>Project "H:\Programming\Project Blizzard\ProjectBlizzard\ProjectBlizzard.vcxproj" on node 2 (Build target(s)).
+﻿Build started 05/03/2014 23:12:05.
+     1>Project "H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\ProjectBlizzard.vcxproj" on node 2 (Build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\ProjectBlizzard.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Main.cpp
-         Main.cpp
-     1>h:\programming\project blizzard\projectblizzard\main.cpp(79): warning C4305: 'argument' : truncation from 'double' to 'scalar_t'
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Rectangle.cpp
+         Rectangle.cpp
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"H:\Programming\Project Blizzard\Debug\ProjectBlizzard.exe" /INCREMENTAL /NOLOGO opengl32.lib glu32.lib odbc32.lib odbccp32.lib winmm.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"H:\Programming\Project Blizzard\Debug\ProjectBlizzard.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"H:\Programming\Project Blizzard\Debug\ProjectBlizzard.lib" /MACHINE:X86 /SAFESEH Debug\BaseGame.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"H:\Programming\GitHub\ProjectBlizzard\Debug\ProjectBlizzard.exe" /INCREMENTAL /NOLOGO opengl32.lib glu32.lib odbc32.lib odbccp32.lib winmm.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"H:\Programming\GitHub\ProjectBlizzard\Debug\ProjectBlizzard.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"H:\Programming\GitHub\ProjectBlizzard\Debug\ProjectBlizzard.lib" /MACHINE:X86 /SAFESEH Debug\BaseGame.obj
          Debug\BFont.obj
          Debug\Camera.obj
          Debug\Cube.obj
@@ -23,12 +22,12 @@
          Debug\TimeControl.obj
          Debug\Unit.obj
          Debug\Weapon.obj
-         ProjectBlizzard.vcxproj -> H:\Programming\Project Blizzard\Debug\ProjectBlizzard.exe
+         ProjectBlizzard.vcxproj -> H:\Programming\GitHub\ProjectBlizzard\Debug\ProjectBlizzard.exe
        FinalizeBuildStatus:
          Deleting file "Debug\ProjectBlizzard.unsuccessfulbuild".
          Touching "Debug\ProjectBlizzard.lastbuildstate".
-     1>Done Building Project "H:\Programming\Project Blizzard\ProjectBlizzard\ProjectBlizzard.vcxproj" (Build target(s)).
+     1>Done Building Project "H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\ProjectBlizzard.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:17.12
+Time Elapsed 00:00:18.11

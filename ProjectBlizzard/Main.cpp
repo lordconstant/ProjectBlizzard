@@ -76,7 +76,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
 			break;
 		case WM_LBUTTONDOWN:
 			//g_Game.m_sphere->setScale(g_Game.m_sphere->getScale() + 0.1);
-			g_Game.explo->circularExplosion(Vector(6.4, 6.4, 0), 6, 1);
+			g_Game.explo->circularExplosion(Vector(6.4, 6.4, 0), 6.4, 0);
 			break;
 		case WM_RBUTTONDOWN:
 		//	g_Game.m_sphere->setScale(g_Game.m_sphere->getScale() - 0.1);
