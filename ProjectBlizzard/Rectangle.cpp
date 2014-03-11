@@ -14,6 +14,8 @@ Rect::Rect(float size, float width, float height, float length){
 	for (int i = 0; i < 6; i++){
 		m_texture[i] = 0;
 	}
+
+	m_textured = false;
 }
 
 Rect::~Rect(void)
@@ -26,10 +28,13 @@ void Rect::Render(){
 	}
 
 	glPushMatrix();
-		glEnable(GL_TEXTURE_2D);
+		if(m_textured){
+			glEnable(GL_TEXTURE_2D);
+		}
+
 		// Perform transformations here in TRS order
 		glTranslatef(getPos().x, getPos().y, getPos().z);
-		// Draw each face with a different colour
+		//Draw each face with a different colour
 		drawFace(0, 4, 5, 1, 1.0f, 1.0f, 1.0f, 0);
 		drawFace(3, 7, 4, 0, 1.0f, 1.0f, 1.0f, 1);
 		drawFace(2, 6, 7, 3, 1.0f, 1.0f, 1.0f, 2);
@@ -37,21 +42,23 @@ void Rect::Render(){
 		drawFace(3, 0, 1, 2, 1.0f, 1.0f, 1.0f, 4);
 		drawFace(4, 7, 6, 5, 1.0f, 1.0f, 1.0f, 5);
 
-		glDisable(GL_TEXTURE_2D);
+		if(m_textured){
+			glDisable(GL_TEXTURE_2D);
+		}
 	glPopMatrix();
 }
 
 void Rect::drawFace(int v0, int v1, int v2, int v3, float r, float g, float b, int textNum){
-	if (textNum >= 0 && textNum <= 5 && m_texture[textNum] > 0){
+	if (textNum >= 0 && textNum <= 5 && m_textured){
 		glBindTexture(GL_TEXTURE_2D, m_texture[textNum]);
 	}
 
 	glColor3f(r, g, b);
 	glBegin(GL_QUADS);
-		glVertex3f(m_verts[v0].x, m_verts[v0].y, m_verts[v0].z);
-		glVertex3f(m_verts[v1].x, m_verts[v1].y, m_verts[v1].z);
-		glVertex3f(m_verts[v2].x, m_verts[v2].y, m_verts[v2].z);
-		glVertex3f(m_verts[v3].x, m_verts[v3].y, m_verts[v3].z);
+		glTexCoord2f(0.0f, 0.0f); glVertex3f(m_verts[v0].x, m_verts[v0].y, m_verts[v0].z);
+		glTexCoord2f(0.0f, 1.0f); glVertex3f(m_verts[v1].x, m_verts[v1].y, m_verts[v1].z);
+		glTexCoord2f(1.0f, 1.0f); glVertex3f(m_verts[v2].x, m_verts[v2].y, m_verts[v2].z);
+		glTexCoord2f(1.0f, 0.0f); glVertex3f(m_verts[v3].x, m_verts[v3].y, m_verts[v3].z);
 	glEnd();
 }
 
@@ -96,6 +103,8 @@ bool Rect::setFaceTexture(char* img, int face){
 		delete lt;
 		lt = NULL;
 
+		m_textured = true;
+
 		return true;
 	}
 
@@ -105,6 +114,8 @@ bool Rect::setFaceTexture(char* img, int face){
 	}
 
 	m_texture[face] = lt->getTexture();
+
+	m_textured = true;
 
 	delete lt;
 	lt = NULL;

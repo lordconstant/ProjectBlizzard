@@ -100,7 +100,10 @@
     <ClCompile Include="Movement.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Rectangle.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneSelect.cpp" />
     <ClCompile Include="Sphere.cpp" />
+    <ClCompile Include="StartScreen.cpp" />
     <ClCompile Include="Team.cpp" />
     <ClCompile Include="TimeControl.cpp" />
     <ClCompile Include="Unit.cpp" />
@@ -121,7 +124,10 @@
     <ClInclude Include="Physics.h" />
     <ClInclude Include="random.h" />
     <ClInclude Include="Rectangle.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneSelect.h" />
     <ClInclude Include="Sphere.h" />
+    <ClInclude Include="StartScreen.h" />
     <ClInclude Include="Team.h" />
     <ClInclude Include="TimeControl.h" />
     <ClInclude Include="Timer.h" />

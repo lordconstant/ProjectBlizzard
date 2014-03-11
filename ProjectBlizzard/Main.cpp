@@ -30,16 +30,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
 					PostQuitMessage(0);
 					break;
 				case VK_W:
-					g_Game.m_cam->move()->up(true);
 					break;
 				case VK_S:
-					g_Game.m_cam->move()->down(true);
 					break;
 				case VK_A:
-					g_Game.m_cam->move()->left(true);
 					break;
 				case VK_D:
-					g_Game.m_cam->move()->right(true);
 					break;
 				default:
 					break;
@@ -48,17 +44,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
 		case WM_KEYUP:
 			switch(wParam)	{
 				case VK_W:
-					g_Game.m_cam->move()->up(false);
-					//g_Game.m_cam->move()->down(false);
 					break;
 				case VK_S:
-					g_Game.m_cam->move()->down(false);
 					break;
 				case VK_A:
-					g_Game.m_cam->move()->left(false);
 					break;
 				case VK_D:
-					g_Game.m_cam->move()->right(false);
 					break;
 			}
 			break;
@@ -75,14 +66,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
 			g_Game.mouseY = HIWORD(lParam);
 			break;
 		case WM_LBUTTONDOWN:
-			//g_Game.m_sphere->setScale(g_Game.m_sphere->getScale() + 0.1);
-			g_Game.explo->circularExplosion(Vector(6.4, 6.4, 0), 6.4, 0);
 			break;
 		case WM_RBUTTONDOWN:
-		//	g_Game.m_sphere->setScale(g_Game.m_sphere->getScale() - 0.1);
 			break;
 		case WM_MOUSEWHEEL:
-			((short) HIWORD(wParam) < 0) ? g_Game.m_cam->move()->forward(true) : g_Game.m_cam->move()->backward(true);
+			//((short) HIWORD(wParam) < 0) ? g_Game.m_cam->move()->forward(true) : g_Game.m_cam->move()->backward(true);
 			break;
 	}
 

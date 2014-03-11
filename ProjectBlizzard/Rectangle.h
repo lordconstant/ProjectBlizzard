@@ -7,7 +7,7 @@ class Rect :public Model{
 	float m_size, m_width, m_height, m_length;
 	Vector m_verts[8];
 	unsigned int m_texture[6];
-
+	bool m_textured;
 public:
 	Rect();
 	Rect(float size, float width, float height, float length);

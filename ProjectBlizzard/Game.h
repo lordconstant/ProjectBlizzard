@@ -1,12 +1,8 @@
 #pragma once
 #include "BaseGame.h"
 #include "DebugPrint.h"
-#include "Sphere.h"
-#include "Cube.h"
-#include "Button3D.h"
-#include "Camera.h"
 #include "TimeControl.h"
-#include "Explosion.h"
+#include "SceneSelect.h"
 
 #include <vector>
 
@@ -29,10 +25,8 @@ private:
 
 	// HERE WE DECLARE ANY GAME OBJECTS ("BASEOBJECTS") AND CREATE THEM
 	// IN THE INITIALISE METHOD
-	vector<Model*> m_sphere;
-	Camera* m_cam;
-	Explosion* explo;
-	Button3D* m_btn;
+
+	SceneSelect* sceneSel;
 public:
 	Game(void);
 	virtual ~Game(void);

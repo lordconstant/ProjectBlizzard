@@ -32,7 +32,7 @@ void Button3D::update(float mouseX, float mouseY){
 				DebugOut("mousedOver");
 				//char s[255];
 				//sprintf(s, "%c_hover", m_img);
-				//m_rect->setFaceTexture(s, FRONT_FACE);
+				m_rect->setFaceTexture("Images/Buttons/new_game_hover.bmp", LEFT_FACE);
 			}
 
 			return;
@@ -40,7 +40,7 @@ void Button3D::update(float mouseX, float mouseY){
 	}
 
 	if (m_hover){
-		//m_rect->setFaceTexture(m_img, FRONT_FACE);
+		m_rect->setFaceTexture("Images/Buttons/new_game.bmp", LEFT_FACE);
 		m_rect->setPos(m_rect->getPos().x, m_rect->getPos().y, 1);
 		DebugOut("mousedOut");
 	}
