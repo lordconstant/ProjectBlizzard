@@ -5,17 +5,18 @@
 class Button3D{
 	char* m_img;
 	Rect* m_rect;
-	bool m_hover, m_clicked;
+	bool m_hover;
 public:
-	Button3D(char* img, int width, int height, int length);
+	Button3D(char* img, float width, float height, float length);
 	~Button3D();
 
 	void render();
 	void update(float mouseX, float mouseY);
-	void setClicked(bool clicked);
 
 	Rect* getRect();
 
 	bool isMouseOver();
+
+	bool checkArea(float mouseX, float mouseY);
 };
 

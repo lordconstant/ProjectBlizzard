@@ -25,33 +25,19 @@ Game g_Game;	//Access to Game Object
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
 	switch(uMsg){
 		case WM_KEYDOWN:
+			g_Game.sceneSel->getCurScene()->processKeyDown(wParam);
 			switch(wParam)	{
 				case VK_ESCAPE:
 					PostQuitMessage(0);
 					break;
-				case VK_W:
-					break;
-				case VK_S:
-					break;
-				case VK_A:
-					break;
-				case VK_D:
-					break;
+				case VK_O:
+					g_Game.sceneSel->setScene(OPTIONS);
 				default:
 					break;
 			}
 			break;
 		case WM_KEYUP:
-			switch(wParam)	{
-				case VK_W:
-					break;
-				case VK_S:
-					break;
-				case VK_A:
-					break;
-				case VK_D:
-					break;
-			}
+			g_Game.sceneSel->getCurScene()->processKeyUp(wParam);
 			break;
 		case WM_DESTROY:
 		case WM_CLOSE:
@@ -66,11 +52,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
 			g_Game.mouseY = HIWORD(lParam);
 			break;
 		case WM_LBUTTONDOWN:
+			g_Game.sceneSel->getCurScene()->processMouse(uMsg, wParam);
 			break;
 		case WM_RBUTTONDOWN:
+			g_Game.sceneSel->getCurScene()->processMouse(uMsg, wParam);
 			break;
 		case WM_MOUSEWHEEL:
-			//((short) HIWORD(wParam) < 0) ? g_Game.m_cam->move()->forward(true) : g_Game.m_cam->move()->backward(true);
+			g_Game.sceneSel->getCurScene()->processMouse(uMsg, wParam);
 			break;
 	}
 

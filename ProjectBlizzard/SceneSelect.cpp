@@ -42,6 +42,8 @@ void SceneSelect::setScene(int scene){
 	default:
 		break;
 	}
+
+	m_curScene->initialise();
 }
 
 Scene* SceneSelect::getCurScene(){

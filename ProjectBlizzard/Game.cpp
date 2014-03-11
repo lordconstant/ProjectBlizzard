@@ -15,7 +15,6 @@ void Game::InitOpenGL(){
 void Game::Initialise(){
 	DebugOut("Game::Initialise being called");
 	sceneSel = &SceneSelect::getInstance();
-	sceneSel->getCurScene()->initialise();
 }
 
 void Game::Shutdown(){
@@ -25,7 +24,7 @@ void Game::Shutdown(){
 void Game::Update(){
 	TimeControl::getInstance().updateTime();
 
-	sceneSel->getCurScene()->update();
+	sceneSel->getCurScene()->update(mouseX, mouseY);
 }
 
 // Render the objects in their current state.
