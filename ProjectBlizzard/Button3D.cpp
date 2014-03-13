@@ -16,14 +16,11 @@ void Button3D::render(){
 }
 
 void Button3D::update(float mouseX, float mouseY){
-	mouseX /= 100;
-	mouseY /= 100;
-
 	if(checkArea(mouseX, mouseY)){
 		if (!m_hover){
 			m_hover = true;
 
-			m_rect->setPos(m_rect->getPos().x, m_rect->getPos().y, 0);
+			m_rect->setPos(m_rect->getPos().x, m_rect->getPos().y, m_rect->getPos().z-0.05);
 			DebugOut("mousedOver");
 			//char s[255];
 			//sprintf(s, "%c_hover", m_img);
@@ -34,7 +31,7 @@ void Button3D::update(float mouseX, float mouseY){
 
 	if (m_hover){
 		m_rect->setFaceTexture("Images/Buttons/new_game.bmp", LEFT_FACE);
-		m_rect->setPos(m_rect->getPos().x, m_rect->getPos().y, 1);
+		m_rect->setPos(m_rect->getPos().x, m_rect->getPos().y, m_rect->getPos().z+0.05);
 		DebugOut("mousedOut");
 	}
 

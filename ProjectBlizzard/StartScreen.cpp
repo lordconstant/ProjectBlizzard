@@ -10,7 +10,7 @@ StartScreen::~StartScreen(){
 
 void StartScreen::initialise(){
 	m_cam = new Camera();
-	m_cam->move()->setPos(0, 0, 2);
+	m_cam->move()->setPos(0, 0, 0);
 
 	for (int i = 0; i < 3; i++){
 		m_btns.push_back(new Button3D("Images/Buttons/new_game.bmp", 1.0f, 0.25f, 0.0f));
@@ -19,11 +19,10 @@ void StartScreen::initialise(){
 }
 
 void StartScreen::update(float mouseX, float mouseY){
-	m_mouseX = mouseX;
-	m_mouseY = mouseY;
+	updateMouse(mouseX, mouseY);
 
 	for (int i = 0; i < m_btns.size(); i++){
-		m_btns[i]->update(mouseX, mouseY);
+		m_btns[i]->update(m_mousePos.x, m_mousePos.y);
 	}
 }
 
@@ -77,7 +76,7 @@ void StartScreen::processKeyDown(int key){
 void StartScreen::processMouse(int key, int state){
 	switch(key){
 		case WM_LBUTTONDOWN:
-			if(m_btns[0]->checkArea(m_mouseX, m_mouseY)){
+			if(m_btns[0]->checkArea(m_mousePos.x, m_mousePos.y)){
 				SceneSelect::getInstance().setScene(OPTIONS);
 			}
 			break;
