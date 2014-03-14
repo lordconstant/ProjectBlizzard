@@ -39,7 +39,7 @@ void Rect::Render(){
 		drawFace(3, 7, 4, 0, 1.0f, 1.0f, 1.0f, 1);
 		drawFace(2, 6, 7, 3, 1.0f, 1.0f, 1.0f, 2);
 		drawFace(1, 5, 6, 2, 1.0f, 1.0f, 1.0f, 3);
-		drawFace(3, 0, 1, 2, 1.0f, 1.0f, 1.0f, 4);
+		drawFace(3, 0, 1, 2, 0.0f, 1.0f, 1.0f, 4);
 		drawFace(4, 7, 6, 5, 1.0f, 1.0f, 1.0f, 5);
 
 		if(m_textured){

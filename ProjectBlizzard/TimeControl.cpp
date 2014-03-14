@@ -27,10 +27,7 @@ void TimeControl::updateTime(){
 	m_curTime = timeGetTime();
 
 	m_deltaTime = m_curTime - m_lastCall;
-	if (m_deltaTime == 0){
-		m_deltaTime++;
-	}
 
-	m_deltaTime /= 100;
+	m_deltaTime /= 1000;
 	m_lastCall = m_curTime;
 }

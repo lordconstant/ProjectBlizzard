@@ -14,7 +14,7 @@ void StartScreen::initialise(){
 
 	for (int i = 0; i < 3; i++){
 		m_btns.push_back(new Button3D("Images/Buttons/new_game.bmp", 1.0f, 0.25f, 0.0f));
-		m_btns.back()->getRect()->setPos(-0.9f, -0.25f-(i*0.35f), 0.0f);
+		m_btns.back()->getRect()->setPos(-0.9f, -0.25f - (i*0.35f), 0.0f);
 	}
 }
 
@@ -77,7 +77,7 @@ void StartScreen::processMouse(int key, int state){
 	switch(key){
 		case WM_LBUTTONDOWN:
 			if(m_btns[0]->checkArea(m_mousePos.x, m_mousePos.y)){
-				SceneSelect::getInstance().setScene(OPTIONS);
+				SceneSelect::getInstance().setScene(GAME);
 			}
 			break;
 		case WM_RBUTTONDOWN:

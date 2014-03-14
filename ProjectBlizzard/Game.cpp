@@ -25,6 +25,8 @@ void Game::Update(){
 	TimeControl::getInstance().updateTime();
 
 	sceneSel->getCurScene()->update(mouseX, mouseY);
+
+	sceneSel->getCurScene()->setScreenSize(m_width, m_height);
 }
 
 // Render the objects in their current state.

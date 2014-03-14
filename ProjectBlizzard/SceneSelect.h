@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "StartScreen.h"
+#include "GameScreen.h"
 
 enum SCENES {START = 0, OPTIONS, LOBBY, GAME, END, SCENE_COUNT};
 

@@ -73,15 +73,33 @@ void Movement::setAllVel(float xSpeed, float ySpeed, float zSpeed){
 }
 
 void Movement::moveXPos(float speed){
-	m_pos->x += TimeControl::getInstance().getDeltaTime() * speed;
+	float delta = TimeControl::getInstance().getDeltaTime();
+
+	if (delta <= 0){
+		delta = 0.0001;
+	}
+
+	m_pos->x += delta * speed;
 }
 
 void Movement::moveYPos(float speed){
-	m_pos->y += TimeControl::getInstance().getDeltaTime() * speed;
+	float delta = TimeControl::getInstance().getDeltaTime();
+
+	if (delta <= 0){
+		delta = 0.0001;
+	}
+
+	m_pos->y += delta * speed;
 }
 
 void Movement::moveZPos(float speed){
-	m_pos->z += TimeControl::getInstance().getDeltaTime() * speed;
+	float delta = TimeControl::getInstance().getDeltaTime();
+
+	if (delta <= 0){
+		delta = 0.0001;
+	}
+
+	m_pos->z += delta * speed;
 }
 
 void Movement::moveX(){
@@ -106,11 +124,11 @@ void Movement::moveY(){
 
 void Movement::moveZ(){
 	if(m_forwards){
-		moveZPos(m_zVel);
+		moveZPos(-m_zVel);
 	}
 
 	if(m_backwards){
-		moveZPos(-m_zVel);
+		moveZPos(m_zVel);
 	}
 }
 

@@ -34,3 +34,8 @@ void Scene::updateMouse(float mouseX, float mouseY){
 
 	mouseToWorldCoord(mouseX, mouseY);
 }
+
+void Scene::setScreenSize(float width, float height){
+	m_sWidth = width;
+	m_sHeight = height;
+}

@@ -34,7 +34,7 @@ void SceneSelect::setScene(int scene){
 		m_curScene = new StartScreen;
 		break;
 	case GAME:
-		m_curScene = new StartScreen;
+		m_curScene = new GameScreen;
 		break;
 	case END:
 		m_curScene = new StartScreen;

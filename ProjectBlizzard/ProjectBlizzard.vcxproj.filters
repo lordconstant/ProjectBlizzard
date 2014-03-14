@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Header Files\Scenes">
+      <UniqueIdentifier>{242fa06d-3d5d-4768-ada2-8a67592704bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Objects">
+      <UniqueIdentifier>{120e4c43-9541-4a01-8dfd-0f885e9c5936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Weapons">
+      <UniqueIdentifier>{31bcc714-9ea6-41a7-aaea-8dc6cbd21e95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseGame.cpp">
@@ -78,6 +87,12 @@
     <ClCompile Include="StartScreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseGame.h">
@@ -93,9 +108,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="random.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="vector.h">
@@ -116,22 +128,7 @@
     <ClInclude Include="Unit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Weapon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Cube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sphere.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Rectangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Explosion.h">
@@ -140,16 +137,37 @@
     <ClInclude Include="LoadTextures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Button3D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="SceneSelect.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="StartScreen.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScreen.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Button3D.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

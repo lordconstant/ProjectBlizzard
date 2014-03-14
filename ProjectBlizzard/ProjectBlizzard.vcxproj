@@ -26,7 +26,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -94,6 +94,7 @@
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameScreen.cpp" />
     <ClCompile Include="LoadTextures.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Model.cpp" />
@@ -106,6 +107,7 @@
     <ClCompile Include="StartScreen.cpp" />
     <ClCompile Include="Team.cpp" />
     <ClCompile Include="TimeControl.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
@@ -118,6 +120,7 @@
     <ClInclude Include="DebugPrint.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameScreen.h" />
     <ClInclude Include="LoadTextures.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Movement.h" />

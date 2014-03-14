@@ -7,7 +7,7 @@
 
 class Scene{
 protected:
-	float m_mouseX, m_mouseY;
+	float m_mouseX, m_mouseY, m_sWidth, m_sHeight;
 	Vector m_mousePos;
 public:
 	Scene();
@@ -22,7 +22,7 @@ public:
 	virtual void processMouse(int key, int state) = 0;
 
 	void mouseToWorldCoord(float x, float y);
-
+	void setScreenSize(float width, float height);
 protected:
 	void updateMouse(float mouseX, float mouseY);
 };
