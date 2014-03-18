@@ -2,10 +2,17 @@
 
 
 Scene::Scene(){
+	initialiseSound();
 }
 
-
 Scene::~Scene(){
+	if (sEngine){
+		delete sEngine;
+	}
+}
+
+void Scene::initialiseSound(){
+	sEngine = createIrrKlangDevice();
 }
 
 void Scene::mouseToWorldCoord(float x, float y){

@@ -4,11 +4,15 @@
 #include <gl/gl.h>
 #include <gl/glu.h>
 #include "vector.h"
+#include <irrKlang.h>
+
+using namespace irrklang;
 
 class Scene{
 protected:
 	float m_mouseX, m_mouseY, m_sWidth, m_sHeight;
 	Vector m_mousePos;
+	ISoundEngine* sEngine;
 public:
 	Scene();
 	~Scene();
@@ -20,6 +24,8 @@ public:
 	virtual void processKeyUp(int key) = 0;
 	virtual void processKeyDown(int key) = 0;
 	virtual void processMouse(int key, int state) = 0;
+
+	void initialiseSound();
 
 	void mouseToWorldCoord(float x, float y);
 	void setScreenSize(float width, float height);
