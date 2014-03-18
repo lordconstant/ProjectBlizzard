@@ -1,7 +1,6 @@
 #include "Cube.h"
 
-Cube::Cube(void) :Model(0.2)
-{
+Cube::Cube(void) :Model(0.2){
 	setSize(0.2f);
 }
 
@@ -9,8 +8,7 @@ Cube::Cube(float size):Model(size){
 	setSize(size);
 }
 
-Cube::~Cube(void)
-{
+Cube::~Cube(void){
 }
 
 void Cube::Render(){

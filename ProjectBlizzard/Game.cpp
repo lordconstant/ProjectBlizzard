@@ -9,7 +9,7 @@ Game::~Game(void){
 
 void Game::InitOpenGL(){
 	DebugOut("Game::InitOpenGL being called");
-	Set3D();
+	Set3D(80, 0.1f, 100.0f);
 }
 
 void Game::Initialise(){
