@@ -5,6 +5,9 @@
 #include <gl/glu.h>
 #include "vector.h"
 #include <irrKlang.h>
+#include <il.h>
+#include <ilu.h>
+#include <ilut.h>
 
 using namespace irrklang;
 
