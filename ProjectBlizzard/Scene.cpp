@@ -5,14 +5,14 @@ Scene::Scene(){
 	initialiseSound();
 }
 
-Scene::~Scene(){
-	if (sEngine){
-		delete sEngine;
-	}
+void Scene::initialiseSound(){
+	m_sEngine = createIrrKlangDevice();
 }
 
-void Scene::initialiseSound(){
-	sEngine = createIrrKlangDevice();
+Scene::~Scene(){
+	if (m_sEngine){
+		delete m_sEngine;
+	}
 }
 
 void Scene::mouseToWorldCoord(float x, float y){

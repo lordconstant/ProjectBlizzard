@@ -14,17 +14,19 @@ void GameScreen::initialise(){
 
 	m_land = new Rect(1, 10, 0.05, 10);
 
-	m_timer = new Timer();
-	m_timer->play();
+	//m_timer = new Timer();
+	//m_timer->play();
+
+	m_sEngine->play2D("Sounds/Electrodoodle.mp3");
 }
 
 void GameScreen::update(float mouseX, float mouseY){
 	updateMouse(mouseX, mouseY);
 	m_cam->firstPerson(2, mouseX, mouseY, m_sHeight, m_sWidth);
-	m_timer->update();
-	char s[255];
-	sprintf(s, "%.2f", m_timer->getElapsedTime());
-	DebugOut(s);
+	//m_timer->update();
+	//char s[255];
+	//sprintf(s, "%.2f", m_timer->getElapsedTime());
+	//DebugOut("Steve is shit");
 }
 
 void GameScreen::render(){
@@ -46,6 +48,8 @@ void GameScreen::processKeyUp(int key){
 		break;
 	case VK_D:
 		m_cam->move()->right(false);
+		break;
+	case VK_SPACE:
 		break;
 	default:
 		break;
@@ -75,10 +79,10 @@ void GameScreen::processKeyDown(int key){
 void GameScreen::processMouse(int key, int state){
 	switch (key){
 	case WM_LBUTTONDOWN:
-		m_timer->reset();
+		//m_timer->reset();
 		break;
 	case WM_RBUTTONDOWN:
-		m_timer->play();
+		//m_timer->play();
 		break;
 	case WM_MOUSEWHEEL:
 		((short)HIWORD(state) < 0) ? m_cam->move()->forward(true) : m_cam->move()->backward(true);

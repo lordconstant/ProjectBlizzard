@@ -16,6 +16,8 @@ void StartScreen::initialise(){
 		m_btns.push_back(new Button3D("Images/Buttons/new_game.bmp", 1.0f, 0.25f, 0.0f));
 		m_btns.back()->getRect()->setPos(-0.9f, -0.25f - (i*0.35f), 0.0f);
 	}
+
+	m_sEngine->play2D("Sounds/Call to Adventure.mp3", true);
 }
 
 void StartScreen::update(float mouseX, float mouseY){

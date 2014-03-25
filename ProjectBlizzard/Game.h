@@ -5,10 +5,10 @@
 #include "SceneSelect.h"
 
 #include <vector>
-
 #include <string>
-using namespace std;
 
+using namespace std;
+using namespace irrklang;
 // forward declaration
 class BaseObject;
 
@@ -41,7 +41,7 @@ public:
 	execute any OpenGL commands in this method, use initOpenGL instead.
 	*/
 	void Initialise();
-
+	void InitialiseSound();
 	/**
 	Use this method to perform any clean up of objects created for 
 	the game - including fonts and timers.

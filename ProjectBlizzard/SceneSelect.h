@@ -13,6 +13,7 @@ public:
 	static SceneSelect& getInstance();
 
 	void setScene(int scene);
+
 	Scene* getCurScene();
 private:
 	SceneSelect();
