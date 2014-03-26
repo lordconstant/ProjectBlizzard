@@ -26,7 +26,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v110</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -58,14 +58,16 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <AdditionalIncludeDirectories>H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\irrKlang;H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\Resil;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\irrKlang;H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\Resil;H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\libNoise;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;winmm.lib;irrKlang/irrKlang.lib;Resil/DevIL.lib;Resil/ILU.lib;Resil/ILUT.lib;Resil/zlib1.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;winmm.lib;irrKlang/irrKlang.lib;Resil/DevIL.lib;Resil/ILU.lib;Resil/ILUT.lib;Resil/zlib1.lib;libNoise/libnoise.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -109,6 +111,7 @@
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="StartScreen.cpp" />
     <ClCompile Include="Team.cpp" />
+    <ClCompile Include="TerrainGenerator.cpp" />
     <ClCompile Include="TimeControl.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Unit.cpp" />
@@ -136,6 +139,7 @@
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="StartScreen.h" />
     <ClInclude Include="Team.h" />
+    <ClInclude Include="TerrainGenerator.h" />
     <ClInclude Include="TimeControl.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Unit.h" />

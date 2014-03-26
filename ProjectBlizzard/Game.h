@@ -8,7 +8,6 @@
 #include <string>
 
 using namespace std;
-using namespace irrklang;
 // forward declaration
 class BaseObject;
 

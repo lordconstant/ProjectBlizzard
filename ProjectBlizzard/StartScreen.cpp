@@ -6,6 +6,15 @@ StartScreen::StartScreen(){
 
 
 StartScreen::~StartScreen(){
+	for(int i = 0; i < m_btns.size(); i++){
+		if(m_btns[i]){
+			delete m_btns[i];
+		}
+	}
+
+	if(m_cam){
+		delete m_cam;
+	}
 }
 
 void StartScreen::initialise(){

@@ -7,6 +7,7 @@ Scene::Scene(){
 
 void Scene::initialiseSound(){
 	m_sEngine = createIrrKlangDevice();
+	m_sEngine->setSoundVolume(0.2f);
 }
 
 Scene::~Scene(){
