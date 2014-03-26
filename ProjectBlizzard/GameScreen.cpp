@@ -33,7 +33,7 @@ void GameScreen::initialise(){
 
 void GameScreen::update(float mouseX, float mouseY){
 	updateMouse(mouseX, mouseY);
-	m_cam->firstPerson(2, mouseX, mouseY, m_sHeight, m_sWidth);
+	//m_cam->firstPerson(2, mouseX, mouseY, m_sHeight, m_sWidth);
 	//m_timer->update();
 }
 
@@ -50,10 +50,10 @@ void GameScreen::render(){
 void GameScreen::processKeyUp(int key){
 	switch (key){
 	case VK_W:
-		m_cam->move()->forward(false);
+		m_cam->move()->up(false);
 		break;
 	case VK_S:
-		m_cam->move()->backward(false);
+		m_cam->move()->down(false);
 		break;
 	case VK_A:
 		m_cam->move()->left(false);
@@ -84,10 +84,10 @@ void GameScreen::processKeyUp(int key){
 void GameScreen::processKeyDown(int key){
 	switch (key){
 	case VK_W:
-		m_cam->move()->forward(true);
+		m_cam->move()->up(true);
 		break;
 	case VK_S:
-		m_cam->move()->backward(true);
+		m_cam->move()->down(true);
 		break;
 	case VK_A:
 		m_cam->move()->left(true);

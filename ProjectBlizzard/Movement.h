@@ -6,19 +6,19 @@
 enum{XAXIS, YAXIS, ZAXIS};
 
 class Movement{
-	Vector* m_pos;
-	float* m_angle, m_xVel, m_yVel, m_zVel;
+	Vector* m_pos, *m_angle;
+	float m_xVel, m_yVel, m_zVel;
 	bool m_left, m_right, m_up, m_down, m_forwards, m_backwards;
 public:
-	Movement(Vector& pos, float& angle, float xVel, float yVel, float zVel);
+	Movement(Vector& pos, Vector& angle, float xVel, float yVel, float zVel);
 	~Movement();
 
 	Vector getPos();
 
-	float getAngle();
+	Vector getAngle();
 
 	void definePos(Vector& pos);
-	void defineAngle(float& angle);
+	void defineAngle(Vector& angle);
 
 	void setPos(Vector pos);
 	void setPos(float x, float y, float z);

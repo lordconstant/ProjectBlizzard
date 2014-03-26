@@ -1,8 +1,7 @@
 #include "Movement.h"
-Movement::Movement(Vector& pos, float& angle, float xVel, float yVel, float zVel){
+Movement::Movement(Vector& pos, Vector& angle, float xVel, float yVel, float zVel){
 	m_pos = &pos;
 	m_angle = &angle;
-
 	m_xVel = xVel;
 	m_yVel = yVel;
 	m_zVel = zVel;
@@ -20,7 +19,7 @@ Vector Movement::getPos(){
 	return *m_pos;
 }
 
-float Movement::getAngle(){
+Vector Movement::getAngle(){
 	return *m_angle;
 }
 
@@ -32,7 +31,7 @@ void Movement::definePos(Vector& pos){
 	m_pos = &pos;
 }
 
-void Movement::defineAngle(float& angle){
+void Movement::defineAngle(Vector& angle){
 	if (!&angle){
 		return;
 	}
@@ -139,27 +138,67 @@ void Movement::move(float xSpeed, float ySpeed, float zSpeed){
 }
 
 void Movement::rotateBy(float angle, int axis){
-	rotateTo(*m_angle + angle, axis);
+	switch (axis){
+	case XAXIS:
+		rotateTo(m_angle->x + angle, axis);
+		break;
+	case YAXIS:
+		rotateTo(m_angle->y + angle, axis);
+		break;
+	case ZAXIS:
+		rotateTo(m_angle->z + angle, axis);
+		break;
+	default:
+		break;
+	}
 }
 
 void Movement::rotateTo(float angle, int axis){
-	*m_angle = angle;
+	switch (axis){
+	case XAXIS:
+		m_angle->x = angle;
 
-	while (*m_angle > 360){
-		*m_angle -= 360;
-	}
+		while (m_angle->x > 360){
+			m_angle->x -= 360;
+		}
 
-	while (*m_angle < -360){
-		*m_angle += 360;
+		while (m_angle->x < -360){
+			m_angle->x += 360;
+		}
+		break;
+	case YAXIS:
+		m_angle->y = angle;
+
+		while (m_angle->y > 360){
+			m_angle->y -= 360;
+		}
+
+		while (m_angle->y < -360){
+			m_angle->y += 360;
+		}
+		break;
+	case ZAXIS:
+		m_angle->z = angle;
+
+		while (m_angle->z < 360){
+			m_angle->z -= 360;
+		}
+
+		while (m_angle->z < -360){
+			m_angle->z += 360;
+		}
+		break;
+	default:
+		break;
 	}
 }
 
 void Movement::smoothRotateBy(float angle, float speed, int axis){
-	smoothRotateTo(*m_angle + angle, speed, axis);
+	//smoothRotateTo(*m_angle + angle, speed, axis);
 }
 
 void Movement::smoothRotateTo(float angle, float speed, int axis){
-	if (speed <= 0 || *m_angle == angle){
+	/*if (speed <= 0 || *m_angle == angle){
 		return;
 	}
 
@@ -173,7 +212,7 @@ void Movement::smoothRotateTo(float angle, float speed, int axis){
 		while (*m_angle > angle){
 			*m_angle -= TimeControl::getInstance().getDeltaTime() * speed;
 		}
-	}
+	}*/
 
 	rotateTo(angle, axis);
 }

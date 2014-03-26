@@ -8,11 +8,11 @@ using namespace std;
 
 class Unit{
 	int m_maxHealth, m_curHealth, m_mass;
-	float m_speed, m_angle;
+	float m_speed;
 	string m_name;
 	//Model* m_model;
 	Weapon* m_wep;
-	Vector m_pos, m_wepPos, m_modelPos;
+	Vector m_pos, m_angle, m_wepPos, m_modelPos;
 	Movement* m_move;
 public:
 	Unit(void);

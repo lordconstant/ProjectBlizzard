@@ -109,7 +109,7 @@ Image TerrainGenerator::createCaves(int seed){
 Image TerrainGenerator::createCave(int seed){
 	Image image;
 
-	image = renderNoise(5, 3.0f, 1.0f, 0.5f, seed);
+	image = renderNoise(4, 3.0f, 1.0f, 1.0f, seed);
 
 	for (int x = 0; x < image.GetWidth(); x++){
 		for (int y = 0; y < image.GetHeight()/2; y++){
@@ -187,8 +187,8 @@ Image TerrainGenerator::renderNoise(int oct, float freq, float pers, float lacun
 
 	heightMapBuilder.SetSourceModule(myModule);
 	heightMapBuilder.SetDestNoiseMap(heightMap);
-	heightMapBuilder.SetDestSize(128, 128);
-	heightMapBuilder.SetBounds(2.0f, 6.0f, 1.0f, 5.0f);
+	heightMapBuilder.SetDestSize(256, 128);
+	heightMapBuilder.SetBounds(2.0f, 4.5f, 2.0f, 4.5f);
 	heightMapBuilder.Build();
 
 	renderer.SetSourceNoiseMap(heightMap);
