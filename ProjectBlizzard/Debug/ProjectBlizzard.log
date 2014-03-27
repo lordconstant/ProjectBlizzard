@@ -1,8 +1,9 @@
-﻿Build started 26/03/2014 18:26:45.
+﻿Build started 27/03/2014 13:43:42.
      1>Project "H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\ProjectBlizzard.vcxproj" on node 2 (Build target(s)).
-       Project file contains ToolsVersion="12.0". This toolset is unknown or missing. You may be able to resolve this by installing the appropriate .NET Framework for this toolset. Treating the project as if it had ToolsVersion="4.0".
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\irrKlang /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\Resil /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\libNoise /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt TerrainGenerator.cpp
+     1>InitializeBuildStatus:
+         Creating "Debug\ProjectBlizzard.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\irrKlang /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\Resil /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\libNoise /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\UnitTest++\src /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt TerrainGenerator.cpp
          TerrainGenerator.cpp
      1>h:\programming\github\projectblizzard\projectblizzard\libnoise\noiseutils.h(1217): warning C4244: 'initializing' : conversion from 'const double' to 'float', possible loss of data
      1>h:\programming\github\projectblizzard\projectblizzard\libnoise\noiseutils.cpp(61): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
@@ -331,8 +332,11 @@
      1>TerrainGenerator.obj : warning LNK4006: "public: void __thiscall noise::utils::WriterTER::WriteDestFile(void)" (?WriteDestFile@WriterTER@utils@noise@@QAEXXZ) already defined in Game.obj; second definition ignored
      1>H:\Programming\GitHub\ProjectBlizzard\Debug\ProjectBlizzard.exe : warning LNK4088: image being generated due to /FORCE option; image may not run
          ProjectBlizzard.vcxproj -> H:\Programming\GitHub\ProjectBlizzard\Debug\ProjectBlizzard.exe
+       FinalizeBuildStatus:
+         Deleting file "Debug\ProjectBlizzard.unsuccessfulbuild".
+         Touching "Debug\ProjectBlizzard.lastbuildstate".
      1>Done Building Project "H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\ProjectBlizzard.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:05.11
+Time Elapsed 00:00:05.17

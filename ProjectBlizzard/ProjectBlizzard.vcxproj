@@ -58,7 +58,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <AdditionalIncludeDirectories>H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\irrKlang;H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\Resil;H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\libNoise;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\irrKlang;H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\Resil;H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\libNoise;H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\UnitTest++\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
     <Link>

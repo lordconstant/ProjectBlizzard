@@ -1,5 +1,6 @@
 // Initial OpenGL Framework
 // DO not modify this project. Use a copy of it.
+#pragma once
 #include "Game.h"
 
 // tell the compiler to always link into a Winmain, even if we are using a console app
@@ -100,6 +101,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			g_Game.Render();
 			g_Game.Swap();
 #endif
+
 		}
 	}
 

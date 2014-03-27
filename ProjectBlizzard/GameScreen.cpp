@@ -24,17 +24,13 @@ void GameScreen::initialise(){
 	m_cam->move()->setPos(0, 1, 0);
 
 	m_land = NULL;
+	m_explo = NULL;
 
-	//m_timer = new Timer();
-	//m_timer->play();
-
-	m_sEngine->play2D("Sounds/Electrodoodle.mp3");
+	m_sEngine->play2D("Sounds/Electrodoodle.mp3", true);
 }
 
 void GameScreen::update(float mouseX, float mouseY){
 	updateMouse(mouseX, mouseY);
-	//m_cam->firstPerson(2, mouseX, mouseY, m_sHeight, m_sWidth);
-	//m_timer->update();
 }
 
 void GameScreen::render(){
@@ -42,7 +38,7 @@ void GameScreen::render(){
 
 	if(m_land != NULL){
 		for(int i = 0; i < m_land->size(); i++){
-			m_land->at(i).Render();
+			m_land->at(i)->Render();
 		}
 	}
 }
@@ -104,12 +100,15 @@ void GameScreen::processMouse(int key, int state){
 	switch (key){
 	case WM_LBUTTONDOWN:
 		//m_timer->reset();
+		if (m_explo){
+			m_explo->circularExplosion(Vector(m_mousePos.x, m_mousePos.y, 1), 0.5f, 5);
+		}
 		break;
 	case WM_RBUTTONDOWN:
 		//m_timer->play();
 		break;
 	case WM_MOUSEWHEEL:
-		((short)HIWORD(state) < 0) ? m_cam->move()->forward(true) : m_cam->move()->backward(true);
+		((short)HIWORD(state) < 0) ? m_cam->move()->backward(true) : m_cam->move()->forward(true);
 		break;
 	default:
 		break;
@@ -122,4 +121,10 @@ void GameScreen::genTerrain(int type){
 	}
 
 	m_land = m_tGen.generateMap(type);
+
+	if (!m_explo){
+		m_explo = new Explosion(*m_land, *m_land);
+	}
+
+	m_explo->defineTerrain(*m_land);
 }

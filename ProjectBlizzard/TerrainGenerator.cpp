@@ -11,7 +11,7 @@ TerrainGenerator::~TerrainGenerator(void){
 Image TerrainGenerator::createIslands(int seed){
 	Image image;
 
-	image = renderNoise(1, 0.5f, 0.2f, 1.0f, seed);
+	image = renderNoise(2, 0.3f, 0.8f, 1.0f, seed);
 
 	for (int x = 0; x < image.GetWidth(); x++){
 		for (int y = 0; y < image.GetHeight(); y++){
@@ -201,7 +201,7 @@ Image TerrainGenerator::renderNoise(int oct, float freq, float pers, float lacun
 	return image;
 }
 
-vector<Cube>* TerrainGenerator::generateMap(int seed, int type){
+vector<Model*>* TerrainGenerator::generateMap(int seed, int type){
 	if(type < 0 || type > LTCOUNT){
 		return NULL;
 	}
@@ -225,14 +225,14 @@ vector<Cube>* TerrainGenerator::generateMap(int seed, int type){
 		break;
 	}
 
-	vector<Cube>* cubVec;
-	cubVec = new vector<Cube>;
+	vector<Model*>* cubVec;
+	cubVec = new vector<Model*>;
 	for(int x = 0; x < image.GetWidth(); x++){
 		for(int y = 0; y < image.GetHeight(); y++){
 			if(image.GetValue(x, y).red == 255){
-				Cube cube(0.05);
+				Cube* cube = new Cube(0.05);
 
-				cube.setPos(x*0.05, y*0.05, 1);
+				cube->setPos(x*0.05, y*0.05, 1);
 
 				cubVec->push_back(cube);
 			}
@@ -242,7 +242,7 @@ vector<Cube>* TerrainGenerator::generateMap(int seed, int type){
 	return cubVec;
 }
 
-vector<Cube>* TerrainGenerator::generateMap(int type){
+vector<Model*>* TerrainGenerator::generateMap(int type){
 	srand(time(NULL));
 	return generateMap(rand() % 100000, type);
 }

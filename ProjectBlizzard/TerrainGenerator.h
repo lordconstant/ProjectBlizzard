@@ -1,5 +1,4 @@
 #pragma once
-//#include <module\perlin.h>
 #include <noiseutils.h>
 #include <noiseutils.cpp>
 #include "Cube.h"
@@ -17,8 +16,10 @@ public:
 	TerrainGenerator(void);
 	~TerrainGenerator(void);
 
-	vector<Cube>* generateMap(int seed, int type);
-	vector<Cube>* generateMap(int type);
+	int box;
+
+	vector<Model*>* generateMap(int seed, int type);
+	vector<Model*>* generateMap(int type);
 private:
 	Image createIslands(int seed);
 	Image createLand(int seed);

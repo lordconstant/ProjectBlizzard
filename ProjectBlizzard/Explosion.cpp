@@ -59,3 +59,11 @@ void Explosion::rectExplosion(Vector pos, float x, float y, int damage){
 void Explosion::pyramidExplosion(Vector pos, float x, float y, int damage){
 
 }
+
+void Explosion::defineTerrain(vector<Model*>& terrain){
+	if (!&terrain){
+		return;
+	}
+
+	m_terrain = &terrain;
+}

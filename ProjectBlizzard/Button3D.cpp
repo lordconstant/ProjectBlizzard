@@ -47,8 +47,8 @@ bool Button3D::isMouseOver(){
 }
 
 bool Button3D::checkArea(float mouseX, float mouseY){
-	if (mouseX > m_rect->getPos().x && mouseX < m_rect->getPos().x + m_rect->getWidth()){
-		if (mouseY > m_rect->getPos().y && mouseY < m_rect->getPos().y + m_rect->getHeight()){
+	if (mouseX > m_rect->getPos().x - m_rect->getWidth() / 2 && mouseX < m_rect->getPos().x + m_rect->getWidth() / 2){
+		if (mouseY > m_rect->getPos().y - m_rect->getHeight() / 2 && mouseY < m_rect->getPos().y + m_rect->getHeight() / 2){
 			return true;
 		}
 	}
