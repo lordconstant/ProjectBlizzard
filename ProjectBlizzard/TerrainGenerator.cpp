@@ -736,6 +736,10 @@ Image TerrainGenerator::renderNoise(int oct, float freq, float pers, float lacun
 	return image;
 }
 
+int TerrainGenerator::getCurrentType(){
+	return m_curType;
+}
+
 vector<Vector> TerrainGenerator::generateMap(int seed, int type){
 	if (type < 0 || type > LTCOUNT){
 		vector<Vector> temp; 
@@ -768,8 +772,11 @@ vector<Vector> TerrainGenerator::generateMap(int seed, int type){
 		image = createRidges(seed);
 		break;
 	default:
+		image = createIslands(seed);
 		break;
 	}
+
+	m_curType = type;
 
 	vector<Vector> cubVec;
 	for (int x = 0; x < image.GetWidth(); x++){

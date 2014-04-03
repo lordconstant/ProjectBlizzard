@@ -12,11 +12,13 @@ using namespace noise::utils;
 enum LAND_TYPE{ISLANDS = 0, LAND = 1, CAVES = 2, CAVE = 3, FLOATING_ISLAND = 4, BRIDGE = 5, RIDGES = 6, LTCOUNT};
 
 class TerrainGenerator{
+	int m_curType;
 public:
 	TerrainGenerator(void);
 	~TerrainGenerator(void);
 
 	int box;
+	int getCurrentType();
 
 	vector<Vector> generateMap(int seed, int type);
 	vector<Vector> generateMap(int type);
