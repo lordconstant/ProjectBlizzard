@@ -1,17 +1,15 @@
-﻿Build started 27/03/2014 13:43:42.
+﻿Build started 03/04/2014 13:11:22.
      1>Project "H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\ProjectBlizzard.vcxproj" on node 2 (Build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\ProjectBlizzard.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\irrKlang /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\Resil /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\libNoise /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\UnitTest++\src /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt TerrainGenerator.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\\irrKlang /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\\Resil /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\\libNoise /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt TerrainGenerator.cpp
          TerrainGenerator.cpp
      1>h:\programming\github\projectblizzard\projectblizzard\libnoise\noiseutils.h(1217): warning C4244: 'initializing' : conversion from 'const double' to 'float', possible loss of data
      1>h:\programming\github\projectblizzard\projectblizzard\libnoise\noiseutils.cpp(61): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
      1>h:\programming\github\projectblizzard\projectblizzard\libnoise\noiseutils.cpp(62): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
      1>h:\programming\github\projectblizzard\projectblizzard\libnoise\noiseutils.cpp(867): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>h:\programming\github\projectblizzard\projectblizzard\terraingenerator.cpp(233): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>h:\programming\github\projectblizzard\projectblizzard\terraingenerator.cpp(235): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
-     1>h:\programming\github\projectblizzard\projectblizzard\terraingenerator.cpp(246): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
+     1>h:\programming\github\projectblizzard\projectblizzard\terraingenerator.cpp(787): warning C4244: 'argument' : conversion from 'time_t' to 'unsigned int', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"H:\Programming\GitHub\ProjectBlizzard\Debug\ProjectBlizzard.exe" /INCREMENTAL /NOLOGO opengl32.lib glu32.lib odbc32.lib odbccp32.lib winmm.lib irrKlang/irrKlang.lib Resil/DevIL.lib Resil/ILU.lib Resil/ILUT.lib Resil/zlib1.lib libNoise/libnoise.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"H:\Programming\GitHub\ProjectBlizzard\Debug\ProjectBlizzard.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"H:\Programming\GitHub\ProjectBlizzard\Debug\ProjectBlizzard.lib" /MACHINE:X86 /SAFESEH:NO /FORCE:MULTIPLE Debug\BaseGame.obj
          Debug\BFont.obj
@@ -26,7 +24,9 @@
          Debug\Main.obj
          Debug\Model.obj
          Debug\Movement.obj
+         Debug\OptionsScreen.obj
          Debug\Physics.obj
+         Debug\Projectile.obj
          Debug\Rectangle.obj
          Debug\Scene.obj
          Debug\SceneSelect.obj
@@ -156,6 +156,64 @@
      1>Main.obj : warning LNK4006: "public: void __thiscall noise::utils::NoiseMap::TakeOwnership(class noise::utils::NoiseMap &)" (?TakeOwnership@NoiseMap@utils@noise@@QAEXAAV123@@Z) already defined in Game.obj; second definition ignored
      1>Main.obj : warning LNK4006: "public: void __thiscall noise::utils::WriterBMP::WriteDestFile(void)" (?WriteDestFile@WriterBMP@utils@noise@@QAEXXZ) already defined in Game.obj; second definition ignored
      1>Main.obj : warning LNK4006: "public: void __thiscall noise::utils::WriterTER::WriteDestFile(void)" (?WriteDestFile@WriterTER@utils@noise@@QAEXXZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: __thiscall noise::utils::GradientColor::GradientColor(void)" (??0GradientColor@utils@noise@@QAE@XZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: __thiscall noise::utils::Image::Image(class noise::utils::Image const &)" (??0Image@utils@noise@@QAE@ABV012@@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: __thiscall noise::utils::Image::Image(int,int)" (??0Image@utils@noise@@QAE@HH@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: __thiscall noise::utils::Image::Image(void)" (??0Image@utils@noise@@QAE@XZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: __thiscall noise::utils::NoiseMap::NoiseMap(class noise::utils::NoiseMap const &)" (??0NoiseMap@utils@noise@@QAE@ABV012@@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: __thiscall noise::utils::NoiseMap::NoiseMap(int,int)" (??0NoiseMap@utils@noise@@QAE@HH@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: __thiscall noise::utils::NoiseMap::NoiseMap(void)" (??0NoiseMap@utils@noise@@QAE@XZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: __thiscall noise::utils::NoiseMapBuilder::NoiseMapBuilder(void)" (??0NoiseMapBuilder@utils@noise@@QAE@XZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: __thiscall noise::utils::NoiseMapBuilderCylinder::NoiseMapBuilderCylinder(void)" (??0NoiseMapBuilderCylinder@utils@noise@@QAE@XZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: __thiscall noise::utils::NoiseMapBuilderPlane::NoiseMapBuilderPlane(void)" (??0NoiseMapBuilderPlane@utils@noise@@QAE@XZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: __thiscall noise::utils::NoiseMapBuilderSphere::NoiseMapBuilderSphere(void)" (??0NoiseMapBuilderSphere@utils@noise@@QAE@XZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: __thiscall noise::utils::RendererImage::RendererImage(void)" (??0RendererImage@utils@noise@@QAE@XZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: __thiscall noise::utils::RendererNormalMap::RendererNormalMap(void)" (??0RendererNormalMap@utils@noise@@QAE@XZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: __thiscall noise::utils::GradientColor::~GradientColor(void)" (??1GradientColor@utils@noise@@QAE@XZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: __thiscall noise::utils::Image::~Image(void)" (??1Image@utils@noise@@QAE@XZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: __thiscall noise::utils::NoiseMap::~NoiseMap(void)" (??1NoiseMap@utils@noise@@QAE@XZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: class noise::utils::Image & __thiscall noise::utils::Image::operator=(class noise::utils::Image const &)" (??4Image@utils@noise@@QAEAAV012@ABV012@@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: class noise::utils::NoiseMap & __thiscall noise::utils::NoiseMap::operator=(class noise::utils::NoiseMap const &)" (??4NoiseMap@utils@noise@@QAEAAV012@ABV012@@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::GradientColor::AddGradientPoint(double,class noise::utils::Color const &)" (?AddGradientPoint@GradientColor@utils@noise@@QAEXNABVColor@23@@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::RendererImage::AddGradientPoint(double,class noise::utils::Color const &)" (?AddGradientPoint@RendererImage@utils@noise@@QAEXNABVColor@23@@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: virtual void __thiscall noise::utils::NoiseMapBuilderCylinder::Build(void)" (?Build@NoiseMapBuilderCylinder@utils@noise@@UAEXXZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: virtual void __thiscall noise::utils::NoiseMapBuilderPlane::Build(void)" (?Build@NoiseMapBuilderPlane@utils@noise@@UAEXXZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: virtual void __thiscall noise::utils::NoiseMapBuilderSphere::Build(void)" (?Build@NoiseMapBuilderSphere@utils@noise@@UAEXXZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::RendererImage::BuildGrayscaleGradient(void)" (?BuildGrayscaleGradient@RendererImage@utils@noise@@QAEXXZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::RendererImage::BuildTerrainGradient(void)" (?BuildTerrainGradient@RendererImage@utils@noise@@QAEXXZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "private: class noise::utils::Color __thiscall noise::utils::RendererImage::CalcDestColor(class noise::utils::Color const &,class noise::utils::Color const &,double)const " (?CalcDestColor@RendererImage@utils@noise@@ABE?AVColor@23@ABV423@0N@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "private: double __thiscall noise::utils::RendererImage::CalcLightIntensity(double,double,double,double,double)const " (?CalcLightIntensity@RendererImage@utils@noise@@ABENNNNNN@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "private: class noise::utils::Color __thiscall noise::utils::RendererNormalMap::CalcNormalColor(double,double,double,double)const " (?CalcNormalColor@RendererNormalMap@utils@noise@@ABE?AVColor@23@NNNN@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "protected: int __thiscall noise::utils::WriterBMP::CalcWidthByteCount(int)const " (?CalcWidthByteCount@WriterBMP@utils@noise@@IBEHH@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "protected: int __thiscall noise::utils::WriterTER::CalcWidthByteCount(int)const " (?CalcWidthByteCount@WriterTER@utils@noise@@IBEHH@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::GradientColor::Clear(void)" (?Clear@GradientColor@utils@noise@@QAEXXZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::Image::Clear(class noise::utils::Color const &)" (?Clear@Image@utils@noise@@QAEXABVColor@23@@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::NoiseMap::Clear(float)" (?Clear@NoiseMap@utils@noise@@QAEXM@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::RendererImage::ClearGradient(void)" (?ClearGradient@RendererImage@utils@noise@@QAEXXZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "private: void __thiscall noise::utils::Image::CopyImage(class noise::utils::Image const &)" (?CopyImage@Image@utils@noise@@AAEXABV123@@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "private: void __thiscall noise::utils::NoiseMap::CopyNoiseMap(class noise::utils::NoiseMap const &)" (?CopyNoiseMap@NoiseMap@utils@noise@@AAEXABV123@@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "private: void __thiscall noise::utils::Image::DeleteImageAndReset(void)" (?DeleteImageAndReset@Image@utils@noise@@AAEXXZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "private: void __thiscall noise::utils::NoiseMap::DeleteNoiseMapAndReset(void)" (?DeleteNoiseMapAndReset@NoiseMap@utils@noise@@AAEXXZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "private: int __thiscall noise::utils::GradientColor::FindInsertionPos(double)" (?FindInsertionPos@GradientColor@utils@noise@@AAEHN@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: class noise::utils::Color const & __thiscall noise::utils::GradientColor::GetColor(double)const " (?GetColor@GradientColor@utils@noise@@QBEABVColor@23@N@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: class noise::utils::Color __thiscall noise::utils::Image::GetValue(int,int)const " (?GetValue@Image@utils@noise@@QBE?AVColor@23@HH@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: float __thiscall noise::utils::NoiseMap::GetValue(int,int)const " (?GetValue@NoiseMap@utils@noise@@QBEMHH@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "private: void __thiscall noise::utils::Image::InitObj(void)" (?InitObj@Image@utils@noise@@AAEXXZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "private: void __thiscall noise::utils::NoiseMap::InitObj(void)" (?InitObj@NoiseMap@utils@noise@@AAEXXZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "private: void __thiscall noise::utils::GradientColor::InsertAtPos(int,double,class noise::utils::Color const &)" (?InsertAtPos@GradientColor@utils@noise@@AAEXHNABVColor@23@@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::Image::ReclaimMem(void)" (?ReclaimMem@Image@utils@noise@@QAEXXZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::NoiseMap::ReclaimMem(void)" (?ReclaimMem@NoiseMap@utils@noise@@QAEXXZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::RendererImage::Render(void)" (?Render@RendererImage@utils@noise@@QAEXXZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::RendererNormalMap::Render(void)" (?Render@RendererNormalMap@utils@noise@@QAEXXZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::NoiseMapBuilder::SetCallback(void (__cdecl*)(int))" (?SetCallback@NoiseMapBuilder@utils@noise@@QAEXP6AXH@Z@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::Image::SetSize(int,int)" (?SetSize@Image@utils@noise@@QAEXHH@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::NoiseMap::SetSize(int,int)" (?SetSize@NoiseMap@utils@noise@@QAEXHH@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::Image::SetValue(int,int,class noise::utils::Color const &)" (?SetValue@Image@utils@noise@@QAEXHHABVColor@23@@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::NoiseMap::SetValue(int,int,float)" (?SetValue@NoiseMap@utils@noise@@QAEXHHM@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::Image::TakeOwnership(class noise::utils::Image &)" (?TakeOwnership@Image@utils@noise@@QAEXAAV123@@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::NoiseMap::TakeOwnership(class noise::utils::NoiseMap &)" (?TakeOwnership@NoiseMap@utils@noise@@QAEXAAV123@@Z) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::WriterBMP::WriteDestFile(void)" (?WriteDestFile@WriterBMP@utils@noise@@QAEXXZ) already defined in Game.obj; second definition ignored
+     1>OptionsScreen.obj : warning LNK4006: "public: void __thiscall noise::utils::WriterTER::WriteDestFile(void)" (?WriteDestFile@WriterTER@utils@noise@@QAEXXZ) already defined in Game.obj; second definition ignored
      1>SceneSelect.obj : warning LNK4006: "public: __thiscall noise::utils::GradientColor::GradientColor(void)" (??0GradientColor@utils@noise@@QAE@XZ) already defined in Game.obj; second definition ignored
      1>SceneSelect.obj : warning LNK4006: "public: __thiscall noise::utils::Image::Image(class noise::utils::Image const &)" (??0Image@utils@noise@@QAE@ABV012@@Z) already defined in Game.obj; second definition ignored
      1>SceneSelect.obj : warning LNK4006: "public: __thiscall noise::utils::Image::Image(int,int)" (??0Image@utils@noise@@QAE@HH@Z) already defined in Game.obj; second definition ignored
@@ -339,4 +397,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:05.17
+Time Elapsed 00:00:04.87

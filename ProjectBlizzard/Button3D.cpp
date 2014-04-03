@@ -2,9 +2,13 @@
 
 
 Button3D::Button3D(char* img, float width, float height, float length){
+	char s[255];
+	sprintf(s, "Images/Buttons/%s.bmp", img);
 	m_rect = new Rect(1, width, height, length);
 
-	m_rect->setTexture(img);
+	m_img = img;
+
+	m_rect->setTexture(s);
 }
 
 
@@ -22,15 +26,17 @@ void Button3D::update(float mouseX, float mouseY){
 
 			m_rect->setPos(m_rect->getPos().x, m_rect->getPos().y, m_rect->getPos().z-0.05);
 			DebugOut("mousedOver");
-			//char s[255];
-			//sprintf(s, "%c_hover", m_img);
-			m_rect->setFaceTexture("Images/Buttons/new_game_hover.bmp", LEFT_FACE);
+			char s[255];
+			sprintf(s, "Images/Buttons/%s_hover.bmp", m_img);
+			m_rect->setFaceTexture(s, LEFT_FACE);
 		}
 		return;
 	}
 
 	if (m_hover){
-		m_rect->setFaceTexture("Images/Buttons/new_game.bmp", LEFT_FACE);
+		char a[255];
+		sprintf(a, "Images/Buttons/%s.bmp", m_img);
+		m_rect->setFaceTexture(a, LEFT_FACE);
 		m_rect->setPos(m_rect->getPos().x, m_rect->getPos().y, m_rect->getPos().z+0.05);
 		DebugOut("mousedOut");
 	}

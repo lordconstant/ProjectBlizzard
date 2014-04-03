@@ -6,13 +6,17 @@
 #include <vector>
 #include "TerrainGenerator.h"
 #include "Explosion.h"
+#include "Unit.h"
 
 class GameScreen :public Scene{
 	Camera* m_cam;
 	Timer* m_timer;
-	vector<Model*>* m_land;
+	vector<Vector>* m_land;
 	TerrainGenerator m_tGen;
 	Explosion* m_explo;
+	Unit* m_unit;
+	Cube* m_landCube;
+	float m_width, m_height;
 public:
 	GameScreen();
 	~GameScreen();
@@ -25,6 +29,8 @@ public:
 	void processKeyDown(int key);
 	void processMouse(int key, int state);
 
+	void createGame(int type, vector<Unit*>* units);
 	void genTerrain(int type);
+	void placeUnit(Unit* unit);
 };
 

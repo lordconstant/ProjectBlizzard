@@ -4,8 +4,9 @@
 #include <gl/glu.h>
 #include "vector.h"
 #include "Movement.h"
+#include <cmath>
 
-#define M_PI 3.14159265358979323846
+#define M_PI 3.1415926f
 
 class Camera{
 	Vector m_pos, m_angle, m_rot;

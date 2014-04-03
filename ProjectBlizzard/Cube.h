@@ -6,7 +6,12 @@ class Cube: public Model{
 	float m_size;
 
 	Vector m_verts[8];
+
+	int m_inc;
 public:
+	float m_VBVerts[24], m_Colours[24];
+	GLubyte m_bytes[24];
+
 	Cube(void);
 
 	Cube(float size);

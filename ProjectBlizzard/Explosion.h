@@ -3,22 +3,23 @@
 #include <vector>
 #include "DebugPrint.h"
 #include "Rectangle.h"
+#include "Unit.h"
 
 using namespace std;
 
 class Explosion{
-	vector<Model*>* m_terrain;
-	vector<Model*>* m_units;
+	vector<Vector>* m_terrain;
+	vector<Vector>* m_units;
 
 public:
-	Explosion(vector<Model*>& terrain, vector<Model*>& unit);
+	Explosion(vector<Vector>& terrain, vector<Vector>& unit);
 	~Explosion();
 
 	Rect* explo;
 	bool tempBool;
 
-	void defineTerrain(vector<Model*>& terrain);
-	//void defineUnits(vector<Model*>& unit);
+	void defineTerrain(vector<Vector>& terrain);
+	//void defineUnits(vector<Unit*>& unit);
 
 	void circularExplosion(Vector pos, float radius, int damage);
 	void rectExplosion(Vector pos, float x, float y, int damage);

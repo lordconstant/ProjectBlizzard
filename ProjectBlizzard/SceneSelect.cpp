@@ -1,6 +1,5 @@
 #include "SceneSelect.h"
 
-
 SceneSelect::SceneSelect(){
 	setScene(START);
 }
@@ -28,7 +27,7 @@ void SceneSelect::setScene(int scene){
 		m_curScene = new StartScreen;
 		break;
 	case OPTIONS:
-		m_curScene = new StartScreen;
+		m_curScene = new OptionsScreen;
 		break;
 	case LOBBY:
 		m_curScene = new StartScreen;

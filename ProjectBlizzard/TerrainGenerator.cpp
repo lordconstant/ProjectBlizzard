@@ -4,14 +4,129 @@
 TerrainGenerator::TerrainGenerator(void){
 }
 
-
 TerrainGenerator::~TerrainGenerator(void){
 }
 
 Image TerrainGenerator::createIslands(int seed){
-	Image image;
+	Image image, image2;
 
-	image = renderNoise(2, 0.3f, 0.8f, 1.0f, seed);
+	image = renderNoise(6, 10.0f, 1.0f, 1.0f, seed);
+
+	for (int x = (image.GetWidth() / 4) + (image.GetWidth()/2); x <= image.GetWidth(); x++){
+		for (int y = 0; y < image.GetHeight(); y++){
+			if (x > 0){
+				bool done = false;
+				int curX, curY;
+				curX = x;
+				curY = y;
+
+				while (!done){
+					int col1, col2;
+					col1 = image.GetValue(curX, curY).red;
+					col2 = image.GetValue(curX - 1, curY).red;
+
+					if (col1 > col2){
+						Color temp = image.GetValue(curX, curY);
+						image.SetValue(curX, curY, image.GetValue(curX - 1, curY));
+						image.SetValue(curX - 1, curY, temp);
+					}
+
+					curX--;
+
+					if (curX <= (image.GetWidth() / 4) + (image.GetWidth() / 2)){
+						done = true;
+					}
+				}
+			}
+		}
+	}
+
+	for (int x = (image.GetWidth() / 4) + (image.GetWidth() / 2); x >= image.GetWidth() / 2; x--){
+		for (int y = 0; y < image.GetHeight(); y++){
+			if (x < image.GetWidth()){
+				bool done = false;
+				int curX, curY;
+				curX = x;
+				curY = y;
+
+				while (!done){
+					int col1, col2;
+					col1 = image.GetValue(curX, curY).red;
+					col2 = image.GetValue(curX - 1, curY).red;
+
+					if (col1 < col2){
+						Color temp = image.GetValue(curX, curY);
+						image.SetValue(curX, curY, image.GetValue(curX - 1, curY));
+						image.SetValue(curX - 1, curY, temp);
+					}
+
+					curX++;
+
+					if (curX >= (image.GetWidth() / 4) + (image.GetWidth() / 2)){
+						done = true;
+					}
+				}
+			}
+		}
+	}
+
+	for (int x = image.GetWidth() / 4; x <= image.GetWidth() / 2; x++){
+		for (int y = 0; y < image.GetHeight(); y++){
+			if (x > 0){
+				bool done = false;
+				int curX, curY;
+				curX = x;
+				curY = y;
+
+				while (!done){
+					int col1, col2;
+					col1 = image.GetValue(curX, curY).red;
+					col2 = image.GetValue(curX - 1, curY).red;
+
+					if (col1 > col2){
+						Color temp = image.GetValue(curX, curY);
+						image.SetValue(curX, curY, image.GetValue(curX - 1, curY));
+						image.SetValue(curX - 1, curY, temp);
+					}
+
+					curX--;
+
+					if (curX <= image.GetWidth() / 4){
+						done = true;
+					}
+				}
+			}
+		}
+	}
+
+	for (int x = image.GetWidth() / 4; x > 0; x--){
+		for (int y = 0; y < image.GetHeight(); y++){
+			if (x < image.GetWidth()){
+				bool done = false;
+				int curX, curY;
+				curX = x;
+				curY = y;
+
+				while (!done){
+					int col1, col2;
+					col1 = image.GetValue(curX, curY).red;
+					col2 = image.GetValue(curX - 1, curY).red;
+
+					if (col1 < col2){
+						Color temp = image.GetValue(curX, curY);
+						image.SetValue(curX, curY, image.GetValue(curX - 1, curY));
+						image.SetValue(curX - 1, curY, temp);
+					}
+
+					curX++;
+
+					if (curX >= image.GetWidth() / 4){
+						done = true;
+					}
+				}
+			}
+		}
+	}
 
 	for (int x = 0; x < image.GetWidth(); x++){
 		for (int y = 0; y < image.GetHeight(); y++){
@@ -28,7 +143,7 @@ Image TerrainGenerator::createIslands(int seed){
 
 					if (col1 > col2){
 						Color temp = image.GetValue(curX, curY);
-						image.SetValue(curX, curY, image.GetValue(curX, curY-1));
+						image.SetValue(curX, curY, image.GetValue(curX, curY - 1));
 						image.SetValue(curX, curY - 1, temp);
 					}
 
@@ -37,6 +152,22 @@ Image TerrainGenerator::createIslands(int seed){
 					if (curY <= 0){
 						done = true;
 					}
+				}
+			}
+		}
+	}
+
+	image2 = renderNoise(8, 2.0f, 0.1f, 2.0f, seed + 1);
+
+	for (int x = 0; x < image.GetWidth(); x++){
+		for (int y = 0; y < image.GetHeight(); y++){
+			int col1, col2;
+			col1 = image.GetValue(x, y).red;
+			col2 = image2.GetValue(x, y).red;
+
+			if (col1 = 255){
+				if (col1 == col2){
+					image.SetValue(x, y, Color(0, 0, 0, 255));
 				}
 			}
 		}
@@ -48,11 +179,11 @@ Image TerrainGenerator::createIslands(int seed){
 Image TerrainGenerator::createLand(int seed){
 	Image image, image2;
 
-	image = renderNoise(3, 0.8f, 1.0f, 1.0f, seed);
+	image = renderNoise(8, 1.0f, 1.0f, 1.0f, seed);
 
-	for (int x = 0; x < image.GetWidth(); x++){
+	for (int x = image.GetWidth() / 2; x <= image.GetWidth(); x++){
 		for (int y = 0; y < image.GetHeight(); y++){
-			if (y > 0){
+			if (x > 0){
 				bool done = false;
 				int curX, curY;
 				curX = x;
@@ -61,17 +192,17 @@ Image TerrainGenerator::createLand(int seed){
 				while (!done){
 					int col1, col2;
 					col1 = image.GetValue(curX, curY).red;
-					col2 = image.GetValue(curX, curY - 1).red;
+					col2 = image.GetValue(curX - 1, curY).red;
 
 					if (col1 > col2){
 						Color temp = image.GetValue(curX, curY);
-						image.SetValue(curX, curY, image.GetValue(curX, curY-1));
-						image.SetValue(curX, curY - 1, temp);
+						image.SetValue(curX, curY, image.GetValue(curX - 1, curY));
+						image.SetValue(curX - 1, curY, temp);
 					}
 
-					curY--;
+					curX--;
 
-					if (curY <= 0){
+					if (curX <= image.GetWidth() / 2){
 						done = true;
 					}
 				}
@@ -79,7 +210,36 @@ Image TerrainGenerator::createLand(int seed){
 		}
 	}
 
-	image2 = renderNoise(3, 0.4f, 1.0f, 1.0f, seed+1);
+	for (int x = image.GetWidth() / 2; x > 0; x--){
+		for (int y = 0; y < image.GetHeight(); y++){
+			if (x < image.GetWidth()){
+				bool done = false;
+				int curX, curY;
+				curX = x;
+				curY = y;
+
+				while (!done){
+					int col1, col2;
+					col1 = image.GetValue(curX, curY).red;
+					col2 = image.GetValue(curX - 1, curY).red;
+
+					if (col1 < col2){
+						Color temp = image.GetValue(curX, curY);
+						image.SetValue(curX, curY, image.GetValue(curX - 1, curY));
+						image.SetValue(curX - 1, curY, temp);
+					}
+
+					curX++;
+
+					if (curX >= image.GetWidth() / 2){
+						done = true;
+					}
+				}
+			}
+		}
+	}
+
+	image2 = renderNoise(4, 0.2f, 1.0f, 2.0f, seed+1);
 
 	for (int x = 0; x < image.GetWidth(); x++){
 		for (int y = 0; y < image.GetHeight(); y++){
@@ -172,6 +332,381 @@ Image TerrainGenerator::createCave(int seed){
 	return image;
 }
 
+Image TerrainGenerator::createFloatingIsland(int seed){
+	Image image, image2;
+
+	image = renderNoise(1, 2.0f, 0.5f, 1.0f, seed);
+
+	for (int x = 0; x < image.GetWidth(); x++){
+		for (int y = (image.GetHeight() / 2); y <= image.GetHeight(); y++){
+			if (y > 0){
+				bool done = false;
+				int curX, curY;
+				curX = x;
+				curY = y;
+
+				while (!done){
+					int col1, col2;
+					col1 = image.GetValue(curX, curY).red;
+					col2 = image.GetValue(curX, curY - 1).red;
+
+					if (col1 > col2){
+						Color temp = image.GetValue(curX, curY);
+						image.SetValue(curX, curY, image.GetValue(curX, curY - 1));
+						image.SetValue(curX, curY - 1, temp);
+					}
+
+					curY--;
+
+					if (curY <= image.GetHeight() / 2){
+						done = true;
+					}
+				}
+			}
+		}
+	}
+
+	for (int x = 0; x < image.GetWidth(); x++){
+		for (int y = image.GetHeight() / 2; y > 0; y--){
+			if (y < image.GetHeight()){
+				bool done = false;
+				int curX, curY;
+				curX = x;
+				curY = y;
+
+				while (!done){
+					int col1, col2;
+					col1 = image.GetValue(curX, curY).red;
+					col2 = image.GetValue(curX, curY - 1).red;
+
+					if (col1 < col2){
+						Color temp = image.GetValue(curX, curY);
+						image.SetValue(curX, curY, image.GetValue(curX, curY - 1));
+						image.SetValue(curX, curY - 1, temp);
+					}
+
+					curY++;
+
+					if (curY >= image.GetHeight()/2){
+						done = true;
+					}
+				}
+			}
+		}
+	}
+
+	for (int x = image.GetWidth() / 2; x <= image.GetWidth(); x++){
+		for (int y = 0; y < image.GetHeight(); y++){
+			if (x > 0){
+				bool done = false;
+				int curX, curY;
+				curX = x;
+				curY = y;
+
+				while (!done){
+					int col1, col2;
+					col1 = image.GetValue(curX, curY).red;
+					col2 = image.GetValue(curX - 1, curY).red;
+
+					if (col1 > col2){
+						Color temp = image.GetValue(curX, curY);
+						image.SetValue(curX, curY, image.GetValue(curX - 1, curY));
+						image.SetValue(curX - 1, curY, temp);
+					}
+
+					curX--;
+
+					if (curX <= image.GetWidth()/2){
+						done = true;
+					}
+				}
+			}
+		}
+	}
+
+	for (int x = image.GetWidth()/2; x > 0; x--){
+		for (int y = 0; y < image.GetHeight(); y++){
+			if (x < image.GetWidth()){
+				bool done = false;
+				int curX, curY;
+				curX = x;
+				curY = y;
+
+				while (!done){
+					int col1, col2;
+					col1 = image.GetValue(curX, curY).red;
+					col2 = image.GetValue(curX - 1, curY).red;
+
+					if (col1 < col2){
+						Color temp = image.GetValue(curX, curY);
+						image.SetValue(curX, curY, image.GetValue(curX - 1, curY));
+						image.SetValue(curX - 1, curY, temp);
+					}
+
+					curX++;
+
+					if (curX >= image.GetWidth()/2){
+						done = true;
+					}
+				}
+			}
+		}
+	}
+
+	image2 = renderNoise(4, 0.4f, 1.0f, 2.0f, seed + 1);
+
+	for (int x = 0; x < image.GetWidth(); x++){
+		for (int y = 0; y < image.GetHeight(); y++){
+			int col1, col2;
+			col1 = image.GetValue(x, y).red;
+			col2 = image2.GetValue(x, y).red;
+
+			if (col1 = 255){
+				if (col1 == col2){
+					image.SetValue(x, y, Color(0, 0, 0, 255));
+				}
+			}
+		}
+	}
+
+	return image;
+}
+
+Image TerrainGenerator::createBridge(int seed){
+	Image image;
+
+	image = renderNoise(8, 1.8f, 2.0f, 1.0f, seed);
+
+	for (int x = 0; x <= image.GetWidth()/2; x++){
+		for (int y = 0; y < image.GetHeight(); y++){
+			if (x > 0){
+				bool done = false;
+				int curX, curY;
+				curX = x;
+				curY = y;
+
+				while (!done){
+					int col1, col2;
+					col1 = image.GetValue(curX, curY).red;
+					col2 = image.GetValue(curX - 1, curY).red;
+
+					if (col1 > col2){
+						Color temp = image.GetValue(curX, curY);
+						image.SetValue(curX, curY, image.GetValue(curX - 1, curY));
+						image.SetValue(curX - 1, curY, temp);
+					}
+
+					curX--;
+
+					if (curX <= 0){
+						done = true;
+					}
+				}
+			}
+		}
+	}
+
+	for (int x = image.GetWidth(); x > image.GetWidth()/2; x--){
+		for (int y = 0; y < image.GetHeight(); y++){
+			if (x < image.GetWidth()){
+				bool done = false;
+				int curX, curY;
+				curX = x;
+				curY = y;
+
+				while (!done){
+					int col1, col2;
+					col1 = image.GetValue(curX, curY).red;
+					col2 = image.GetValue(curX - 1, curY).red;
+
+					if (col1 < col2){
+						Color temp = image.GetValue(curX, curY);
+						image.SetValue(curX, curY, image.GetValue(curX - 1, curY));
+						image.SetValue(curX - 1, curY, temp);
+					}
+
+					curX++;
+
+					if (curX >= image.GetWidth()){
+						done = true;
+					}
+				}
+			}
+		}
+	}
+
+	for (int x = 0; x < image.GetWidth(); x++){
+		for (int y = (image.GetHeight() / 2); y <= image.GetHeight(); y++){
+			if (y > 0){
+				bool done = false;
+				int curX, curY;
+				curX = x;
+				curY = y;
+
+				while (!done){
+					int col1, col2;
+					col1 = image.GetValue(curX, curY).red;
+					col2 = image.GetValue(curX, curY - 1).red;
+
+					if (col1 > col2){
+						Color temp = image.GetValue(curX, curY);
+						image.SetValue(curX, curY, image.GetValue(curX, curY - 1));
+						image.SetValue(curX, curY - 1, temp);
+					}
+
+					curY--;
+
+					if (curY <= image.GetHeight() / 2){
+						done = true;
+					}
+				}
+			}
+		}
+	}
+
+	for (int x = 0; x < image.GetWidth(); x++){
+		for (int y = image.GetHeight() / 2; y > 0; y--){
+			if (y < image.GetHeight()){
+				bool done = false;
+				int curX, curY;
+				curX = x;
+				curY = y;
+
+				while (!done){
+					int col1, col2;
+					col1 = image.GetValue(curX, curY).red;
+					col2 = image.GetValue(curX, curY - 1).red;
+
+					if (col1 < col2){
+						Color temp = image.GetValue(curX, curY);
+						image.SetValue(curX, curY, image.GetValue(curX, curY - 1));
+						image.SetValue(curX, curY - 1, temp);
+					}
+
+					curY++;
+
+					if (curY >= image.GetHeight() / 2){
+						done = true;
+					}
+				}
+			}
+		}
+	}
+
+	return image;
+}
+
+Image TerrainGenerator::createRidges(int seed){
+	Image image, image2;
+
+	image = renderNoise(8, 1.0f, 0.7f, 4.0f, seed);
+
+	for (int x = 0; x <= image.GetWidth() / 2; x++){
+		for (int y = 0; y < image.GetHeight(); y++){
+			if (x > 0){
+				bool done = false;
+				int curX, curY;
+				curX = x;
+				curY = y;
+
+				while (!done){
+					int col1, col2;
+					col1 = image.GetValue(curX, curY).red;
+					col2 = image.GetValue(curX - 1, curY).red;
+
+					if (col1 > col2){
+						Color temp = image.GetValue(curX, curY);
+						image.SetValue(curX, curY, image.GetValue(curX - 1, curY));
+						image.SetValue(curX - 1, curY, temp);
+					}
+
+					curX--;
+
+					if (curX <= 0){
+						done = true;
+					}
+				}
+			}
+		}
+	}
+
+	for (int x = image.GetWidth(); x > image.GetWidth() / 2; x--){
+		for (int y = 0; y < image.GetHeight(); y++){
+			if (x < image.GetWidth()){
+				bool done = false;
+				int curX, curY;
+				curX = x;
+				curY = y;
+
+				while (!done){
+					int col1, col2;
+					col1 = image.GetValue(curX, curY).red;
+					col2 = image.GetValue(curX - 1, curY).red;
+
+					if (col1 < col2){
+						Color temp = image.GetValue(curX, curY);
+						image.SetValue(curX, curY, image.GetValue(curX - 1, curY));
+						image.SetValue(curX - 1, curY, temp);
+					}
+
+					curX++;
+
+					if (curX >= image.GetWidth()){
+						done = true;
+					}
+				}
+			}
+		}
+	}
+
+	for (int x = 0; x < image.GetWidth(); x++){
+		for (int y = 0; y < image.GetHeight(); y++){
+			if (y > 0){
+				bool done = false;
+				int curX, curY;
+				curX = x;
+				curY = y;
+
+				while (!done){
+					int col1, col2;
+					col1 = image.GetValue(curX, curY).red;
+					col2 = image.GetValue(curX, curY - 1).red;
+
+					if (col1 > col2){
+						Color temp = image.GetValue(curX, curY);
+						image.SetValue(curX, curY, image.GetValue(curX, curY - 1));
+						image.SetValue(curX, curY - 1, temp);
+					}
+
+					curY--;
+
+					if (curY <= 0){
+						done = true;
+					}
+				}
+			}
+		}
+	}
+	
+	image2 = renderNoise(8, 2.0f, 0.4f, 1.0f, seed + 1);
+
+	for (int x = 0; x < image.GetWidth(); x++){
+		for (int y = 0; y < image.GetHeight(); y++){
+			int col1, col2;
+			col1 = image.GetValue(x, y).red;
+			col2 = image2.GetValue(x, y).red;
+
+			if (col1 = 255){
+				if (col1 == col2){
+					image.SetValue(x, y, Color(0, 0, 0, 255));
+				}
+			}
+		}
+	}
+
+	return image;
+}
+
 Image TerrainGenerator::renderNoise(int oct, float freq, float pers, float lacun, int seed){
 	module::Perlin myModule;
 	NoiseMap heightMap;
@@ -188,7 +723,7 @@ Image TerrainGenerator::renderNoise(int oct, float freq, float pers, float lacun
 	heightMapBuilder.SetSourceModule(myModule);
 	heightMapBuilder.SetDestNoiseMap(heightMap);
 	heightMapBuilder.SetDestSize(256, 128);
-	heightMapBuilder.SetBounds(2.0f, 4.5f, 2.0f, 4.5f);
+	heightMapBuilder.SetBounds(2.0f, 4.0f, 2.0f, 4.0f);
 	heightMapBuilder.Build();
 
 	renderer.SetSourceNoiseMap(heightMap);
@@ -201,9 +736,11 @@ Image TerrainGenerator::renderNoise(int oct, float freq, float pers, float lacun
 	return image;
 }
 
-vector<Model*>* TerrainGenerator::generateMap(int seed, int type){
-	if(type < 0 || type > LTCOUNT){
-		return NULL;
+vector<Vector> TerrainGenerator::generateMap(int seed, int type){
+	if (type < 0 || type > LTCOUNT){
+		vector<Vector> temp; 
+		temp.push_back(Vector(0, 0, 0));
+		return temp;
 	}
 
 	Image image;
@@ -221,20 +758,24 @@ vector<Model*>* TerrainGenerator::generateMap(int seed, int type){
 	case CAVE:
 		image = createCave(seed);
 		break;
+	case FLOATING_ISLAND:
+		image = createFloatingIsland(seed);
+		break;
+	case BRIDGE:
+		image = createBridge(seed);
+		break;
+	case RIDGES:
+		image = createRidges(seed);
+		break;
 	default:
 		break;
 	}
 
-	vector<Model*>* cubVec;
-	cubVec = new vector<Model*>;
-	for(int x = 0; x < image.GetWidth(); x++){
-		for(int y = 0; y < image.GetHeight(); y++){
-			if(image.GetValue(x, y).red == 255){
-				Cube* cube = new Cube(0.05);
-
-				cube->setPos(x*0.05, y*0.05, 1);
-
-				cubVec->push_back(cube);
+	vector<Vector> cubVec;
+	for (int x = 0; x < image.GetWidth(); x++){
+		for (int y = 0; y < image.GetHeight(); y++){
+			if (image.GetValue(x, y).red == 255){
+				cubVec.push_back(Vector(x*0.05f, y*0.05f, 1));
 			}
 		}
 	}
@@ -242,7 +783,7 @@ vector<Model*>* TerrainGenerator::generateMap(int seed, int type){
 	return cubVec;
 }
 
-vector<Model*>* TerrainGenerator::generateMap(int type){
+vector<Vector> TerrainGenerator::generateMap(int type){
 	srand(time(NULL));
-	return generateMap(rand() % 100000, type);
+	return generateMap(rand() % 1000000, type);
 }

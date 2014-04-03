@@ -4,7 +4,6 @@
 StartScreen::StartScreen(){
 }
 
-
 StartScreen::~StartScreen(){
 	for(int i = 0; i < m_btns.size(); i++){
 		if(m_btns[i]){
@@ -22,7 +21,17 @@ void StartScreen::initialise(){
 	m_cam->move()->setPos(0, 0, 0);
 
 	for (int i = 0; i < 3; i++){
-		m_btns.push_back(new Button3D("Images/Buttons/new_game.bmp", 1.0f, 0.25f, 0.00f));
+		if(i == 0){
+			m_btns.push_back(new Button3D("new_game", 1.0f, 0.25f, 0.00f));
+		}
+
+		if(i == 1){
+			m_btns.push_back(new Button3D("options", 1.0f, 0.25f, 0.00f));
+		}
+
+		if(i == 2){
+			m_btns.push_back(new Button3D("quit_game", 1.0f, 0.25f, 0.00f));
+		}
 		m_btns.back()->getRect()->setPos(-0.9f, -0.25f - (i*0.35f), 0.0f);
 	}
 
@@ -89,7 +98,19 @@ void StartScreen::processMouse(int key, int state){
 		case WM_LBUTTONDOWN:
 			if(m_btns[0]->checkArea(m_mousePos.x, m_mousePos.y)){
 				SceneSelect::getInstance().setScene(GAME);
+				break;
 			}
+
+			if(m_btns[1]->checkArea(m_mousePos.x, m_mousePos.y)){
+				SceneSelect::getInstance().setScene(OPTIONS);
+				break;
+			}
+
+			if(m_btns[2]->checkArea(m_mousePos.x, m_mousePos.y)){
+				PostQuitMessage(0);
+				break;
+			}
+
 			break;
 		case WM_RBUTTONDOWN:
 			break;

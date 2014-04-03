@@ -138,6 +138,12 @@
     <ClCompile Include="TerrainGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OptionsScreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Explosion.h">
@@ -219,6 +225,12 @@
       <Filter>Header Files\Cameras</Filter>
     </ClInclude>
     <ClInclude Include="TerrainGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionsScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
