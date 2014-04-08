@@ -7,16 +7,20 @@
 #include "TerrainGenerator.h"
 #include "Explosion.h"
 #include "Unit.h"
+#include "Team.h"
+#include "SceneSelect.h"
 
-const int NBR_UNITS = 8;
+const int NBR_UNITS = 4;
+const int NBR_TEAMS = 2;
 
 class GameScreen :public Scene{
+	int m_curTeam;
 	Camera* m_cam;
 	Timer* m_timer;
 	vector<Vector>* m_land;
 	TerrainGenerator m_tGen;
 	Explosion* m_explo;
-	vector<Unit*> m_unit;
+	vector<Team*> m_teams;
 	Unit* m_curUnit;
 	Cube* m_landCube;
 	float m_width, m_height;
@@ -37,5 +41,7 @@ public:
 	void createGame(int type);
 	void genTerrain(int type);
 	void placeUnit(Unit* unit);
+
+	void changeUnit();
 };
 

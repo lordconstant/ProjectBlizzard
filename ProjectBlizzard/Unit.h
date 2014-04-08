@@ -16,6 +16,7 @@ class Unit{
 	Weapon* m_wep;
 	Vector m_pos, m_angle, m_wepPos, m_modelPos;
 	Movement* m_move;
+	bool m_dead;
 public:
 	Unit(void);
 	Unit(string name, Model* model, int health, float speed);
@@ -56,6 +57,7 @@ public:
 
 	bool hasModel();
 	bool fireWeapon();
+	bool isDead();
 
 	void update(Vector mouse);
 

@@ -259,8 +259,8 @@ void Weapon::update(Vector mouse){
 
 	if(m_curShot && !m_hit){
 		if (m_curShot->getModel()->getPos().y < 0){
-			//delete m_curShot;
-			//m_curShot = NULL;
+			delete m_curShot;
+			m_curShot = NULL;
 		}
 
 		if (m_curShot){

@@ -1,9 +1,9 @@
 #include "Explosion.h"
 
 
-Explosion::Explosion(vector<Vector>& terrain, vector<Vector>& unit){
+Explosion::Explosion(vector<Vector>& terrain, vector<Team*>& teams){
 	m_terrain = &terrain;
-	m_units = &unit;
+	m_teams = &teams;
 	tempBool = false;
 }
 
@@ -29,9 +29,39 @@ void Explosion::circularExplosion(Vector pos, float radius, int damage){
 		}
 
 		if (dist <= radius){
-			//delete m_terrain->at(i);
 			m_terrain->erase(m_terrain->begin() + i);
 			i--;
+		}
+	}
+
+	for (int i = 0; i < m_teams->size(); i++){
+		for (int j = 0; j < m_teams->at(i)->getTeamSize(); j++){
+			float dist;
+			dist = pos.Dist2(m_teams->at(i)->getUnit(j)->getPosition());
+
+			if (dist < 0){
+				dist = -dist;
+			}
+
+			if (dist <= radius){
+				int curDamage;
+
+				if (dist >= 1){
+					curDamage = (damage - ((float)damage / dist));
+				}
+				else if (dist < 1){
+					curDamage = (damage - ((float)damage * dist));
+				}
+
+				if (curDamage < 0){
+					curDamage = -curDamage;
+				}
+
+				m_teams->at(i)->getUnit(j)->setCurHealth(m_teams->at(i)->getUnit(j)->getCurHealth() - curDamage);
+				char s[255];
+				sprintf(s, "Unit - T:%i, No:%i, Hp:%i", i, j, m_teams->at(i)->getUnit(j)->getCurHealth());
+				DebugOut(s);
+			}
 		}
 	}
 }
@@ -48,7 +78,6 @@ void Explosion::rectExplosion(Vector pos, float x, float y, int damage){
 
 		if (tx > pos.x - hx && tx < pos.x + hx){
 			if (ty > pos.y - hy && ty < pos.y + hy){
-				//delete m_terrain->at(i);
 				m_terrain->erase(m_terrain->begin() + i);
 				i--;
 			}

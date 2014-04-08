@@ -10,9 +10,9 @@ GameScreen::~GameScreen(){
 		delete m_cam;
 	}
 
-	if(m_timer){
-		delete m_timer;
-	}
+	///*if(m_timer){
+	//	delete m_timer;
+	//*/}
 
 	if(m_land){
 		while(m_land->size() > 0){
@@ -29,17 +29,26 @@ void GameScreen::initialise(){
 
 	m_land = NULL;
 	m_explo = NULL;
+	
+	m_curTeam = 0;
 
-	for(int i = 0; i < NBR_UNITS; i++){
-		m_unit.push_back(new Unit("Pete", new Cube(0.2f), 100, 2.0f));
+	for (int i = 0; i < NBR_TEAMS; i++){
+		m_teams.push_back(new Team(i));
+
+		m_teams[i]->setCurrentUnit(0);
+
+		for (int j = 0; j < NBR_UNITS; j++){
+			m_teams[i]->addUnit(new Unit("Pete", new Cube(0.05f), 100, 2.0f));
+		}
 	}
 
-	m_sEngine->play2D("Sounds/Electrodoodle.mp3", true);
+	//m_sEngine->play2D("Sounds/Electrodoodle.mp3", true);
 
 	m_landCube = new Cube(0.05f);
-	m_curUnit = m_unit[0];
 
 	createGame(CAVE);
+
+	changeUnit();
 
 	renderCubes = true;
 
@@ -52,13 +61,19 @@ void GameScreen::initialise(){
 void GameScreen::update(float mouseX, float mouseY){
 	updateMouse(mouseX, mouseY);
 
+	for (int i = 0; i < NBR_TEAMS; i++){
+		m_teams[i]->update();
+	}
+
 	m_curUnit->update(m_mousePos);
 
 	if (m_land){
 		for (int i = 0; i < m_land->size(); i++){
 			if (m_curUnit->getWeapon()->hitObject(m_land->at(i), m_landCube->getScale(), m_landCube->getScale())){
 				if (m_explo){
-					m_explo->circularExplosion(Vector(m_land->at(i).x, m_land->at(i).y, 1), 0.5f, 5);
+					m_explo->circularExplosion(Vector(m_land->at(i).x, m_land->at(i).y, 1), 1.0f, 50);
+					changeUnit();
+					break;
 				}
 			}
 
@@ -69,14 +84,21 @@ void GameScreen::update(float mouseX, float mouseY){
 	}
 
 	m_cam->move()->setPos(m_curUnit->getPosition().x, m_curUnit->getPosition().y, m_cam->move()->getPos().z);
+
+	for (int i = 0; i < NBR_TEAMS; i++){
+		if (m_teams[i]->isDead()){
+			SceneSelect::getInstance().setScene(START);
+			break;
+		}
+	}
 }
 
 void GameScreen::render(){
 	m_cam->update();
 	
 	if(renderCubes){
-		for(int i = 0; i < NBR_UNITS; i++){
-			m_unit[i]->render();
+		for (int i = 0; i < NBR_TEAMS; i++){
+			m_teams[i]->render();
 		}
 	}
 
@@ -136,6 +158,12 @@ void GameScreen::processKeyUp(int key){
 	case VK_7:
 		createGame(RIDGES);
 		break;
+	case VK_8:
+		createGame(VALLEY);
+		break;
+	case VK_9:
+		createGame(CAVE2);
+		break;
 	default:
 		break;
 	}
@@ -190,6 +218,11 @@ void GameScreen::createGame(int type){
 	genTerrain(type);
 
 	m_width = m_height = 0;
+	for (int i = 0; i < NBR_TEAMS; i++){
+		m_teams[i]->setCurrentUnit(0);
+	}
+
+	m_curTeam = 0;
 
 	for (int i = 0; i < m_land->size(); i++){
 		if (m_land->at(i).x > m_width){
@@ -201,8 +234,10 @@ void GameScreen::createGame(int type){
 		}
 	}
 
-	for (int i = 0; i < m_unit.size(); i++){
-		placeUnit(m_unit[i]);
+	for (int i = 0; i < NBR_TEAMS; i++){
+		for (int j = 0; j < NBR_UNITS; j++){
+			placeUnit(m_teams[i]->getUnit(j));
+		}
 	}
 }
 
@@ -215,7 +250,7 @@ void GameScreen::genTerrain(int type){
 	*m_land = m_tGen.generateMap(type);
 
 	if (!m_explo){
-		m_explo = new Explosion(*m_land, *m_land);
+		m_explo = new Explosion(*m_land, m_teams);
 	}
 
 	m_explo->defineTerrain(*m_land);
@@ -226,7 +261,7 @@ void GameScreen::placeUnit(Unit* unit){
 	int attempts = 0;
 
 	while (!done){
-		unit->setPosition((float)(rand() % (int)m_width), rand() % (int)m_height, 1);
+		unit->setPosition((float)(rand() % (int)m_width), (float)(rand() % (int)m_height), 1);
 
 		for (int i = 0; i < m_land->size(); i++){
 			if(unit->getPosition().x == m_land->at(i).x){
@@ -250,13 +285,15 @@ void GameScreen::placeUnit(Unit* unit){
 					done = true;
 				}
 
-				for (int k = 0; k < m_unit.size(); k++){
-					if (m_unit[k] == unit){
-						continue;
-					}
+				for (int k = 0; k < NBR_TEAMS; k++){
+					for (int l = 0; l < NBR_UNITS; l++){
+						if (m_teams[k]->getUnit(l) == unit){
+							continue;
+						}
 
-					if (m_unit[k]->getPosition() == unit->getPosition()){
-						done = false;
+						if (m_teams[k]->getUnit(l)->getPosition() == unit->getPosition()){
+							done = false;
+						}
 					}
 				}
 
@@ -275,4 +312,32 @@ void GameScreen::placeUnit(Unit* unit){
 	if (regen){
 		createGame(m_tGen.getCurrentType());
 	}
+}
+
+void GameScreen::changeUnit(){
+	bool run = false;
+
+	m_curUnit = m_teams[m_curTeam]->getUnit(m_teams[m_curTeam]->getCurrentUnit());
+
+	while (m_curUnit->isDead() || !run){
+		m_curUnit = m_teams[m_curTeam]->getUnit(m_teams[m_curTeam]->getCurrentUnit());
+
+		if (m_teams[m_curTeam]->getCurrentUnit() == NBR_UNITS - 1){
+			m_teams[m_curTeam]->setCurrentUnit(0);
+		}
+		else{
+			m_teams[m_curTeam]->setCurrentUnit(m_teams[m_curTeam]->getCurrentUnit() + 1);
+		}
+
+		if (m_curTeam == NBR_TEAMS - 1){
+			m_curTeam = 0;
+		}
+		else if (m_curTeam < NBR_TEAMS){
+			m_curTeam++;
+		}
+
+		run = true;
+	}
+
+	m_curUnit->move()->stopMoving();
 }

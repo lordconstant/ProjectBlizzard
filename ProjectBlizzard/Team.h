@@ -1,37 +1,44 @@
 #pragma once
 #include "Unit.h"
-//#include "Weapon.h"
+#include "Weapon.h"
 
 #include <vector>
 
 class Team
 {
 private:
-	int m_maxHealth, m_curHealth, m_ID, m_size;
+	int m_maxHealth, m_curHealth, m_maxUnits, m_ID, m_curUnit;
 	vector<Unit*> m_units;
-//	vector<Weapon*> m_weapons;
+	vector<Weapon*> m_weapons;
 	string m_name;
+	bool m_dead;
 public:
-	Team(void);
+	Team(int teamID);
 	~Team(void);
 
 	int getMaxHealth();
 	int getCurHealth();
 	int getID();
-	int getSize();
+	int getTeamSize();
+	int getCurrentUnit();
+
+	bool isDead();
 
 	string getName(); 
 
 	Unit* getUnit(int unitNum);
 
-	//Weapon* getWeapon(int wepNum);
+	Weapon* getWeapon(int wepNum);
 
 	void updateMaxHealth();
 	void updateCurHealth();
 	void setID(int ID);
-	void setSize(int size);
 	void setName(string name);
-
+	void setSize(int size);
 	void addUnit(Unit* unit);
+	void setCurrentUnit(int curUnit);
+
+	void update();
+	void render();
 };
 

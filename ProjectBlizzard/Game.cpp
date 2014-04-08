@@ -24,9 +24,13 @@ void Game::Shutdown(){
 void Game::Update(){
 	TimeControl::getInstance().updateTime();
 
-	sceneSel->getCurScene()->update(mouseX, mouseY);
+	if (sceneSel->getCurScene()){
+		sceneSel->getCurScene()->update(mouseX, mouseY);
+	}
 
-	sceneSel->getCurScene()->setScreenSize(m_width, m_height);
+	if (sceneSel->getCurScene()){
+		sceneSel->getCurScene()->setScreenSize(m_width, m_height);
+	}
 }
 
 // Render the objects in their current state.
@@ -34,7 +38,9 @@ void Game::Render(){
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	sceneSel->getCurScene()->render();
+	if (sceneSel->getCurScene()){
+		sceneSel->getCurScene()->render();
+	}
 
 	glFlush();
 }

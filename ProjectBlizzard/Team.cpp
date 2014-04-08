@@ -1,9 +1,11 @@
 #include "Team.h"
 
 
-Team::Team(void){
+Team::Team(int teamID){
+	m_maxHealth = m_curHealth = m_maxUnits = m_curUnit = 0;
+	m_ID = teamID;
+	m_dead = false;
 }
-
 
 Team::~Team(void){
 }
@@ -20,8 +22,16 @@ int Team::getID(){
 	return m_ID;
 }
 
-int Team::getSize(){
-	return m_size;
+int Team::getTeamSize(){
+	return m_maxUnits;
+}
+
+int Team::getCurrentUnit(){
+	return m_curUnit;
+}
+
+bool Team::isDead(){
+	return m_dead;
 }
 
 string Team::getName(){
@@ -29,20 +39,20 @@ string Team::getName(){
 }
 
 Unit* Team::getUnit(int unitNum){
-	if (unitNum < 0 || unitNum > m_size){
+	if (unitNum < 0 || unitNum > m_units.size()){
 		return NULL;
 	}
 
 	return m_units[unitNum];
 }
 
-//Weapon* Team::getWeapon(int wepNum){
-//	if (wepNum < 0 || wepNum > m_size){
-//		return NULL;
-//	}
-//
-//	return m_weapons[wepNum];
-//}
+Weapon* Team::getWeapon(int wepNum){
+	if (wepNum < 0 || wepNum > m_weapons.size()){
+		return NULL;
+	}
+
+	return m_weapons[wepNum];
+}
 
 void Team::updateMaxHealth(){
 	m_maxHealth = 0;
@@ -76,7 +86,7 @@ void Team::setSize(int size){
 		if (m_units.size() == 0){
 			addUnit(new Unit());
 		}else{
-			addUnit(*m_units.end());
+			addUnit(m_units.back());
 		}
 	}
 
@@ -99,4 +109,34 @@ void Team::addUnit(Unit* unit){
 	*temp = *unit;
 
 	m_units.push_back(temp);
+
+	m_maxUnits++;
+}
+
+void Team::setCurrentUnit(int curUnit){
+	if (curUnit < 0 || curUnit >= m_maxUnits){
+		return;
+	}
+
+	m_curUnit = curUnit;
+}
+
+void Team::update(){
+	updateCurHealth();
+	updateMaxHealth();
+
+	if (m_curHealth <= 0){
+		m_dead = true;
+	}
+	else{
+		m_dead = false;
+	}
+}
+
+void Team::render(){
+	for (int i = 0; i < m_units.size(); i++){
+		if (!m_units[i]->isDead()){
+			m_units[i]->render();
+		}
+	}
 }

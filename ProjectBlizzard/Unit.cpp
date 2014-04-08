@@ -7,16 +7,19 @@ Unit::Unit(void){
 	m_name = "Unit";
 	m_model = NULL;
 	m_wep = NULL;
+	m_dead = false;
 	m_wepPos = m_modelPos = m_pos = m_angle = Vector(0, 0, 0);
 	m_move = new Movement(m_pos, m_angle, m_speed, m_speed, 0);
 }
 
 Unit::Unit(string name, Model* model, int health, float speed){
-	m_maxHealth = m_curHealth = health;
+	m_maxHealth = health;
+	m_curHealth = health;
 	m_speed = speed;
 	m_name = name;
 	m_model = model;
 	m_wep = new Weapon("Rocket", new Cube(0.1), new Cube(0.1), 10, 1);
+	m_dead = false;
 	Vector temp;
 	temp.x = temp.y = temp.z = 0;
 	m_wepPos = m_modelPos = temp;
@@ -74,7 +77,14 @@ void Unit::setMaxHealth(int hp){
 }
 
 void Unit::setCurHealth(int hp){
-	if (hp < 0 || hp > m_maxHealth){
+	if (hp > m_maxHealth){
+		resetHealth();
+		return;
+	}
+
+	if (hp < 0){
+		m_curHealth = 0;
+		m_dead = true;
 		return;
 	}
 
@@ -192,14 +202,25 @@ bool Unit::fireWeapon(){
 	return true;
 }
 
+bool Unit::isDead(){
+	return m_dead;
+}
+
 void Unit::update(Vector mouse){
 	m_move->moveX();
 	m_move->moveY();
 	m_move->moveZ();
 
-	setPosition(m_pos.x, m_pos.y, m_pos.z);
+	setPosition(m_move->getPos().x, m_move->getPos().y, m_move->getPos().z);
 
 	m_wep->update(mouse);
+
+	if (m_curHealth <= 0){
+		m_dead = true;
+	}
+	else{
+		m_dead = false;
+	}
 }
 
 void Unit::render(){

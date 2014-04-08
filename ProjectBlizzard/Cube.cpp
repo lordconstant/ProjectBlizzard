@@ -40,24 +40,6 @@ void Cube::drawFace(int v0, int v1, int v2, int v3, float r, float g, float b){
 		glVertex3f(m_verts[v3].x, m_verts[v3].y, m_verts[v3].z);
 	glEnd();
 
-	/*m_VBVerts[m_inc] = m_verts[v0].x;
-	m_VBVerts[m_inc + 1] = m_verts[v0].y;
-	m_VBVerts[m_inc + 2] = m_verts[v0].z;
-
-	m_VBVerts[m_inc + 3] = m_verts[v1].x;
-	m_VBVerts[m_inc + 4] = m_verts[v1].y;
-	m_VBVerts[m_inc + 5] = m_verts[v1].z;
-
-	m_VBVerts[m_inc + 6] = m_verts[v2].x;
-	m_VBVerts[m_inc + 7] = m_verts[v2].y;
-	m_VBVerts[m_inc + 8] = m_verts[v2].z;
-
-	m_VBVerts[m_inc + 9] = m_verts[v3].x;
-	m_VBVerts[m_inc + 10] = m_verts[v3].y;
-	m_VBVerts[m_inc + 11] = m_verts[v3].z;
-
-	m_inc += 12;*/
-
 	glCullFace(GL_BACK);
 }
 
