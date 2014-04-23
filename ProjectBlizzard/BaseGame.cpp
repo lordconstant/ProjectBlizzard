@@ -10,6 +10,8 @@ BaseGame::BaseGame(void){
 	bFullscreen = false;
 	m_width = m_height = 1;
 	display3D = true;
+
+	glewInit();
 }
 
 BaseGame::~BaseGame(void){

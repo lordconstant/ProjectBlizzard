@@ -1,10 +1,10 @@
 #pragma once
-#include "Rectangle.h"
+#include "Cuboid.h"
 #include "DebugPrint.h"
 
 class Button3D{
 	char* m_img;
-	Rect* m_rect;
+	Cuboid* m_cuboid;
 	bool m_hover;
 public:
 	Button3D(char* img, float width, float height, float length);
@@ -13,7 +13,7 @@ public:
 	void render();
 	void update(float mouseX, float mouseY);
 
-	Rect* getRect();
+	Cuboid* getCuboid();
 
 	bool isMouseOver();
 

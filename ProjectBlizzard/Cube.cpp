@@ -1,77 +1,100 @@
 #include "Cube.h"
 
-Cube::Cube(void) :Model(0.2){
+Cube::Cube(void) :Model(0.2f){
+	setColor(1.0f, 1.0f, 1.0f);
 	setSize(0.2f);
+	createVAO();
 }
 
-Cube::Cube(float size):Model(size){
-	setSize(size);
+Cube::Cube(float scale) :Model(scale){
+	setColor(1.0f, 1.0f, 1.0f);
+	setSize(scale);
+	createVAO();
+}
+
+Cube::Cube(float scale, float r, float g, float b) :Model(scale){
+	setColor(r, g, b);
+	setSize(scale);
+	createVAO();
 }
 
 Cube::~Cube(void){
 }
 
 void Cube::Render(){
-	if (m_size != getScale()){
+	if (m_scale != getScale()){
 		setSize(getScale());
 	}
-	//m_inc = 0;
-		glEnable(GL_CULL_FACE);
+
+	glBindVertexArray(getVAO());
+	glEnable(GL_CULL_FACE);
 		glPushMatrix();
-			// Perform transformations here in TRS order
-			glTranslatef(getPos().x, getPos().y, getPos().z);
-			// Draw each face with a different colour
-			drawFace(0, 4, 5, 1, 0.5f, 0.5f, 1.0f);
-			drawFace(3, 7, 4, 0, 0.5f, 1.0f, 0.5f);
-			drawFace(2, 6, 7, 3, 0.0f, 0.0f, 0.0f);
-			drawFace(1, 5, 6, 2, 1.0f, 0.5f, 0.5f);
-			drawFace(3, 0, 1, 2, 1.0f, 0.5f, 1.0f);
-			drawFace(4, 7, 6, 5, 1.0f, 1.0f, 0.5f);
+		glColor3f(getColor().x, getColor().y, getColor().z);
+		glTranslatef(getPos().x, getPos().y, getPos().z);
+
+		glDrawElements(GL_QUADS, 24, GL_UNSIGNED_INT, m_indices);
+
 		glPopMatrix();
-		glDisable(GL_CULL_FACE);
+	glDisable(GL_CULL_FACE);
+	glBindVertexArray(0);
 }
 
-void Cube::drawFace(int v0, int v1, int v2, int v3, float r, float g, float b){
-	glColor3f(r, g, b);
-	glBegin(GL_QUADS);
-		glVertex3f(m_verts[v0].x, m_verts[v0].y, m_verts[v0].z);
-		glVertex3f(m_verts[v1].x, m_verts[v1].y, m_verts[v1].z);
-		glVertex3f(m_verts[v2].x, m_verts[v2].y, m_verts[v2].z);
-		glVertex3f(m_verts[v3].x, m_verts[v3].y, m_verts[v3].z);
-	glEnd();
+void Cube::setSize(float scale){
+	m_scale = scale;
 
-	glCullFace(GL_BACK);
-}
+	setDimensions(1, 1, 1);
 
-void Cube::setSize(float size){
-	m_size = size;
-	float hs = size / 2;
-	m_verts[0].set(-hs, hs, hs);
-	m_verts[1].set(hs, hs, hs);
-	m_verts[2].set(hs, hs, -hs);
-	m_verts[3].set(-hs, hs, -hs);
-	m_verts[4].set(-hs, -hs, hs);
-	m_verts[5].set(hs, -hs, hs);
-	m_verts[6].set(hs, -hs, -hs);
-	m_verts[7].set(-hs, -hs, -hs);
+	float w = (getWidth() / 2) * scale;
+	float h = (getHeight() / 2) * scale;
+	float l = (getLength() / 2) * scale;
 
-	int vertCount = 0;
-	for (int i = 0; i < 8; i++){
-		m_VBVerts[vertCount] = m_verts[i].x;
-		m_VBVerts[vertCount+1] = m_verts[i].y;
-		m_VBVerts[vertCount+2] = m_verts[i].z;
+	m_VBVerts[0] = -w; m_VBVerts[1] = h; m_VBVerts[2] = l;
+	m_VBVerts[3] = w; m_VBVerts[4] = h; m_VBVerts[5] = l;
+	m_VBVerts[6] = w; m_VBVerts[7] = h; m_VBVerts[8] = -l;
+	m_VBVerts[9] = -w; m_VBVerts[10] = h; m_VBVerts[11] = -l;
+	m_VBVerts[12] = -w; m_VBVerts[13] = -h; m_VBVerts[14] = l;
+	m_VBVerts[15] = w; m_VBVerts[16] = -h; m_VBVerts[17] = l;
+	m_VBVerts[18] = w; m_VBVerts[19] = -h; m_VBVerts[20] = -l;
+	m_VBVerts[21] = -w; m_VBVerts[22] = -h; m_VBVerts[23] = -l;
 
-		vertCount += 3;
-	}
-
-	GLubyte temp[] = { 0, 4, 5, 1, 3, 7, 4, 0,
+	unsigned int temp[] = { 0, 4, 5, 1, 3, 7, 4, 0,
 					   2, 6, 7, 3, 1, 5, 6, 2,
 					   3, 0, 1, 2, 4, 7, 6, 5};
 
-	float tempCol[] = { 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f };
+	memcpy(m_indices, temp, sizeof(int) * 24);
 
-	for (int i = 0; i < 24; i++){
-		m_bytes[i] = temp[i];
-		m_Colours[i] = tempCol[i];
-	}
+	/*for (int i = 0; i < 24; i++){
+		m_indices[i] = temp[i];
+	}*/
+}
+
+float* Cube::getVertArr(){
+	return m_VBVerts;
+}
+
+unsigned int* Cube::getIndicesArr(){
+	return m_indices;
+}
+
+void Cube::createVAO(){
+	GLuint vao, buffers[2];
+
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+
+	glGenBuffers(2, buffers);
+
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_VBVerts[0]) * 24, m_VBVerts, GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[1]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(m_indices[0]) * 24, m_indices, GL_STATIC_DRAW);
+
+	glBindVertexArray(0);
+
+	setVAO(vao);
+	setBuffer(buffers);
 }

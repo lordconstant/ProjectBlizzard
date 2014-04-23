@@ -12,7 +12,7 @@ void OptionsScreen::initialise(){
 	m_cam = new Camera();
 
 	m_btn = new Button3D("new_game", 1, 0.25f, 0.0f);
-	m_btn->getRect()->setPos(0, 0, -1);
+	m_btn->getCuboid()->setPos(0, 0, -1);
 
 	m_cam->move()->setPos(0, 0, 0);
 }

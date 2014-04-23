@@ -10,6 +10,8 @@ Unit::Unit(void){
 	m_dead = false;
 	m_wepPos = m_modelPos = m_pos = m_angle = Vector(0, 0, 0);
 	m_move = new Movement(m_pos, m_angle, m_speed, m_speed, 0);
+	m_phys = new Physics(m_pos);
+	m_phys->isGrounded(true);
 }
 
 Unit::Unit(string name, Model* model, int health, float speed){
@@ -18,13 +20,15 @@ Unit::Unit(string name, Model* model, int health, float speed){
 	m_speed = speed;
 	m_name = name;
 	m_model = model;
-	m_wep = new Weapon("Rocket", new Cube(0.1), new Cube(0.1), 10, 1);
+	m_wep = new Weapon("Rocket", new Cube(0.04f), new Cube(0.02f), 10, 1);
 	m_dead = false;
 	Vector temp;
 	temp.x = temp.y = temp.z = 0;
 	m_wepPos = m_modelPos = temp;
 	m_pos = m_angle = Vector(0, 0, 0);
 	m_move = new Movement(m_pos, m_angle, m_speed, m_speed, 0);
+	m_phys = new Physics(m_pos);
+	m_phys->isGrounded(true);
 }
 
 Unit::~Unit(void){
@@ -63,10 +67,17 @@ Movement* Unit::move(){
 	return m_move;
 }
 
+Physics* Unit::getPhysics(){
+	return m_phys;
+}
+
 Vector Unit::getPosition(){
 	return m_move->getPos();
 }
 
+Model* Unit::getModel(){
+	return m_model;
+}
 
 void Unit::setMaxHealth(int hp){
 	if (hp < 1){
@@ -82,7 +93,7 @@ void Unit::setCurHealth(int hp){
 		return;
 	}
 
-	if (hp < 0){
+	if (hp <= 0){
 		m_curHealth = 0;
 		m_dead = true;
 		return;
@@ -133,6 +144,10 @@ void Unit::setWeapon(Weapon* wep){
 
 	m_wep = new Weapon;
 	*m_wep = *wep;
+}
+
+void Unit::setColor(float r, float g, float b){
+	m_model->setColor(r, g, b);
 }
 
 void Unit::setPosition(Vector pos){
@@ -214,7 +229,7 @@ void Unit::update(Vector mouse){
 	setPosition(m_move->getPos().x, m_move->getPos().y, m_move->getPos().z);
 
 	m_wep->update(mouse);
-
+	m_phys->update();
 	if (m_curHealth <= 0){
 		m_dead = true;
 	}
@@ -230,5 +245,12 @@ void Unit::render(){
 
 	if (m_wep){
 		m_wep->render();
+	}
+}
+
+void Unit::jump(){
+	if (m_phys->isGrounded()){
+		m_phys->setVelocityY(JUMP_POWER);
+		m_phys->isGrounded(false);
 	}
 }

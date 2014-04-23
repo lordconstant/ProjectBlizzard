@@ -2,18 +2,19 @@
 
 
 Projectile::Projectile(){
-	m_model = new Cube(0.1);
+	m_model = new Cube(0.5f);
 	m_phys = new Physics(m_pos);
 }
 
 Projectile::Projectile(Model* model){
-	m_model = model;
+	m_model = new Cube(0.1f);
+	*m_model = *model;
 
 	if (!m_model){
-		m_model = new Cube(0.1);
+		m_model = new Cube(0.1f);
 	}
 
-	m_phys = new Physics(m_model->getPos());
+	m_phys = new Physics(m_pos);
 }
 
 Projectile::~Projectile(){

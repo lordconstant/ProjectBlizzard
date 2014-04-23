@@ -36,6 +36,8 @@ public:
 
 	Vector getPos();
 
+	Projectile* getCurShot();
+
 	void setDamage(int dmg);
 	void setAmountWeps(int amount);
 
@@ -49,7 +51,8 @@ public:
 
 	void setPos(Vector pos);
 	void setPos(float x, float y, float z);
-	
+	void setColor(float r, float g, float b);
+
 	bool useWeapon();
 
 	bool hitObject(Vector pos, float width, float height);

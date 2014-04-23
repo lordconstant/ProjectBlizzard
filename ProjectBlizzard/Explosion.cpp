@@ -12,8 +12,8 @@ Explosion::~Explosion()
 {
 }
 
-void Explosion::circularExplosion(Vector pos, float radius, int damage){
-	explo = new Rect(1, radius * 2, radius * 2, 0.05);
+void Explosion::circularExplosion(Vector pos, float radius, int damage, QuadTree& quadTree){
+	explo = new Cuboid(1, radius * 2, radius * 2, 0.05);
 	explo->setTexture("Images/Explosions/Cloud.bmp");
 	explo->setPos(pos);
 	tempBool = true;
@@ -21,6 +21,20 @@ void Explosion::circularExplosion(Vector pos, float radius, int damage){
 	radius *= radius;
 
 	for (int i = 0; i < m_terrain->size(); i++){
+		/*if (pos.x + radius*2 < m_terrain->at(i).x){
+			continue;
+		}
+		else if (pos.x - radius*2 > m_terrain->at(i).x){
+			continue;
+		}
+		
+		if (pos.y + radius*2 < m_terrain->at(i).y){
+			continue;
+		}
+		else if (pos.y - radius*2 > m_terrain->at(i).y){
+			continue;
+		}*/
+
 		float dist;
 		dist = pos.Dist2(m_terrain->at(i));
 
@@ -29,6 +43,7 @@ void Explosion::circularExplosion(Vector pos, float radius, int damage){
 		}
 
 		if (dist <= radius){
+			quadTree.removeObject(m_terrain->at(i));
 			m_terrain->erase(m_terrain->begin() + i);
 			i--;
 		}
@@ -37,6 +52,7 @@ void Explosion::circularExplosion(Vector pos, float radius, int damage){
 	for (int i = 0; i < m_teams->size(); i++){
 		for (int j = 0; j < m_teams->at(i)->getTeamSize(); j++){
 			float dist;
+
 			dist = pos.Dist2(m_teams->at(i)->getUnit(j)->getPosition());
 
 			if (dist < 0){
@@ -45,6 +61,30 @@ void Explosion::circularExplosion(Vector pos, float radius, int damage){
 
 			if (dist <= radius){
 				int curDamage;
+				float xForce, yForce, angle, opp, adj;
+
+				xForce = 0;
+				yForce = 0;
+
+				opp = pos.UnitVector().y - m_teams->at(i)->getUnit(j)->getModel()->getPos().UnitVector().y;
+				adj = pos.UnitVector().x - m_teams->at(i)->getUnit(j)->getModel()->getPos().UnitVector().x;
+
+				angle = atan(opp / adj);
+				xForce = cos(angle);
+				yForce = sin(angle);
+
+				if (adj < 0){
+					xForce = -xForce;
+					yForce = -yForce;
+				}
+
+				if (opp == 0){
+					yForce = -1;
+				}
+
+				if (adj == 0){
+					xForce = 0;
+				}
 
 				if (dist >= 1){
 					curDamage = (damage - ((float)damage / dist));
@@ -57,10 +97,9 @@ void Explosion::circularExplosion(Vector pos, float radius, int damage){
 					curDamage = -curDamage;
 				}
 
+				m_teams->at(i)->getUnit(j)->getPhysics()->setVelocity(-xForce*2.0f, -yForce*2.0f);
+					
 				m_teams->at(i)->getUnit(j)->setCurHealth(m_teams->at(i)->getUnit(j)->getCurHealth() - curDamage);
-				char s[255];
-				sprintf(s, "Unit - T:%i, No:%i, Hp:%i", i, j, m_teams->at(i)->getUnit(j)->getCurHealth());
-				DebugOut(s);
 			}
 		}
 	}
@@ -85,10 +124,6 @@ void Explosion::rectExplosion(Vector pos, float x, float y, int damage){
 	}
 }
 
-void Explosion::pyramidExplosion(Vector pos, float x, float y, int damage){
-
-}
-
 void Explosion::defineTerrain(vector<Vector>& terrain){
 	if (!&terrain){
 		return;
@@ -97,10 +132,10 @@ void Explosion::defineTerrain(vector<Vector>& terrain){
 	m_terrain = &terrain;
 }
 
-//void Explosion::defineUnits(vector<Unit*>& unit){
-//	if (!&unit){
-//		return;
-//	}
-//
-//	m_units = &unit;
-//}
+void Explosion::defineTeams(vector<Team*>& teams){
+	if (!&teams){
+		return;
+	}
+
+	m_teams = &teams;
+}

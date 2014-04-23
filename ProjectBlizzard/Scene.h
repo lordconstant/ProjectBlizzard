@@ -1,6 +1,7 @@
 #pragma once
 #include "key_codes.h"
 #include <windows.h>
+#include <glew.h>
 #include <gl/gl.h>
 #include <gl/glu.h>
 #include "vector.h"

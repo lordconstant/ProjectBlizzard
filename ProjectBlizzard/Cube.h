@@ -1,28 +1,26 @@
 #pragma once
 
 #include "Model.h"
+#include "DebugPrint.h"
 
 class Cube: public Model{
-	float m_size;
-
-	Vector m_verts[8];
-
-	int m_inc;
+	float m_VBVerts[24];
+	unsigned int m_indices[24];
+	int m_scale;
 public:
-	float m_VBVerts[24], m_Colours[24];
-	GLubyte m_bytes[24];
 
 	Cube(void);
-
-	Cube(float size);
-
+	Cube(float scale);
+	Cube(float scale, float r, float g, float b);
 	~Cube(void);
 
 	void Render();
-private:
-	//Renders a face
-	void drawFace(int v0, int v1, int v2, int v3, float r, float g, float b);
 
+	float* getVertArr();
+	unsigned int* getIndicesArr();
+private:
 	//Modifies the size
-	void setSize(float size);
+	void setSize(float scale);
+
+	void createVAO();
 };

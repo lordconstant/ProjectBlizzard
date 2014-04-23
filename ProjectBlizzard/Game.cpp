@@ -14,6 +14,10 @@ void Game::InitOpenGL(){
 
 void Game::Initialise(){
 	DebugOut("Game::Initialise being called");
+	char s[256];
+	sprintf_s(s, "Version : %s", gluGetString(GLU_VERSION));
+	DebugOut(s);
+
 	sceneSel = &SceneSelect::getInstance();
 }
 

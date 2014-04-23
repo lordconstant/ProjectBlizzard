@@ -10,10 +10,6 @@ GameScreen::~GameScreen(){
 		delete m_cam;
 	}
 
-	///*if(m_timer){
-	//	delete m_timer;
-	//*/}
-
 	if(m_land){
 		while(m_land->size() > 0){
 			m_land->pop_back();
@@ -24,8 +20,12 @@ GameScreen::~GameScreen(){
 }
 
 void GameScreen::initialise(){
+	glewInit();
+
 	m_cam = new Camera();
 	m_cam->move()->setPos(0, 1, 0);
+
+	m_quadTree = NULL;
 
 	m_land = NULL;
 	m_explo = NULL;
@@ -38,24 +38,32 @@ void GameScreen::initialise(){
 		m_teams[i]->setCurrentUnit(0);
 
 		for (int j = 0; j < NBR_UNITS; j++){
-			m_teams[i]->addUnit(new Unit("Pete", new Cube(0.05f), 100, 2.0f));
+			Cube* temp;
+
+			if (i == 0){
+				temp = new Cube(0.05f, 1.0f, 0.0f, 0.5f);
+				m_teams[i]->addUnit(new Unit("Pete", temp, 100, 2.0f));
+			}
+
+			if (i == 1){
+				temp = new Cube(0.05f, 0.0f, 0.0f, 1.0f);
+				m_teams[i]->addUnit(new Unit("Pete", temp, 100, 2.0f));
+			}
+
+			m_teams[i]->getUnit(j)->setWepPos(temp->getScale() / 2, temp->getScale() / 2, 1);
 		}
 	}
 
-	//m_sEngine->play2D("Sounds/Electrodoodle.mp3", true);
+	m_sEngine->play2D("Sounds/Electrodoodle.mp3", true);
 
-	m_landCube = new Cube(0.05f);
+	m_landCube = new Cube(0.05f, 0.0f, 1.0f, 0.25f);
 
-	createGame(CAVE);
+	int gameType = rand() % LTCOUNT;
+	createGame(gameType);
 
 	changeUnit();
 
 	renderCubes = true;
-
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_COLOR_ARRAY);
-	glVertexPointer(3, GL_FLOAT, 0, &m_landCube->m_VBVerts);
-	glColorPointer(3, GL_FLOAT, 0, m_landCube->m_Colours);
 }
 
 void GameScreen::update(float mouseX, float mouseY){
@@ -65,21 +73,71 @@ void GameScreen::update(float mouseX, float mouseY){
 		m_teams[i]->update();
 	}
 
-	m_curUnit->update(m_mousePos);
+	if (m_curUnit->getWeapon()->getCurShot()){
+		if (m_quadTree->processCollisions(m_curUnit->getWeapon()->getCurShot()->getModel())){
+			if (m_explo){
+				m_explo->circularExplosion(Vector(m_curUnit->getWeapon()->getCurShot()->getModel()->getPos().x, m_curUnit->getWeapon()->getCurShot()->getModel()->getPos().y, 1), m_curUnit->getWeapon()->getPower() * 0.5f, 50, *m_quadTree);
+				m_curUnit->getWeapon()->hitObject(NULL, 0, 0);
 
-	if (m_land){
-		for (int i = 0; i < m_land->size(); i++){
-			if (m_curUnit->getWeapon()->hitObject(m_land->at(i), m_landCube->getScale(), m_landCube->getScale())){
-				if (m_explo){
-					m_explo->circularExplosion(Vector(m_land->at(i).x, m_land->at(i).y, 1), 1.0f, 50);
+				//changeUnit();
+			}
+		}
+	}
+
+	for (int i = 0; i < NBR_TEAMS; i++){
+		for (int j = 0; j < NBR_UNITS; j++){
+			Unit* tempUnit = m_teams[i]->getUnit(j);
+
+			tempUnit->getModel()->setPos(tempUnit->getPhysics()->nextPos());
+
+			BoxCollider* tempCol = (BoxCollider*)m_quadTree->processCollisions(tempUnit->getModel(), tempUnit->getPhysics()->nextPos());
+
+			if (tempCol){
+				if (tempUnit->getPhysics()->getVelX() < 0){
+					if (tempCol->hitright((BoxCollider*)tempUnit->getModel()->getCollider())){
+						tempUnit->getPhysics()->setAccelX(0.0f);
+						tempUnit->getPhysics()->setVelocityX(0.0f);
+					}
+				}
+
+				if (tempUnit->getPhysics()->getVelX() > 0){
+					if (tempCol->hitLeft((BoxCollider*)tempUnit->getModel()->getCollider())){
+						tempUnit->getPhysics()->setAccelX(0.0f);
+						tempUnit->getPhysics()->setVelocityX(0.0f);
+					}
+				}
+
+				if (tempUnit->getPhysics()->getVelY() < 0){
+					if (tempCol->hitTop((BoxCollider*)tempUnit->getModel()->getCollider())){
+						tempUnit->getPhysics()->setAccelY(0.0f);
+						tempUnit->getPhysics()->setVelocityY(0.0f);
+
+						tempUnit->getPhysics()->isGrounded(true);
+					}
+				}
+
+				if (tempUnit->getPhysics()->getVelY() > 0){
+					if (tempCol->hitBottom((BoxCollider*)tempUnit->getModel()->getCollider())){
+						tempUnit->getPhysics()->setAccelY(0.0f);
+						tempUnit->getPhysics()->setVelocityY(0.0f);
+					}
+				}
+			}
+			else{
+				tempUnit->getPhysics()->isGrounded(false);
+			}
+
+			if (tempUnit->getPosition().y < 0 && !tempUnit->isDead()){
+				tempUnit->setCurHealth(0);
+
+				if (m_curUnit == tempUnit){
 					changeUnit();
-					break;
 				}
 			}
 
-			if (m_curUnit->getWeapon()->checkAhead(m_land->at(i), m_landCube->getScale(), m_landCube->getScale())){
-				break;
-			}
+			tempUnit->update(m_mousePos);
+
+			tempUnit = NULL;
 		}
 	}
 
@@ -104,38 +162,36 @@ void GameScreen::render(){
 
 	if (m_land){
 		for (int i = 0; i < m_land->size(); i++){
-			glPushMatrix();
-				glTranslatef(m_land->at(i).x, m_land->at(i).y, m_land->at(i).z);
-				glDrawElements(GL_QUADS, 24, GL_UNSIGNED_BYTE, m_landCube->m_bytes);
-			glPopMatrix();
+			m_landCube->setPos(m_land->at(i));
+			m_landCube->Render();
 		}
 	}
+
+	//m_quadTree->render();
 }
 
 void GameScreen::processKeyUp(int key){
 	switch (key){
 	case VK_W:
 		//m_cam->move()->up(false);
-		m_curUnit->move()->up(false);
+		//m_curUnit->move()->up(false);
 		break;
 	case VK_S:
 		//m_cam->move()->down(false);
-		m_curUnit->move()->down(false);
+		//m_curUnit->move()->down(false);
 		break;
 	case VK_A:
 		//m_cam->move()->left(false);
-		m_curUnit->move()->left(false);
+		//m_curUnit->move()->left(false);
+		m_curUnit->getPhysics()->setAccelX(0);
 		break;
 	case VK_D:
 		//m_cam->move()->right(false);
-		m_curUnit->move()->right(false);
+		//m_curUnit->move()->right(false);
+		m_curUnit->getPhysics()->setAccelX(0);
 		break;
 	case VK_SPACE:
-		if(renderCubes){
-			renderCubes = false;
-		}else{
-			renderCubes = true;
-		}
+		m_curUnit->jump();
 		break;
 	case VK_1:
 		createGame(ISLANDS);
@@ -174,19 +230,26 @@ void GameScreen::processKeyDown(int key){
 	switch (key){
 	case VK_W:
 		//m_cam->move()->up(true);
-		m_curUnit->move()->up(true);
+		//m_curUnit->move()->up(true);
 		break;
 	case VK_S:
 		//m_cam->move()->down(true);
-		m_curUnit->move()->down(true);
+		//m_curUnit->move()->down(true);
 		break;
 	case VK_A:
 		//m_cam->move()->left(true);
-		m_curUnit->move()->left(true);
+		//m_curUnit->move()->left(true);
+		if (m_curUnit->getPhysics()->getVelX() > -0.5f){
+			m_curUnit->getPhysics()->setAccelX(-1);
+		}
+
 		break;
 	case VK_D:
 		//m_cam->move()->right(true);
-		m_curUnit->move()->right(true);
+		//m_curUnit->move()->right(true);
+		if (m_curUnit->getPhysics()->getVelX() < 0.5f){
+			m_curUnit->getPhysics()->setAccelX(1);
+		}
 		break;
 	default:
 		break;
@@ -196,15 +259,12 @@ void GameScreen::processKeyDown(int key){
 void GameScreen::processMouse(int key, int state){
 	switch (key){
 	case WM_LBUTTONDOWN:
-		//m_timer->reset();
 		if (m_explo){
-			m_explo->circularExplosion(Vector(m_mousePos.x, m_mousePos.y, 1), 0.5f, 5);
+			m_explo->circularExplosion(Vector(m_mousePos.x, m_mousePos.y, 1), 0.5f, 5, *m_quadTree);
 		}
 		break;
 	case WM_RBUTTONDOWN:
 		m_curUnit->fireWeapon();
-
-		//m_timer->play();
 		break;
 	case WM_MOUSEWHEEL:
 		((short)HIWORD(state) < 0) ? m_cam->move()->backward(true) : m_cam->move()->forward(true);
@@ -239,6 +299,14 @@ void GameScreen::createGame(int type){
 			placeUnit(m_teams[i]->getUnit(j));
 		}
 	}
+
+	for (int i = 0; i < NBR_TEAMS; i++){
+		for (int j = 0; j < NBR_UNITS; j++){
+			m_teams[i]->getUnit(j)->setPosition(m_teams[i]->getUnit(j)->getPosition().x, m_teams[i]->getUnit(j)->getPosition().y + (0.05f), m_teams[i]->getUnit(j)->getPosition().z);
+		}
+	}
+
+	BuildQuadTree();
 }
 
 void GameScreen::genTerrain(int type){
@@ -261,10 +329,10 @@ void GameScreen::placeUnit(Unit* unit){
 	int attempts = 0;
 
 	while (!done){
-		unit->setPosition((float)(rand() % (int)m_width), (float)(rand() % (int)m_height), 1);
+		unit->setPosition(random::rnd.number(m_width), random::rnd.number(m_height), 1);
 
 		for (int i = 0; i < m_land->size(); i++){
-			if(unit->getPosition().x == m_land->at(i).x){
+			if ((unit->getPosition().x - 0.025f) < m_land->at(i).x + (m_landCube->getScale() / 2) && (unit->getPosition().x + 0.025f) > m_land->at(i).x - (m_landCube->getScale() / 2)){
 				unit->setPosition(m_land->at(i).x, m_land->at(i).y + (m_landCube->getScale() / 2), 1);
 
 				for (int j = 0; j < m_land->size(); j++){
@@ -274,8 +342,8 @@ void GameScreen::placeUnit(Unit* unit){
 
 							temp = m_land->at(j).y - unit->getPosition().y;
 
-							if(temp < 0.1f){
-								unit->setPosition(m_land->at(j).x, m_land->at(j).y + (m_landCube->getScale() / 2), 1);
+							if(temp <= 0.1f){
+								unit->setPosition(m_land->at(j).x, m_land->at(j).y, 1);
 							}
 						}
 					}
@@ -317,6 +385,8 @@ void GameScreen::placeUnit(Unit* unit){
 void GameScreen::changeUnit(){
 	bool run = false;
 
+	m_teams[m_curTeam]->update();
+
 	m_curUnit = m_teams[m_curTeam]->getUnit(m_teams[m_curTeam]->getCurrentUnit());
 
 	while (m_curUnit->isDead() || !run){
@@ -329,15 +399,40 @@ void GameScreen::changeUnit(){
 			m_teams[m_curTeam]->setCurrentUnit(m_teams[m_curTeam]->getCurrentUnit() + 1);
 		}
 
-		if (m_curTeam == NBR_TEAMS - 1){
-			m_curTeam = 0;
-		}
-		else if (m_curTeam < NBR_TEAMS){
-			m_curTeam++;
+		for (int i = 0; i < NBR_TEAMS; i++){
+			if (m_teams[i]->isDead()){
+				SceneSelect::getInstance().setScene(START);
+				break;
+			}
 		}
 
 		run = true;
 	}
 
+	if (m_curTeam == NBR_TEAMS - 1){
+		m_curTeam = 0;
+	}
+	else if (m_curTeam < NBR_TEAMS){
+		m_curTeam++;
+	}
+
 	m_curUnit->move()->stopMoving();
+}
+
+void GameScreen::BuildQuadTree(){
+	if (m_quadTree){
+		delete m_quadTree;
+		m_quadTree = NULL;
+	}
+
+	m_quadTree = new QuadTree();
+
+	m_quadTree->buildFullTree(NBR_LEVELS, m_width / 2, m_height / 2, 0.5f, m_width, m_height, 1);
+
+	for (int i = 0; i < m_land->size(); i++){
+		BoxCollider* temp = new BoxCollider;
+		temp->setDimension(m_landCube->getScale(), m_landCube->getScale(), m_landCube->getScale());
+		temp->setPos(m_land->at(i));
+		m_quadTree->addObject(temp);
+	}
 }

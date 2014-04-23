@@ -34,7 +34,6 @@ Weapon::Weapon(string name, Model* model, Model* ammo, int damage, int amount){
 	}
 }
 
-
 Weapon::~Weapon(){
 }
 
@@ -68,6 +67,10 @@ bool Weapon::hasModel(){
 
 Vector Weapon::getPos(){
 	return m_pos;
+}
+
+Projectile* Weapon::getCurShot(){
+	return m_curShot;
 }
 
 void Weapon::setDamage(int dmg){
@@ -126,6 +129,10 @@ void Weapon::setPos(float x, float y, float z){
 	setPos(Vector(x, y, z));
 }
 
+void Weapon::setColor(float r, float g, float b){
+	m_model->setColor(r, g, b);
+}
+
 bool Weapon::useWeapon(){
 	if(!m_ammo){
 		return false;
@@ -136,7 +143,7 @@ bool Weapon::useWeapon(){
 		m_curShot = NULL;
 	}
 
-	m_curShot = new Projectile();
+	m_curShot = new Projectile(m_ammo);
 	m_curShot->setPos(m_pos);
 
 	float opp, adj, angle;
@@ -153,15 +160,15 @@ bool Weapon::useWeapon(){
 		m_shotDir.y = -m_shotDir.y;
 	}
 
-	m_curShot->setVel(m_shotDir.x, m_shotDir.y);
+	m_curShot->setVel(m_shotDir.x*2, m_shotDir.y*2);
 	m_power = 1.0f;
-	m_curShot->setAccel(m_shotDir.x * m_power, m_shotDir.y * m_power);
+	m_curShot->setAccel(m_shotDir.x * m_power * 3.0f, m_shotDir.y * m_power * 3.0f);
 
 	return true;
 }
 
 bool Weapon::hitObject(Vector pos, float width, float height){
-	if(!m_curShot){
+	/*if(!m_curShot){
 		return false;
 	}
 
@@ -182,13 +189,14 @@ bool Weapon::hitObject(Vector pos, float width, float height){
 	objBMax.y = pos.y + (height / 2);
 
 	if (objAMin.x < objBMax.x && objAMax.x > objBMin.x){
-		if (objAMin.y < objBMax.y && objAMax.y > objBMin.y){
+		if (objAMin.y < objBMax.y && objAMax.y > objBMin.y){*/
 			delete m_curShot;
 			m_curShot = NULL;
 			return true;
-		}
+		/*}
 	}
 	return false;
+	*/
 }
 
 bool Weapon::checkAhead(Vector pos, float width, float height){
@@ -264,7 +272,7 @@ void Weapon::update(Vector mouse){
 		}
 
 		if (m_curShot){
-			m_curShot->update(0.005f);
+			m_curShot->update(0.0f);
 		}
 	}
 

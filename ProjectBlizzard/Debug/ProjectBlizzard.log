@@ -1,23 +1,19 @@
-﻿Build started 07/04/2014 21:04:51.
+﻿Build started 23/04/2014 23:51:52.
      1>Project "H:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\ProjectBlizzard.vcxproj" on node 2 (Build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\ProjectBlizzard.tlog\unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\\irrKlang /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\\Resil /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\\libNoise /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Explosion.cpp
-         Explosion.cpp
-     1>h:\programming\github\projectblizzard\projectblizzard\explosion.cpp(16): warning C4305: 'argument' : truncation from 'double' to 'float'
-     1>h:\programming\github\projectblizzard\projectblizzard\explosion.cpp(23): warning C4018: '<' : signed/unsigned mismatch
-     1>h:\programming\github\projectblizzard\projectblizzard\explosion.cpp(37): warning C4018: '<' : signed/unsigned mismatch
-     1>h:\programming\github\projectblizzard\projectblizzard\explosion.cpp(50): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>h:\programming\github\projectblizzard\projectblizzard\explosion.cpp(53): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>h:\programming\github\projectblizzard\projectblizzard\explosion.cpp(62): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 c:\program files (x86)\microsoft visual studio 12.0\vc\include\stdio.h(356) : see declaration of 'sprintf'
-     1>h:\programming\github\projectblizzard\projectblizzard\explosion.cpp(74): warning C4018: '<' : signed/unsigned mismatch
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\\irrKlang /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\\Resil /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\\libNoise /IH:\Programming\GitHub\ProjectBlizzard\ProjectBlizzard\\GL /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Cube.cpp
+         Cube.cpp
+     1>h:\programming\github\projectblizzard\projectblizzard\boxcollider.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>h:\programming\github\projectblizzard\projectblizzard\cube.cpp(43): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"H:\Programming\GitHub\ProjectBlizzard\Debug\ProjectBlizzard.exe" /INCREMENTAL /NOLOGO opengl32.lib glu32.lib odbc32.lib odbccp32.lib winmm.lib irrKlang/irrKlang.lib Resil/DevIL.lib Resil/ILU.lib Resil/ILUT.lib Resil/zlib1.lib libNoise/libnoise.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"H:\Programming\GitHub\ProjectBlizzard\Debug\ProjectBlizzard.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"H:\Programming\GitHub\ProjectBlizzard\Debug\ProjectBlizzard.lib" /MACHINE:X86 /SAFESEH:NO /FORCE:MULTIPLE Debug\BaseGame.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"H:\Programming\GitHub\ProjectBlizzard\Debug\ProjectBlizzard.exe" /INCREMENTAL /NOLOGO opengl32.lib glu32.lib odbc32.lib odbccp32.lib winmm.lib irrKlang/irrKlang.lib Resil/DevIL.lib Resil/ILU.lib Resil/ILUT.lib Resil/zlib1.lib libNoise/libnoise.lib GL/glew32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"H:\Programming\GitHub\ProjectBlizzard\Debug\ProjectBlizzard.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"H:\Programming\GitHub\ProjectBlizzard\Debug\ProjectBlizzard.lib" /MACHINE:X86 /SAFESEH:NO /FORCE:MULTIPLE Debug\BaseGame.obj
          Debug\BFont.obj
+         Debug\BoxCollider.obj
          Debug\Button3D.obj
          Debug\Camera.obj
+         Debug\Collider.obj
          Debug\Cube.obj
          Debug\Explosion.obj
          Debug\Game.obj
@@ -30,7 +26,9 @@
          Debug\OptionsScreen.obj
          Debug\Physics.obj
          Debug\Projectile.obj
-         Debug\Rectangle.obj
+         Debug\QuadPart.obj
+         Debug\QuadTree.obj
+         Debug\Cuboid.obj
          Debug\Scene.obj
          Debug\SceneSelect.obj
          Debug\Sphere.obj
@@ -400,4 +398,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.67
+Time Elapsed 00:00:03.77

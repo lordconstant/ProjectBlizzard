@@ -53,16 +53,16 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(ProjectDir)\irrKlang;$(ProjectDir)\Resil;$(ProjectDir)\libNoise;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\irrKlang;$(ProjectDir)\Resil;$(ProjectDir)\libNoise;$(ProjectDir)\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;winmm.lib;irrKlang/irrKlang.lib;Resil/DevIL.lib;Resil/ILU.lib;Resil/ILUT.lib;Resil/zlib1.lib;libNoise/libnoise.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;winmm.lib;irrKlang/irrKlang.lib;Resil/DevIL.lib;Resil/ILU.lib;Resil/ILUT.lib;Resil/zlib1.lib;libNoise/libnoise.lib;GL/glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -93,8 +93,10 @@
   <ItemGroup>
     <ClCompile Include="BaseGame.cpp" />
     <ClCompile Include="BFont.cpp" />
+    <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="Button3D.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -107,7 +109,9 @@
     <ClCompile Include="OptionsScreen.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Projectile.cpp" />
-    <ClCompile Include="Rectangle.cpp" />
+    <ClCompile Include="QuadPart.cpp" />
+    <ClCompile Include="QuadTree.cpp" />
+    <ClCompile Include="Cuboid.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneSelect.cpp" />
     <ClCompile Include="Sphere.cpp" />
@@ -122,8 +126,10 @@
   <ItemGroup>
     <ClInclude Include="BaseGame.h" />
     <ClInclude Include="BFont.h" />
+    <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="Button3D.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Collider.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="DebugPrint.h" />
     <ClInclude Include="Explosion.h" />
@@ -136,8 +142,10 @@
     <ClInclude Include="OptionsScreen.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="QuadPart.h" />
+    <ClInclude Include="QuadTree.h" />
     <ClInclude Include="random.h" />
-    <ClInclude Include="Rectangle.h" />
+    <ClInclude Include="Cuboid.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneSelect.h" />
     <ClInclude Include="Sphere.h" />
