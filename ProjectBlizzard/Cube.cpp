@@ -4,18 +4,21 @@ Cube::Cube(void) :Model(0.2f){
 	setColor(1.0f, 1.0f, 1.0f);
 	setSize(0.2f);
 	createVAO();
+	setDimensions(0.2f, 0.2f, 0.2f);
 }
 
 Cube::Cube(float scale) :Model(scale){
 	setColor(1.0f, 1.0f, 1.0f);
 	setSize(scale);
 	createVAO();
+	setDimensions(scale, scale, scale);
 }
 
 Cube::Cube(float scale, float r, float g, float b) :Model(scale){
 	setColor(r, g, b);
 	setSize(scale);
 	createVAO();
+	setDimensions(scale, scale, scale);
 }
 
 Cube::~Cube(void){

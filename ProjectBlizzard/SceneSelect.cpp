@@ -1,19 +1,19 @@
 #include "SceneSelect.h"
 
-SceneSelect::SceneSelect(){
-	setScene(START);
+SceneSelect::SceneSelect(HDC hdc){
+	setScene(START, hdc);
 }
 
 
 SceneSelect::~SceneSelect(){
 }
 
-SceneSelect& SceneSelect::getInstance(){
-	static SceneSelect instance;
+SceneSelect& SceneSelect::getInstance(HDC hdc){
+	static SceneSelect instance(hdc);
 	return instance;
 }
 
-void SceneSelect::setScene(int scene){
+void SceneSelect::setScene(int scene, HDC hdc){
 	if (scene >= SCENE_COUNT || scene < 0){
 		return;
 	}
@@ -24,19 +24,19 @@ void SceneSelect::setScene(int scene){
 
 	switch (scene){
 	case START:
-		m_curScene = new StartScreen;
+		m_curScene = new StartScreen(hdc);
 		break;
 	case OPTIONS:
-		m_curScene = new OptionsScreen;
+		m_curScene = new OptionsScreen(hdc);
 		break;
 	case LOBBY:
-		m_curScene = new StartScreen;
+		m_curScene = new StartScreen(hdc);
 		break;
 	case GAME:
-		m_curScene = new GameScreen;
+		m_curScene = new GameScreen(hdc);
 		break;
 	case END:
-		m_curScene = new StartScreen;
+		m_curScene = new StartScreen(hdc);
 		break;
 	default:
 		break;

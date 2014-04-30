@@ -1,7 +1,7 @@
 #include "StartScreen.h"
 
 
-StartScreen::StartScreen(){
+StartScreen::StartScreen(HDC hdc) : Scene(hdc){
 }
 
 StartScreen::~StartScreen(){
@@ -54,20 +54,12 @@ void StartScreen::render(){
 	}
 }
 
+void StartScreen::render2D(){
+
+}
+
 void StartScreen::processKeyUp(int key){
 	switch (key){
-		case VK_W:
-			m_cam->move()->up(false);
-			break;
-		case VK_S:
-			m_cam->move()->down(false);
-			break;
-		case VK_A:
-			m_cam->move()->left(false);
-			break;
-		case VK_D:
-			m_cam->move()->right(false);
-			break;
 		default:
 			break;
 	}
@@ -76,18 +68,6 @@ void StartScreen::processKeyUp(int key){
 
 void StartScreen::processKeyDown(int key){
 	switch (key){
-		case VK_W:
-			m_cam->move()->up(true);
-			break;
-		case VK_S:
-			m_cam->move()->down(true);
-			break;
-		case VK_A:
-			m_cam->move()->left(true);
-			break;
-		case VK_D:
-			m_cam->move()->right(true);
-			break;
 		default:
 			break;
 	}
@@ -97,12 +77,12 @@ void StartScreen::processMouse(int key, int state){
 	switch(key){
 		case WM_LBUTTONDOWN:
 			if(m_btns[0]->checkArea(m_mousePos.x, m_mousePos.y)){
-				SceneSelect::getInstance().setScene(GAME);
+				SceneSelect::getInstance(m_hdc).setScene(GAME, m_hdc);
 				break;
 			}
 
 			if(m_btns[1]->checkArea(m_mousePos.x, m_mousePos.y)){
-				SceneSelect::getInstance().setScene(OPTIONS);
+				SceneSelect::getInstance(m_hdc).setScene(OPTIONS, m_hdc);
 				break;
 			}
 
@@ -111,11 +91,6 @@ void StartScreen::processMouse(int key, int state){
 				break;
 			}
 
-			break;
-		case WM_RBUTTONDOWN:
-			break;
-		case WM_MOUSEWHEEL:
-			((short) HIWORD(state) < 0) ? m_cam->move()->forward(true) : m_cam->move()->backward(true);
 			break;
 		default:
 			break;

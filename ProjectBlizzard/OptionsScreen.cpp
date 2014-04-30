@@ -1,7 +1,7 @@
 #include "OptionsScreen.h"
 
 
-OptionsScreen::OptionsScreen(void){
+OptionsScreen::OptionsScreen(HDC hdc) : Scene(hdc){
 }
 
 
@@ -26,6 +26,10 @@ void OptionsScreen::render(){
 	m_btn->render();
 }
 
+void OptionsScreen::render2D(){
+
+}
+
 void OptionsScreen::processKeyUp(int key){
 	switch (key){
 		default:
@@ -44,7 +48,7 @@ void OptionsScreen::processMouse(int key, int state){
 	switch (key){
 	case WM_LBUTTONDOWN:
 		if(m_btn->checkArea(m_mousePos.x, m_mousePos.y)){
-			SceneSelect::getInstance().setScene(START);
+			SceneSelect::getInstance(m_hdc).setScene(START, m_hdc);
 		}
 
 		break;

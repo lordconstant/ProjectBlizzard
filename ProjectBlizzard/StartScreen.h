@@ -12,12 +12,13 @@ class StartScreen :public Scene{
 	vector<Button3D*> m_btns;
 	Camera* m_cam;
 public:
-	StartScreen();
+	StartScreen(HDC hdc);
 	~StartScreen();
 
 	void initialise();
 	void update(float mouseX, float mouseY);
 	void render();
+	void render2D();
 
 	void processKeyUp(int key);
 	void processKeyDown(int key);

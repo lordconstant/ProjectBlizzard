@@ -15,9 +15,9 @@ class Weapon{
 	Model *m_model, *m_ammo;
 	Projectile* m_curShot;
 	int m_damage, m_amount;
-	float m_power;
+	float m_power, m_curPower, m_lastPower;
 	string m_name;
-	bool m_infinite, m_hit;
+	bool m_infinite, m_hit, m_powerUp, m_generatePower;
 	Vector m_pos, m_direction, m_shotDir;
 public:
 	Weapon();
@@ -33,6 +33,7 @@ public:
 
 	bool isInfinite();
 	bool hasModel();
+	bool getPowerGen();
 
 	Vector getPos();
 
@@ -60,7 +61,8 @@ public:
 
 	void render();
 	void update(Vector mouse);
-	void updatePower();
+	void generatePower();
+	void setPowerGen(bool power);
 private:
 
 	void reduceAmount();

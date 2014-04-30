@@ -9,6 +9,7 @@
 #include <il.h>
 #include <ilu.h>
 #include <ilut.h>
+#include "BFont.h"
 
 using namespace irrklang;
 
@@ -17,8 +18,9 @@ protected:
 	float m_mouseX, m_mouseY, m_sWidth, m_sHeight;
 	Vector m_mousePos;
 	ISoundEngine* m_sEngine;
+	HDC m_hdc;
 public:
-	Scene();
+	Scene(HDC& hdc);
 	~Scene();
 
 	void initialiseSound();
@@ -26,7 +28,7 @@ public:
 	virtual void initialise() = 0;
 	virtual void update(float mouseX, float mouseY) = 0;
 	virtual void render() = 0;
-
+	virtual void render2D() = 0;
 	virtual void processKeyUp(int key) = 0;
 	virtual void processKeyDown(int key) = 0;
 	virtual void processMouse(int key, int state) = 0;

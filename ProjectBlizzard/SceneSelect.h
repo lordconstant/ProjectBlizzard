@@ -11,12 +11,12 @@ class SceneSelect{
 public:
 	~SceneSelect();
 
-	static SceneSelect& getInstance();
+	static SceneSelect& getInstance(HDC hdc);
 
-	void setScene(int scene);
+	void setScene(int scene, HDC hdc);
 
 	Scene* getCurScene();
 private:
-	SceneSelect();
+	SceneSelect(HDC hdc);
 };
 

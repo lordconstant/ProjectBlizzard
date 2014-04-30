@@ -1,9 +1,7 @@
 #include "GameScreen.h"
 
-
-GameScreen::GameScreen(){
+GameScreen::GameScreen(HDC& hdc) : Scene(hdc){
 }
-
 
 GameScreen::~GameScreen(){
 	if(m_cam){
@@ -11,11 +9,24 @@ GameScreen::~GameScreen(){
 	}
 
 	if(m_land){
-		while(m_land->size() > 0){
-			m_land->pop_back();
-		}
-
+		m_land->clear();
 		delete m_land;
+	}
+
+	if (m_teams.size() > 0){
+		m_teams.clear();
+	}
+
+	if (m_gameTimer){
+		delete m_gameTimer;
+	}
+
+	if (m_turnTimer){
+		delete m_turnTimer;
+	}
+
+	if (m_endTurnTimer){
+		delete m_endTurnTimer;
 	}
 }
 
@@ -25,11 +36,19 @@ void GameScreen::initialise(){
 	m_cam = new Camera();
 	m_cam->move()->setPos(0, 1, 0);
 
+	m_turnTimer = new Timer();
+	m_gameTimer = new Timer();
+	m_endTurnTimer = new Timer();
+
+	m_largeFont = new BFont(m_hdc, "Courier", 50);
+
 	m_quadTree = NULL;
 
 	m_land = NULL;
 	m_explo = NULL;
 	
+	m_fired = m_hitTerrain = false;
+
 	m_curTeam = 0;
 
 	for (int i = 0; i < NBR_TEAMS; i++){
@@ -58,12 +77,10 @@ void GameScreen::initialise(){
 
 	m_landCube = new Cube(0.05f, 0.0f, 1.0f, 0.25f);
 
-	int gameType = rand() % LTCOUNT;
+	int gameType = rand() % 6;
 	createGame(gameType);
 
 	changeUnit();
-
-	renderCubes = true;
 }
 
 void GameScreen::update(float mouseX, float mouseY){
@@ -76,10 +93,18 @@ void GameScreen::update(float mouseX, float mouseY){
 	if (m_curUnit->getWeapon()->getCurShot()){
 		if (m_quadTree->processCollisions(m_curUnit->getWeapon()->getCurShot()->getModel())){
 			if (m_explo){
-				m_explo->circularExplosion(Vector(m_curUnit->getWeapon()->getCurShot()->getModel()->getPos().x, m_curUnit->getWeapon()->getCurShot()->getModel()->getPos().y, 1), m_curUnit->getWeapon()->getPower() * 0.5f, 50, *m_quadTree);
-				m_curUnit->getWeapon()->hitObject(NULL, 0, 0);
+				float exploForce = 0.0f;
 
-				//changeUnit();
+				exploForce = m_curUnit->getWeapon()->getPower() * 0.5f;
+
+				if (exploForce < 0.2f){
+					exploForce = 0.2f;
+				}
+
+				m_explo->circularExplosion(Vector(m_curUnit->getWeapon()->getCurShot()->getModel()->getPos().x, m_curUnit->getWeapon()->getCurShot()->getModel()->getPos().y, 1), exploForce, m_curUnit->getWeapon()->getDamage() * m_curUnit->getWeapon()->getPower(), *m_quadTree);
+				m_curUnit->getWeapon()->hitObject(NULL, 0, 0);
+				m_hitTerrain = true;
+				m_endTurnTimer->resetTimer();
 			}
 		}
 	}
@@ -135,30 +160,52 @@ void GameScreen::update(float mouseX, float mouseY){
 				}
 			}
 
-			tempUnit->update(m_mousePos);
+			if (!tempUnit->isDead() && tempUnit->getCurHealth() <= 0){
+				tempUnit->setCurHealth(0);
 
-			tempUnit = NULL;
+				if (m_curUnit == tempUnit){
+					changeUnit();
+				}
+			}
+
+			if (!tempUnit->isDead()){
+				tempUnit->update(m_mousePos);
+
+				tempUnit = NULL;
+			}
 		}
 	}
 
 	m_cam->move()->setPos(m_curUnit->getPosition().x, m_curUnit->getPosition().y, m_cam->move()->getPos().z);
 
-	for (int i = 0; i < NBR_TEAMS; i++){
+	if (m_gameTimer->getElapsedTime() >= GAME_TIME){
+		SceneSelect::getInstance(m_hdc).setScene(START, m_hdc);
+		return;
+	}
+
+	for (int i = 0; i < m_teams.size(); i++){
 		if (m_teams[i]->isDead()){
-			SceneSelect::getInstance().setScene(START);
-			break;
+			SceneSelect::getInstance(m_hdc).setScene(START, m_hdc);
+			return;
 		}
+	}
+
+	if (m_turnTimer->getElapsedTime() >= TURN_TIME){
+		changeUnit();
+	}
+
+	if (m_hitTerrain && m_endTurnTimer->getElapsedTime() >= HIT_TURN_TIME || m_fired && m_endTurnTimer->getElapsedTime() >= FIRED_TURN_TIME){
+		changeUnit();
 	}
 }
 
 void GameScreen::render(){
 	m_cam->update();
 	
-	if(renderCubes){
-		for (int i = 0; i < NBR_TEAMS; i++){
-			m_teams[i]->render();
-		}
+	for (int i = 0; i < NBR_TEAMS; i++){
+		m_teams[i]->render();
 	}
+
 
 	if (m_land){
 		for (int i = 0; i < m_land->size(); i++){
@@ -167,7 +214,47 @@ void GameScreen::render(){
 		}
 	}
 
+	if (m_curUnit->getWeapon()->getPowerGen()){
+		m_curUnit->getWeapon()->generatePower();
+	}
+	
+	for (int i = 0; i < NBR_TEAMS; i++){
+		for (int j = 0; j < NBR_UNITS; j++){
+			if (!m_teams[i]->getUnit(j)->isDead()){
+				m_teams[i]->getUnit(j)->renderHealthBar();
+			}
+		}
+	}
+
 	//m_quadTree->render();
+}
+
+void GameScreen::render2D(){
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glColor4f(0.0f, 0.0f, 0.8f, 0.5f);
+		glBegin(GL_QUADS);
+			glVertex2f(m_sWidth, m_sHeight);
+			glVertex2f(m_sWidth, m_sHeight - 50);
+			glVertex2f(m_sWidth - 100, m_sHeight - 50);
+			glVertex2f(m_sWidth - 100, m_sHeight);
+		glEnd();
+
+		glBegin(GL_QUADS);
+			glVertex2f(m_sWidth/2 - 50, 0);
+			glVertex2f(m_sWidth/2 - 50, 50);
+			glVertex2f(m_sWidth/2 + 50, 50);
+			glVertex2f(m_sWidth/2 + 50, 0);
+		glEnd();
+	glDisable(GL_BLEND);
+
+	m_largeFont->setColor(1.0f, 1.0f, 1.0f);
+	char s[255];
+	sprintf(s, "%i", (TURN_TIME - (int)m_turnTimer->getElapsedTime()));
+	m_largeFont->printString(m_sWidth - 100, m_sHeight, s);
+
+	sprintf(s, "%i", (GAME_TIME - (int)m_gameTimer->getElapsedTime()));
+	m_largeFont->printString(m_sWidth/2 - 50, 50, s);
 }
 
 void GameScreen::processKeyUp(int key){
@@ -264,10 +351,28 @@ void GameScreen::processMouse(int key, int state){
 		}
 		break;
 	case WM_RBUTTONDOWN:
-		m_curUnit->fireWeapon();
+		if (!m_fired){
+			m_curUnit->getWeapon()->setPowerGen(true);
+		}
+		break;
+	case WM_RBUTTONUP:
+		if (!m_fired){
+			m_curUnit->getWeapon()->setPowerGen(false);
+			m_curUnit->fireWeapon();
+			m_fired = true;
+			m_endTurnTimer->resetTimer();
+		}
 		break;
 	case WM_MOUSEWHEEL:
-		((short)HIWORD(state) < 0) ? m_cam->move()->backward(true) : m_cam->move()->forward(true);
+		if (state < 0){
+			if (m_cam->getPos().z < 0.5f){
+				m_cam->move()->backward(true);
+			}
+		}else{
+			if (m_cam->getPos().z > -1.0f){
+				m_cam->move()->forward(true);
+			}
+		}
 		break;
 	default:
 		break;
@@ -401,7 +506,7 @@ void GameScreen::changeUnit(){
 
 		for (int i = 0; i < NBR_TEAMS; i++){
 			if (m_teams[i]->isDead()){
-				SceneSelect::getInstance().setScene(START);
+				SceneSelect::getInstance(m_hdc).setScene(START, m_hdc);
 				break;
 			}
 		}
@@ -417,6 +522,9 @@ void GameScreen::changeUnit(){
 	}
 
 	m_curUnit->move()->stopMoving();
+	m_turnTimer->resetTimer();
+	m_hitTerrain = false;
+	m_fired = false;
 }
 
 void GameScreen::BuildQuadTree(){

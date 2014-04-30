@@ -7,12 +7,15 @@ TimeControl& TimeControl::getInstance(){
 
 TimeControl::TimeControl()
 {
-	m_curTime = m_lastCall = timeGetTime();
+	m_timer = new Timer;
+	m_curTime = m_lastCall = m_timer->getElapsedTime();
 }
 
 
-TimeControl::~TimeControl()
-{
+TimeControl::~TimeControl(){
+	if (m_timer){
+		delete m_timer;
+	}
 }
 
 double TimeControl::getDeltaTime(){
@@ -24,10 +27,9 @@ float TimeControl::getCurTime(){
 }
 
 void TimeControl::updateTime(){
-	m_curTime = timeGetTime();
+	m_curTime = m_timer->getElapsedTime();
 
 	m_deltaTime = m_curTime - m_lastCall;
 
-	m_deltaTime /= 1000;
 	m_lastCall = m_curTime;
 }

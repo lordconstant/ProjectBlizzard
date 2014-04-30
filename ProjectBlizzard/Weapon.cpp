@@ -6,9 +6,12 @@ Weapon::Weapon(){
 	m_ammo = NULL;
 	m_damage = 10;
 	m_amount = 1;
-	m_power = 0;
+	m_power = 1;
 	m_curShot = NULL;
 	m_infinite = m_hit = false;
+	m_curPower = m_lastPower = 0;
+	m_powerUp = true;
+	m_generatePower = false;
 }
 
 Weapon::Weapon(string name, Model* model, Model* ammo, int damage, int amount){
@@ -17,7 +20,7 @@ Weapon::Weapon(string name, Model* model, Model* ammo, int damage, int amount){
 	m_ammo = ammo;
 	m_damage = damage;
 	m_amount = amount;
-	m_power = 0;
+	m_power = 1;
 	m_curShot = NULL;
 	m_hit = false;
 
@@ -32,6 +35,10 @@ Weapon::Weapon(string name, Model* model, Model* ammo, int damage, int amount){
 	if (m_ammo){
 		m_ammo->setPos(0, 0, 0);
 	}
+
+	m_curPower = m_lastPower = 0;
+	m_powerUp = true;
+	m_generatePower = false;
 }
 
 Weapon::~Weapon(){
@@ -46,7 +53,7 @@ int Weapon::getAmountWeps(){
 }
 
 float Weapon::getPower(){
-	return m_power;
+	return m_lastPower;
 }
 
 string Weapon::getName(){
@@ -63,6 +70,10 @@ bool Weapon::hasModel(){
 	}
 
 	return false;
+}
+
+bool Weapon::getPowerGen(){
+	return m_generatePower;
 }
 
 Vector Weapon::getPos(){
@@ -135,6 +146,7 @@ void Weapon::setColor(float r, float g, float b){
 
 bool Weapon::useWeapon(){
 	if(!m_ammo){
+		m_curPower = 0;
 		return false;
 	}
 
@@ -147,8 +159,16 @@ bool Weapon::useWeapon(){
 	m_curShot->setPos(m_pos);
 
 	float opp, adj, angle;
-	opp = m_direction.y - m_pos.y;
-	adj = m_direction.x - m_pos.x;
+
+	if ((m_direction.y > 10 && m_direction.y < -10) || (m_direction.x > 10 && m_direction.x < -10)){
+		opp = m_direction.y - m_pos.y;
+		adj = m_direction.x - m_pos.x;
+
+	}
+	else{
+		opp = m_direction.y;
+		adj = m_direction.x;
+	}
 
 	angle = atan(opp / adj);
 	m_shotDir.x = cos(angle);
@@ -160,9 +180,12 @@ bool Weapon::useWeapon(){
 		m_shotDir.y = -m_shotDir.y;
 	}
 
-	m_curShot->setVel(m_shotDir.x*2, m_shotDir.y*2);
-	m_power = 1.0f;
-	m_curShot->setAccel(m_shotDir.x * m_power * 3.0f, m_shotDir.y * m_power * 3.0f);
+	m_curShot->setVel(m_shotDir.x * m_curPower * 3.0f, m_shotDir.y * m_curPower * 3.0f);
+
+	m_curShot->setAccel(m_shotDir.x * m_curPower * 3.0f, m_shotDir.y * m_curPower * 3.0f);
+
+	m_lastPower = m_curPower;
+	m_curPower = 0;
 
 	return true;
 }
@@ -279,8 +302,42 @@ void Weapon::update(Vector mouse){
 	m_hit = false;
 }
 
-void Weapon::updatePower(){
+void Weapon::generatePower(){
+	if (m_curPower >= m_power){
+		m_powerUp = false;
+	}
 
+	if (m_curPower <= 0){
+		m_powerUp = true;
+	}
+
+	if (m_powerUp){
+		m_curPower += TimeControl::getInstance().getDeltaTime();
+	}
+	else{
+		m_curPower -= TimeControl::getInstance().getDeltaTime();
+	}
+
+	if (m_curPower < 0){
+		m_curPower = 0;
+	}
+
+	float length = (0.05f / m_power) * m_curPower;
+
+	glPushMatrix();
+		glTranslatef(m_pos.x - 0.025f, m_pos.y + 0.05f, 1.1f);
+		glColor3f(1.0f, 0.0f, 0.0f);
+		glBegin(GL_QUADS);
+			glVertex3f(0.0f, 0.0f, 0.0f);
+			glVertex3f(length, 0.0f, 0.0f);
+			glVertex3f(length, 0.01f, 0.0f);
+			glVertex3f(0.0f, 0.01f, 0.0f);
+		glEnd();
+	glPopMatrix();
+}
+
+void Weapon::setPowerGen(bool power){
+	m_generatePower = power;
 }
 
 void Weapon::reduceAmount(){

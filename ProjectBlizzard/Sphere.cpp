@@ -1,7 +1,7 @@
 #include "Sphere.h"
 
 
-Sphere::Sphere():Model(0.2){
+Sphere::Sphere():Model(0.2f){
 	m_sphere = gluNewQuadric();
 }
 

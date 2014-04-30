@@ -3,7 +3,7 @@
 
 Camera::Camera(){
 	m_pos.x = m_pos.y = m_pos.z = 0;
-	m_move = new Movement(m_pos, m_angle, 2.0f, 2.0f, 4.0f);
+	m_move = new Movement(m_pos, m_angle, 2.0f, 2.0f, 5.0f);
 }
 
 

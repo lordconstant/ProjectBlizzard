@@ -74,19 +74,11 @@ void Movement::setAllVel(float xSpeed, float ySpeed, float zSpeed){
 void Movement::moveXPos(float speed){
 	float delta = TimeControl::getInstance().getDeltaTime();
 
-	if (delta <= 0){
-		delta = 0.0001;
-	}
-
 	m_pos->x += delta * speed;
 }
 
 void Movement::moveYPos(float speed){
 	float delta = TimeControl::getInstance().getDeltaTime();
-
-	if (delta <= 0){
-		delta = 0.0001;
-	}
 
 	m_pos->y += delta * speed;
 }
@@ -94,8 +86,8 @@ void Movement::moveYPos(float speed){
 void Movement::moveZPos(float speed){
 	float delta = TimeControl::getInstance().getDeltaTime();
 
-	if (delta <= 0){
-		delta = 0.0001;
+	if (delta == 0){
+		delta = 0.001;
 	}
 
 	m_pos->z += delta * speed;

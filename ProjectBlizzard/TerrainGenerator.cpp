@@ -170,7 +170,7 @@ Image TerrainGenerator::renderNoise(int oct, float freq, float pers, float lacun
 
 	heightMapBuilder.SetSourceModule(myModule);
 	heightMapBuilder.SetDestNoiseMap(heightMap);
-	heightMapBuilder.SetDestSize(256, 128);
+	heightMapBuilder.SetDestSize(128, 64);
 	heightMapBuilder.SetBounds(2.0f, 4.0f, 2.0f, 4.0f);
 	heightMapBuilder.Build();
 

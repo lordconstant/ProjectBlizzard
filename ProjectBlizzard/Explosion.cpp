@@ -13,9 +13,6 @@ Explosion::~Explosion()
 }
 
 void Explosion::circularExplosion(Vector pos, float radius, int damage, QuadTree& quadTree){
-	explo = new Cuboid(1, radius * 2, radius * 2, 0.05);
-	explo->setTexture("Images/Explosions/Cloud.bmp");
-	explo->setPos(pos);
 	tempBool = true;
 
 	radius *= radius;

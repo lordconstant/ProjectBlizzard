@@ -120,9 +120,6 @@
     <ClCompile Include="Weapon.cpp">
       <Filter>Source Files\Weapons</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Source Files\Time</Filter>
-    </ClCompile>
     <ClCompile Include="TimeControl.cpp">
       <Filter>Source Files\Time</Filter>
     </ClCompile>
@@ -160,6 +157,9 @@
       <Filter>Source Files\Collider</Filter>
     </ClCompile>
     <ClCompile Include="BoxCollider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="noiseutils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -261,6 +261,9 @@
       <Filter>Header Files\Collider</Filter>
     </ClInclude>
     <ClInclude Include="BoxCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="noiseutils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

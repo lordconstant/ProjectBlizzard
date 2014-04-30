@@ -55,7 +55,7 @@ BITMAP LoadTextures::LoadBMP(char *Filename){	//Loads a Bitmap & returns bitmap 
 					textureImageData[newpos + 2] = tmpBuf[bufpos];     
 				}
 			}
-			delete tmpBuf;
+			delete[] tmpBuf;
 		}
 	}
 	return bm;

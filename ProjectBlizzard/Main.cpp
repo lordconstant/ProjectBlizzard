@@ -32,7 +32,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
 					PostQuitMessage(0);
 					break;
 				case VK_O:
-					g_Game.sceneSel->setScene(OPTIONS);
 				default:
 					break;
 			}
@@ -53,11 +52,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
 			g_Game.mouseY = HIWORD(lParam);
 			break;
 		case WM_LBUTTONDOWN:
-			g_Game.sceneSel->getCurScene()->processMouse(uMsg, wParam);
-			break;
 		case WM_RBUTTONDOWN:
-			g_Game.sceneSel->getCurScene()->processMouse(uMsg, wParam);
-			break;
+		case WM_RBUTTONUP:
 		case WM_MOUSEWHEEL:
 			g_Game.sceneSel->getCurScene()->processMouse(uMsg, wParam);
 			break;

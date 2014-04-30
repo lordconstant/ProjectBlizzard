@@ -1,6 +1,5 @@
 #pragma once
-#include <noiseutils.h>
-#include <noiseutils.cpp>
+#include "noiseutils.h"
 #include "Cube.h"
 #include <vector>
 #include <ctime>

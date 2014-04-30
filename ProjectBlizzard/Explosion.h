@@ -17,7 +17,6 @@ public:
 	Explosion(vector<Vector>& terrain, vector<Team*>& teams);
 	~Explosion();
 
-	Cuboid* explo;
 	bool tempBool;
 
 	void defineTerrain(vector<Vector>& terrain);

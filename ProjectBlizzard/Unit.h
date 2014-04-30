@@ -72,5 +72,7 @@ public:
 	void jump();
 
 	void render();
+
+	void renderHealthBar();
 };
 

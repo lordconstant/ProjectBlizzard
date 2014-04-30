@@ -106,6 +106,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Movement.cpp" />
+    <ClCompile Include="noiseutils.cpp" />
     <ClCompile Include="OptionsScreen.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Projectile.cpp" />
@@ -119,7 +120,6 @@
     <ClCompile Include="Team.cpp" />
     <ClCompile Include="TerrainGenerator.cpp" />
     <ClCompile Include="TimeControl.cpp" />
-    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
@@ -139,6 +139,7 @@
     <ClInclude Include="LoadTextures.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Movement.h" />
+    <ClInclude Include="noiseutils.h" />
     <ClInclude Include="OptionsScreen.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Projectile.h" />

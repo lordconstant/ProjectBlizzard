@@ -1,8 +1,9 @@
 #include "Scene.h"
 
 
-Scene::Scene(){
+Scene::Scene(HDC& hdc){
 	initialiseSound();
+	m_hdc = hdc;
 }
 
 void Scene::initialiseSound(){

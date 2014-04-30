@@ -62,4 +62,6 @@ public:
 	The main rendering method - renders a single frame
 	*/
 	void Game::Render();
+
+	void Game::Render2D();
 };

@@ -20,7 +20,7 @@ Unit::Unit(string name, Model* model, int health, float speed){
 	m_speed = speed;
 	m_name = name;
 	m_model = model;
-	m_wep = new Weapon("Rocket", new Cube(0.04f), new Cube(0.02f), 10, 1);
+	m_wep = new Weapon("Rocket", new Cube(0.04f), new Cube(0.02f), 55, 1);
 	m_dead = false;
 	Vector temp;
 	temp.x = temp.y = temp.z = 0;
@@ -253,4 +253,34 @@ void Unit::jump(){
 		m_phys->setVelocityY(JUMP_POWER);
 		m_phys->isGrounded(false);
 	}
+}
+
+void Unit::renderHealthBar(){
+	float height = 0.05f;
+	double height2 = (height / m_maxHealth) * m_curHealth;
+
+	glPushMatrix();
+		glTranslatef(m_model->getPos().x - 0.05f, m_model->getPos().y - 0.026f, 1.04f);
+
+		glColor3f(1.0f, 1.0f, 1.0f);
+
+		glBegin(GL_QUADS);
+			glVertex3f(0.0f, 0.0f, 0.0f);
+			glVertex3f(0.02f, 0.0f, 0.0f);
+			glVertex3f(0.02f, height + 0.002f, 0.0f);
+			glVertex3f(0.0f, height + 0.002f, 0.0f);
+		glEnd();
+
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(m_model->getPos().x - 0.05f, m_model->getPos().y - 0.026f, 1.041f);
+		glColor3f(0.0f, 1.0f, 0.0f);
+		glBegin(GL_QUADS);
+			glVertex3f(0.002f, 0.002f, 0.0f);
+			glVertex3f(0.018f, 0.002f, 0.0f);
+			glVertex3f(0.018f, height2, 0.0f);
+			glVertex3f(0.002f, height2, 0.0f);
+		glEnd();
+	glPopMatrix();
 }
