@@ -1,16 +1,16 @@
 #include "Physics.h"
 
 
-Physics::Physics(Vector& pos){
-	m_pos = &pos;
+Physics::Physics(Vector* pos){
+	m_pos = pos;
 	m_vel = m_acc = Vector(0, 0, 0);
 	m_grounded = false;
 	m_wind = 0;
 	m_slowed = true;
 }
 
-
 Physics::~Physics(){
+	m_pos = NULL;
 }
 
 float Physics::getAccelX(){

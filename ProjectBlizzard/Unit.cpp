@@ -8,8 +8,8 @@ Unit::Unit(void){
 	m_model = NULL;
 	m_wep = NULL;
 	m_dead = false;
-	m_wepPos = m_modelPos = m_pos = m_angle = Vector(0, 0, 0);
-	m_move = new Movement(m_pos, m_angle, m_speed, m_speed, 0);
+	m_wepPos = m_modelPos = m_angle = Vector(0.0f, 0.0f, 0.0f);
+	m_pos = new Vector(0.0f, 0.0f, 0.0f);
 	m_phys = new Physics(m_pos);
 	m_phys->isGrounded(true);
 }
@@ -20,13 +20,11 @@ Unit::Unit(string name, Model* model, int health, float speed){
 	m_speed = speed;
 	m_name = name;
 	m_model = model;
-	m_wep = new Weapon("Rocket", new Cube(0.04f), new Cube(0.02f), 55, 1);
+	m_wep = new Weapon("Rocket", new Cube(0.02f), new Cube(0.02f), 55, 1);
 	m_dead = false;
-	Vector temp;
-	temp.x = temp.y = temp.z = 0;
-	m_wepPos = m_modelPos = temp;
-	m_pos = m_angle = Vector(0, 0, 0);
-	m_move = new Movement(m_pos, m_angle, m_speed, m_speed, 0);
+
+	m_wepPos = m_modelPos = m_angle = Vector(0.0f, 0.0f, 0.0f);
+	m_pos = new Vector(0.0f, 0.0f, 0.0f);
 	m_phys = new Physics(m_pos);
 	m_phys->isGrounded(true);
 }
@@ -63,16 +61,12 @@ Weapon* Unit::getWeapon(){
 	return m_wep;
 }
 
-Movement* Unit::move(){
-	return m_move;
-}
-
 Physics* Unit::getPhysics(){
 	return m_phys;
 }
 
 Vector Unit::getPosition(){
-	return m_move->getPos();
+	return *m_pos;
 }
 
 Model* Unit::getModel(){
@@ -151,34 +145,29 @@ void Unit::setColor(float r, float g, float b){
 }
 
 void Unit::setPosition(Vector pos){
-	m_move->setPos(pos);
+	*m_pos = pos;
 
 	if (m_model){
-		setModelPos(pos);
+		setModelPos(m_modelPos);
 	}
 
 	if (m_wep){
-		setWepPos(pos);
+		setWepPos(m_wepPos);
 	}
 }
 
 void Unit::setModelPos(Vector pos){
-	m_model->setPos(m_move->getPos());
-	//m_modelPos = m_model->getPos();
+	m_model->setPos(*m_pos + pos);
+	m_modelPos = pos;
 }
 
 void Unit::setWepPos(Vector pos){
-	m_wep->setPos(m_move->getPos());
-	//m_wepPos = pos;
+	m_wep->setPos(*m_pos + pos);
+	m_wepPos = pos;
 }
 
 void Unit::setPosition(float x, float y, float z){
-	Vector temp;
-	temp.x = x;
-	temp.y = y;
-	temp.z = z;
-
-	setPosition(temp);
+	setPosition(Vector(x, y, z));
 }
 
 void Unit::setModelPos(float x, float y, float z){
@@ -222,14 +211,10 @@ bool Unit::isDead(){
 }
 
 void Unit::update(Vector mouse){
-	m_move->moveX();
-	m_move->moveY();
-	m_move->moveZ();
-
-	setPosition(m_move->getPos().x, m_move->getPos().y, m_move->getPos().z);
-
+	setPosition(*m_pos);
 	m_wep->update(mouse);
 	m_phys->update();
+
 	if (m_curHealth <= 0){
 		m_dead = true;
 	}

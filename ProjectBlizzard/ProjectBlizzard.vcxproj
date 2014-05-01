@@ -60,6 +60,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\irrKlang;$(ProjectDir)\Resil;$(ProjectDir)\libNoise;$(ProjectDir)\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>opengl32.lib;glu32.lib;odbc32.lib;odbccp32.lib;winmm.lib;irrKlang/irrKlang.lib;Resil/DevIL.lib;Resil/ILU.lib;Resil/ILUT.lib;Resil/zlib1.lib;libNoise/libnoise.lib;GL/glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -81,6 +82,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalOptions>/FS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -98,6 +100,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="EndScreen.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScreen.cpp" />
@@ -121,6 +124,7 @@
     <ClCompile Include="TerrainGenerator.cpp" />
     <ClCompile Include="TimeControl.cpp" />
     <ClCompile Include="Unit.cpp" />
+    <ClCompile Include="Water.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +136,7 @@
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="DebugPrint.h" />
+    <ClInclude Include="EndScreen.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameScreen.h" />
@@ -157,6 +162,7 @@
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="vector.h" />
+    <ClInclude Include="Water.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

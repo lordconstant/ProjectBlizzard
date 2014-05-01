@@ -41,44 +41,43 @@ void GameScreen::initialise(){
 	m_endTurnTimer = new Timer();
 
 	m_largeFont = new BFont(m_hdc, "Courier", 50);
+	m_skySphere = new Sphere(10);
+	m_skySphere->setTexture("Images/sky_sunbeams1.bmp");
 
+	m_water = new Water("Images/water.bmp", 20, 30);
 	m_quadTree = NULL;
 
 	m_land = NULL;
 	m_explo = NULL;
-	
+	m_curUnit = NULL;
+
 	m_fired = m_hitTerrain = false;
 
 	m_curTeam = 0;
 
 	for (int i = 0; i < NBR_TEAMS; i++){
 		m_teams.push_back(new Team(i));
-
 		m_teams[i]->setCurrentUnit(0);
 
+		Vector tCol = Vector(random::rnd.number(1.0f), random::rnd.number(1.0f), random::rnd.number(1.0f));
 		for (int j = 0; j < NBR_UNITS; j++){
 			Cube* temp;
 
-			if (i == 0){
-				temp = new Cube(0.05f, 1.0f, 0.0f, 0.5f);
-				m_teams[i]->addUnit(new Unit("Pete", temp, 100, 2.0f));
-			}
-
-			if (i == 1){
-				temp = new Cube(0.05f, 0.0f, 0.0f, 1.0f);
-				m_teams[i]->addUnit(new Unit("Pete", temp, 100, 2.0f));
-			}
-
-			m_teams[i]->getUnit(j)->setWepPos(temp->getScale() / 2, temp->getScale() / 2, 1);
+			temp = new Cube(0.048f, tCol.x, tCol.y, tCol.z);
+			char s[255];
+			sprintf(s, "Pete %i", i);
+			m_teams[i]->addUnit(new Unit(s, temp, 100, 2.0f));
 		}
 	}
 
 	m_sEngine->play2D("Sounds/Electrodoodle.mp3", true);
 
-	m_landCube = new Cube(0.05f, 0.0f, 1.0f, 0.25f);
+	m_landCube = new Cube(0.05f, 0.0f, 0.8f, 0.25f);
 
-	int gameType = rand() % 6;
+	int gameType = rand() % 9;
 	createGame(gameType);
+
+	m_water->setPos(Vector(m_width / 2, 0 - m_landCube->getScale()/2, 0));
 
 	changeUnit();
 }
@@ -90,6 +89,7 @@ void GameScreen::update(float mouseX, float mouseY){
 		m_teams[i]->update();
 	}
 
+	//Causes an explosion at where the curShor hits
 	if (m_curUnit->getWeapon()->getCurShot()){
 		if (m_quadTree->processCollisions(m_curUnit->getWeapon()->getCurShot()->getModel())){
 			if (m_explo){
@@ -113,11 +113,14 @@ void GameScreen::update(float mouseX, float mouseY){
 		for (int j = 0; j < NBR_UNITS; j++){
 			Unit* tempUnit = m_teams[i]->getUnit(j);
 
+			//Smooths out physics
 			tempUnit->getModel()->setPos(tempUnit->getPhysics()->nextPos());
 
+			//Checks to see if collision occurs between current position and next
 			BoxCollider* tempCol = (BoxCollider*)m_quadTree->processCollisions(tempUnit->getModel(), tempUnit->getPhysics()->nextPos());
 
 			if (tempCol){
+				//When going left, collide with right of terrain
 				if (tempUnit->getPhysics()->getVelX() < 0){
 					if (tempCol->hitright((BoxCollider*)tempUnit->getModel()->getCollider())){
 						tempUnit->getPhysics()->setAccelX(0.0f);
@@ -125,6 +128,7 @@ void GameScreen::update(float mouseX, float mouseY){
 					}
 				}
 
+				//When going right collide with left of terrain
 				if (tempUnit->getPhysics()->getVelX() > 0){
 					if (tempCol->hitLeft((BoxCollider*)tempUnit->getModel()->getCollider())){
 						tempUnit->getPhysics()->setAccelX(0.0f);
@@ -132,6 +136,7 @@ void GameScreen::update(float mouseX, float mouseY){
 					}
 				}
 
+				//When falling collide with top of terrain
 				if (tempUnit->getPhysics()->getVelY() < 0){
 					if (tempCol->hitTop((BoxCollider*)tempUnit->getModel()->getCollider())){
 						tempUnit->getPhysics()->setAccelY(0.0f);
@@ -141,6 +146,7 @@ void GameScreen::update(float mouseX, float mouseY){
 					}
 				}
 
+				//When jumping collide with bottom of terrain
 				if (tempUnit->getPhysics()->getVelY() > 0){
 					if (tempCol->hitBottom((BoxCollider*)tempUnit->getModel()->getCollider())){
 						tempUnit->getPhysics()->setAccelY(0.0f);
@@ -149,10 +155,12 @@ void GameScreen::update(float mouseX, float mouseY){
 				}
 			}
 			else{
+				//If not colliding the unit is falling
 				tempUnit->getPhysics()->isGrounded(false);
 			}
 
-			if (tempUnit->getPosition().y < 0 && !tempUnit->isDead()){
+			//If the unit goes below the water level they die
+			if (tempUnit->getPosition().y < WATER_LEVEL && !tempUnit->isDead()){
 				tempUnit->setCurHealth(0);
 
 				if (m_curUnit == tempUnit){
@@ -160,6 +168,7 @@ void GameScreen::update(float mouseX, float mouseY){
 				}
 			}
 
+			//When a unit is below 0 health set them to dead and change unit
 			if (!tempUnit->isDead() && tempUnit->getCurHealth() <= 0){
 				tempUnit->setCurHealth(0);
 
@@ -168,6 +177,7 @@ void GameScreen::update(float mouseX, float mouseY){
 				}
 			}
 
+			//If the unit is alive, run its update
 			if (!tempUnit->isDead()){
 				tempUnit->update(m_mousePos);
 
@@ -176,24 +186,47 @@ void GameScreen::update(float mouseX, float mouseY){
 		}
 	}
 
+	//Keeps camera on the unit
 	m_cam->move()->setPos(m_curUnit->getPosition().x, m_curUnit->getPosition().y, m_cam->move()->getPos().z);
 
+	if (m_cam->getPos().y <= m_landCube->getScale() * 2){
+		m_cam->move()->setPos(m_cam->getPos().x, m_landCube->getScale() * 2, m_cam->getPos().z);
+	}
+
+	m_skySphere->setPos(m_cam->getPos().x, m_cam->getPos().y, 1);
+
+	//If the game lasts longer than its allowed its a draw
 	if (m_gameTimer->getElapsedTime() >= GAME_TIME){
-		SceneSelect::getInstance(m_hdc).setScene(START, m_hdc);
+		SceneSelect::getInstance(m_hdc).setWinner("draw");
+		SceneSelect::getInstance(m_hdc).setScene(END, m_hdc);
 		return;
 	}
 
-	for (int i = 0; i < m_teams.size(); i++){
-		if (m_teams[i]->isDead()){
-			SceneSelect::getInstance(m_hdc).setScene(START, m_hdc);
-			return;
+
+	int teamsAlive = 0;
+	string teamName = "draw"; //if it does'nt change the game is a draw
+
+	//Checks to see how many teams are alive
+	for (int i = 0; i < NBR_TEAMS; i++){
+		if (!m_teams[i]->isDead()){
+			teamsAlive++;
+			teamName = m_teams[i]->getName();
 		}
 	}
 
+	//If there arent 2 teams alive, gameover
+	if (teamsAlive < 2){
+		SceneSelect::getInstance(m_hdc).setWinner(teamName);
+		SceneSelect::getInstance(m_hdc).setScene(END, m_hdc);
+		return;
+	}
+
+	//Changes unit at the end of the turn
 	if (m_turnTimer->getElapsedTime() >= TURN_TIME){
 		changeUnit();
 	}
 
+	//Changes the unit after it hits the terrain or after firing a projectile
 	if (m_hitTerrain && m_endTurnTimer->getElapsedTime() >= HIT_TURN_TIME || m_fired && m_endTurnTimer->getElapsedTime() >= FIRED_TURN_TIME){
 		changeUnit();
 	}
@@ -201,11 +234,14 @@ void GameScreen::update(float mouseX, float mouseY){
 
 void GameScreen::render(){
 	m_cam->update();
-	
+
+	m_skySphere->Render();
+
+	m_water->render();
+
 	for (int i = 0; i < NBR_TEAMS; i++){
 		m_teams[i]->render();
 	}
-
 
 	if (m_land){
 		for (int i = 0; i < m_land->size(); i++){
@@ -225,7 +261,6 @@ void GameScreen::render(){
 			}
 		}
 	}
-
 	//m_quadTree->render();
 }
 
@@ -246,7 +281,13 @@ void GameScreen::render2D(){
 			glVertex2f(m_sWidth/2 + 50, 50);
 			glVertex2f(m_sWidth/2 + 50, 0);
 		glEnd();
+		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glDisable(GL_BLEND);
+
+	int gap = m_sHeight / 20;
+	for (int i = 0; i < NBR_TEAMS; i++){
+		m_teams[i]->renderHealthBar(m_hdc, m_sWidth / 4, m_sHeight - (gap * (i + 1)), m_sWidth / 2, m_sHeight / 40);
+	}
 
 	m_largeFont->setColor(1.0f, 1.0f, 1.0f);
 	char s[255];
@@ -260,52 +301,14 @@ void GameScreen::render2D(){
 void GameScreen::processKeyUp(int key){
 	switch (key){
 	case VK_W:
-		//m_cam->move()->up(false);
-		//m_curUnit->move()->up(false);
 		break;
 	case VK_S:
-		//m_cam->move()->down(false);
-		//m_curUnit->move()->down(false);
 		break;
 	case VK_A:
-		//m_cam->move()->left(false);
-		//m_curUnit->move()->left(false);
 		m_curUnit->getPhysics()->setAccelX(0);
 		break;
 	case VK_D:
-		//m_cam->move()->right(false);
-		//m_curUnit->move()->right(false);
 		m_curUnit->getPhysics()->setAccelX(0);
-		break;
-	case VK_SPACE:
-		m_curUnit->jump();
-		break;
-	case VK_1:
-		createGame(ISLANDS);
-		break;
-	case VK_2:
-		createGame(LAND);
-		break;
-	case VK_3:
-		createGame(CAVES);
-		break;
-	case VK_4:
-		createGame(CAVE);
-		break;
-	case VK_5:
-		createGame(FLOATING_ISLAND);
-		break;
-	case VK_6:
-		createGame(BRIDGE);
-		break;
-	case VK_7:
-		createGame(RIDGES);
-		break;
-	case VK_8:
-		createGame(VALLEY);
-		break;
-	case VK_9:
-		createGame(CAVE2);
 		break;
 	default:
 		break;
@@ -316,27 +319,22 @@ void GameScreen::processKeyUp(int key){
 void GameScreen::processKeyDown(int key){
 	switch (key){
 	case VK_W:
-		//m_cam->move()->up(true);
-		//m_curUnit->move()->up(true);
 		break;
 	case VK_S:
-		//m_cam->move()->down(true);
-		//m_curUnit->move()->down(true);
 		break;
 	case VK_A:
-		//m_cam->move()->left(true);
-		//m_curUnit->move()->left(true);
 		if (m_curUnit->getPhysics()->getVelX() > -0.5f){
 			m_curUnit->getPhysics()->setAccelX(-1);
 		}
 
 		break;
 	case VK_D:
-		//m_cam->move()->right(true);
-		//m_curUnit->move()->right(true);
 		if (m_curUnit->getPhysics()->getVelX() < 0.5f){
 			m_curUnit->getPhysics()->setAccelX(1);
 		}
+		break;
+	case VK_SPACE:
+		m_curUnit->jump();
 		break;
 	default:
 		break;
@@ -383,12 +381,15 @@ void GameScreen::createGame(int type){
 	genTerrain(type);
 
 	m_width = m_height = 0;
+
+	//Makes sure we are getting the first unit
 	for (int i = 0; i < NBR_TEAMS; i++){
 		m_teams[i]->setCurrentUnit(0);
 	}
 
 	m_curTeam = 0;
 
+	//Sets the overall width and height of the terrain
 	for (int i = 0; i < m_land->size(); i++){
 		if (m_land->at(i).x > m_width){
 			m_width = m_land->at(i).x;
@@ -399,29 +400,26 @@ void GameScreen::createGame(int type){
 		}
 	}
 
+	BuildQuadTree();
+
 	for (int i = 0; i < NBR_TEAMS; i++){
 		for (int j = 0; j < NBR_UNITS; j++){
 			placeUnit(m_teams[i]->getUnit(j));
 		}
 	}
-
-	for (int i = 0; i < NBR_TEAMS; i++){
-		for (int j = 0; j < NBR_UNITS; j++){
-			m_teams[i]->getUnit(j)->setPosition(m_teams[i]->getUnit(j)->getPosition().x, m_teams[i]->getUnit(j)->getPosition().y + (0.05f), m_teams[i]->getUnit(j)->getPosition().z);
-		}
-	}
-
-	BuildQuadTree();
 }
 
 void GameScreen::genTerrain(int type){
+	//Removes existing land
 	if (m_land){
 		delete m_land;
 	}
 
+	//Generates a new map from the selected type
 	m_land = new vector<Vector>;
 	*m_land = m_tGen.generateMap(type);
 
+	//Initialises the explosions
 	if (!m_explo){
 		m_explo = new Explosion(*m_land, m_teams);
 	}
@@ -438,23 +436,23 @@ void GameScreen::placeUnit(Unit* unit){
 
 		for (int i = 0; i < m_land->size(); i++){
 			if ((unit->getPosition().x - 0.025f) < m_land->at(i).x + (m_landCube->getScale() / 2) && (unit->getPosition().x + 0.025f) > m_land->at(i).x - (m_landCube->getScale() / 2)){
-				unit->setPosition(m_land->at(i).x, m_land->at(i).y + (m_landCube->getScale() / 2), 1);
+				unit->setPosition(m_land->at(i).x, m_land->at(i).y + m_landCube->getScale(), 1);
 
 				for (int j = 0; j < m_land->size(); j++){
-					if(unit->getPosition().x == m_land->at(j).x){
-						if(unit->getPosition().y < m_land->at(j).y){
+					if (unit->getPosition().x == m_land->at(j).x){
+						if (unit->getPosition().y < m_land->at(j).y){
 							float temp;
 
 							temp = m_land->at(j).y - unit->getPosition().y;
 
-							if(temp <= 0.1f){
+							if (temp <= 0.1f){
 								unit->setPosition(m_land->at(j).x, m_land->at(j).y, 1);
 							}
 						}
 					}
 				}
 
-				if(unit->getPosition().y < m_height){
+				if (unit->getPosition().y < m_height){
 					done = true;
 				}
 
@@ -485,10 +483,20 @@ void GameScreen::placeUnit(Unit* unit){
 	if (regen){
 		createGame(m_tGen.getCurrentType());
 	}
+	char s[255];
+	sprintf(s, "Before: %3.3f", unit->getPosition().y);
+	DebugOut(s);
+	unit->setPosition(unit->getPosition().x, unit->getPosition().y + 0.3f, 1);
+	sprintf(s, "After: %3.3f", unit->getPosition().y);
+	DebugOut(s);
 }
 
 void GameScreen::changeUnit(){
 	bool run = false;
+
+	if (m_curUnit){
+		m_curUnit->getPhysics()->setAccelX(0);
+	}
 
 	m_teams[m_curTeam]->update();
 
@@ -504,11 +512,20 @@ void GameScreen::changeUnit(){
 			m_teams[m_curTeam]->setCurrentUnit(m_teams[m_curTeam]->getCurrentUnit() + 1);
 		}
 
+		int teamsAlive = 0;
+		string teamName = "draw"; //if it does'nt change the game is a draw
+
 		for (int i = 0; i < NBR_TEAMS; i++){
-			if (m_teams[i]->isDead()){
-				SceneSelect::getInstance(m_hdc).setScene(START, m_hdc);
-				break;
+			if (!m_teams[i]->isDead()){
+				teamsAlive++;
+				teamName = m_teams[i]->getName();
 			}
+		}
+
+		if (teamsAlive < 2){
+			SceneSelect::getInstance(m_hdc).setWinner(teamName);
+			SceneSelect::getInstance(m_hdc).setScene(END, m_hdc);
+			break;
 		}
 
 		run = true;
@@ -521,7 +538,6 @@ void GameScreen::changeUnit(){
 		m_curTeam++;
 	}
 
-	m_curUnit->move()->stopMoving();
 	m_turnTimer->resetTimer();
 	m_hitTerrain = false;
 	m_fired = false;
@@ -535,7 +551,7 @@ void GameScreen::BuildQuadTree(){
 
 	m_quadTree = new QuadTree();
 
-	m_quadTree->buildFullTree(NBR_LEVELS, m_width / 2, m_height / 2, 0.5f, m_width, m_height, 1);
+	m_quadTree->buildFullTree(NBR_LEVELS, (m_width + 0.1f) / 2, (m_height + 0.1f) / 2, 0.5f, m_width + 0.1f, m_height + 0.1f, 1);
 
 	for (int i = 0; i < m_land->size(); i++){
 		BoxCollider* temp = new BoxCollider;

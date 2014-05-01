@@ -7,7 +7,7 @@
 class BFont {
 private:
 	unsigned int listBase;	// display list base
-	float R, G, B;
+	float R, G, B, height;
 
 public:
 	BFont(HDC hDC, char* fName, int fSize);
@@ -17,4 +17,5 @@ public:
 	void ClearFont(unsigned int base);
 	void CleanUp();
 	void setColor(float r, float g, float b);
+	float getHeight();
 };

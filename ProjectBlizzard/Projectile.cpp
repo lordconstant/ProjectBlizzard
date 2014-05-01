@@ -3,7 +3,7 @@
 
 Projectile::Projectile(){
 	m_model = new Cube(0.5f);
-	m_phys = new Physics(m_pos);
+	m_phys = new Physics(&m_pos);
 }
 
 Projectile::Projectile(Model* model){
@@ -14,7 +14,7 @@ Projectile::Projectile(Model* model){
 		m_model = new Cube(0.1f);
 	}
 
-	m_phys = new Physics(m_pos);
+	m_phys = new Physics(&m_pos);
 }
 
 Projectile::~Projectile(){

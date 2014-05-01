@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Model.h"
-#include "DebugPrint.h"
 
 class Cube: public Model{
 	float m_VBVerts[24];
@@ -18,6 +17,7 @@ public:
 
 	float* getVertArr();
 	unsigned int* getIndicesArr();
+
 private:
 	//Modifies the size
 	void setSize(float scale);

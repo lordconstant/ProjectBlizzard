@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "Camera.h"
 #include "Cube.h"
+#include "Sphere.h"
 #include <vector>
 #include "TerrainGenerator.h"
 #include "Explosion.h"
@@ -11,16 +12,18 @@
 #include "random.h"
 #include "QuadTree.h"
 #include "Timer.h"
+#include "Water.h"
 
 using namespace timer;
 
 const int NBR_UNITS = 4;
 const int NBR_TEAMS = 2;
-const int NBR_LEVELS = 5;
+const int NBR_LEVELS = 4;
 const int TURN_TIME = 60; //One minute
 const int HIT_TURN_TIME = 2;
 const int FIRED_TURN_TIME = 5;
 const int GAME_TIME = 600; //Ten minutes
+const float WATER_LEVEL = -0.1f;
 
 class GameScreen :public Scene{
 	int m_curTeam;
@@ -34,9 +37,9 @@ class GameScreen :public Scene{
 	float m_width, m_height, *vertArray, *byteArray, *colArray;
 	BFont* m_largeFont;
 	bool m_fired, m_hitTerrain;
-
+	Sphere* m_skySphere;
 	QuadTree* m_quadTree;
-
+	Water* m_water;
 	Timer* m_turnTimer, *m_gameTimer, *m_endTurnTimer;
 public:
 	GameScreen(HDC& hdc);

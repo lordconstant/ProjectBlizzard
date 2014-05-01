@@ -77,8 +77,8 @@ bool BoxCollider::hitLeft(BoxCollider* col){
 	objBMin.x = col->getPos().x - col->getWidth() / 2;
 	objBMax.x = col->getPos().x + col->getWidth() / 2;
 
-	objAMin.y = this->getPos().y - (m_height * 0.4f);
-	objAMax.y = this->getPos().y + (m_height * 0.4f);
+	objAMin.y = this->getPos().y - (m_height * 0.45f);
+	objAMax.y = this->getPos().y + (m_height * 0.45f);
 
 	objBMin.y = col->getPos().y - col->getHeight() / 2;
 	objBMax.y = col->getPos().y + col->getHeight() / 2;
@@ -101,8 +101,8 @@ bool BoxCollider::hitright(BoxCollider* col){
 	objBMin.x = col->getPos().x - col->getWidth() / 2;
 	objBMax.x = col->getPos().x + col->getWidth() / 2;
 
-	objAMin.y = this->getPos().y - (m_height * 0.4f);
-	objAMax.y = this->getPos().y + (m_height * 0.4f);
+	objAMin.y = this->getPos().y - (m_height * 0.45f);
+	objAMax.y = this->getPos().y + (m_height * 0.45f);
 
 	objBMin.y = col->getPos().y - col->getHeight() / 2;
 	objBMax.y = col->getPos().y + col->getHeight() / 2;

@@ -54,7 +54,8 @@ void Game::Render(){
 void Game::Render2D(){
 	Set2D(0, m_width, m_height, 0); // Change to 2D view and use 1:1 pixel resolution with [0,0] origin being at the top-left corner.
 	glDisable(GL_DEPTH_TEST);  // Disable depth testing so the HUD will not be hidden by the 3D graphics
-
+	glDisable(GL_BLEND);
+	glDisable(GL_LIGHTING);
 	if (sceneSel->getCurScene()){
 		sceneSel->getCurScene()->render2D();
 	}

@@ -1,11 +1,13 @@
 #include "SceneSelect.h"
 
 SceneSelect::SceneSelect(HDC hdc){
+	m_winner = "Default";
 	setScene(START, hdc);
 }
 
 
 SceneSelect::~SceneSelect(){
+	delete m_curScene;
 }
 
 SceneSelect& SceneSelect::getInstance(HDC hdc){
@@ -36,7 +38,7 @@ void SceneSelect::setScene(int scene, HDC hdc){
 		m_curScene = new GameScreen(hdc);
 		break;
 	case END:
-		m_curScene = new StartScreen(hdc);
+		m_curScene = new EndScreen(hdc);
 		break;
 	default:
 		break;
@@ -47,4 +49,12 @@ void SceneSelect::setScene(int scene, HDC hdc){
 
 Scene* SceneSelect::getCurScene(){
 	return m_curScene;
+}
+
+string SceneSelect::getWinner(){
+	return m_winner;
+}
+
+void SceneSelect::setWinner(string winner){
+	m_winner = winner;
 }

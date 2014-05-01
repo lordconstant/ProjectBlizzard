@@ -28,16 +28,18 @@ void Cube::Render(){
 	if (m_scale != getScale()){
 		setSize(getScale());
 	}
+		glBindVertexArray(getVAO());
+		glEnable(GL_CULL_FACE);
 
-	glBindVertexArray(getVAO());
-	glEnable(GL_CULL_FACE);
 		glPushMatrix();
-		glColor3f(getColor().x, getColor().y, getColor().z);
-		glTranslatef(getPos().x, getPos().y, getPos().z);
 
-		glDrawElements(GL_QUADS, 24, GL_UNSIGNED_INT, m_indices);
+			glColor3f(getColor().x, getColor().y, getColor().z);
+			glTranslatef(getPos().x, getPos().y, getPos().z);
+
+			glDrawElements(GL_QUADS, 24, GL_UNSIGNED_INT, m_indices);
 
 		glPopMatrix();
+
 	glDisable(GL_CULL_FACE);
 	glBindVertexArray(0);
 }
@@ -64,11 +66,8 @@ void Cube::setSize(float scale){
 					   2, 6, 7, 3, 1, 5, 6, 2,
 					   3, 0, 1, 2, 4, 7, 6, 5};
 
-	memcpy(m_indices, temp, sizeof(int) * 24);
 
-	/*for (int i = 0; i < 24; i++){
-		m_indices[i] = temp[i];
-	}*/
+	memcpy(m_indices, temp, sizeof(int) * 24);
 }
 
 float* Cube::getVertArr(){
@@ -78,6 +77,7 @@ float* Cube::getVertArr(){
 unsigned int* Cube::getIndicesArr(){
 	return m_indices;
 }
+
 
 void Cube::createVAO(){
 	GLuint vao, buffers[2];

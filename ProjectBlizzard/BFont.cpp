@@ -25,6 +25,7 @@ BFont::BFont(HDC hDC, char *fName, int fSize){
 	boolean b = wglUseFontBitmaps(hDC, 32, 96, base);
 	SelectObject(hDC, oldF);
 	listBase = base;
+	height = fSize;
 }
 
 void BFont::setColor(float r, float g, float b){
@@ -55,4 +56,8 @@ void BFont::ClearFont(unsigned int base){
 
 void BFont::CleanUp(){
 	ClearFont(listBase);
+}
+
+float BFont::getHeight(){
+	return height;
 }

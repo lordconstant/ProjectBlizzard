@@ -14,7 +14,7 @@ class Physics{
 	bool m_grounded;
 	bool m_slowed;
 public:
-	Physics(Vector &pos);
+	Physics(Vector* pos);
 	~Physics();
 
 	float getAccelX();

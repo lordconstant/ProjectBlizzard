@@ -17,8 +17,7 @@ class Unit{
 	string m_name;
 	Model* m_model;
 	Weapon* m_wep;
-	Vector m_pos, m_angle, m_wepPos, m_modelPos;
-	Movement* m_move;
+	Vector *m_pos, m_angle, m_wepPos, m_modelPos;
 	bool m_dead;
 	Physics* m_phys;
 public:
@@ -35,7 +34,6 @@ public:
 
 	Weapon* getWeapon();
 
-	Movement* move();
 	Physics* getPhysics();
 
 	Vector getPosition();

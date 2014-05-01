@@ -5,6 +5,10 @@ Team::Team(int teamID){
 	m_maxHealth = m_curHealth = m_maxUnits = m_curUnit = 0;
 	m_ID = teamID;
 	m_dead = false;
+	char s[255];
+	sprintf(s, "Team%i", m_ID);
+	m_name = s;
+	m_font = NULL;
 }
 
 Team::~Team(void){
@@ -138,5 +142,53 @@ void Team::render(){
 		if (!m_units[i]->isDead()){
 			m_units[i]->render();
 		}
+	}
+}
+
+void Team::renderHealthBar(HDC hdc, float x, float y, float w, float h){
+	if (!m_font){
+		m_font = new BFont(hdc, "TFont", h);
+	}
+
+	if (m_font->getHeight() > h + 1 || m_font->getHeight() < h - 1){
+		delete m_font;
+		m_font = new BFont(hdc, "TFont", h);
+	}
+
+	float bhSize = (h / h) * 2, bwSize = (w / w) * 2;
+
+	double width = ((w - bwSize) / m_maxHealth) * m_curHealth;
+
+	m_font->setColor(0.0f, 0.0f, 1.0f);
+	char s[255];
+	strcpy(s, m_name.c_str());
+	m_font->printString(x - (m_name.size() * (h / 1.95f)) - bwSize, y - (h / 4), s);
+
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glBegin(GL_QUADS);
+		glVertex2f(x, y);
+		glVertex2f(x, y - h);
+		glVertex2f(x + w, y - h);
+		glVertex2f(x + w, y);
+	glEnd();
+
+	glColor3f(0.0f, 1.0f, 0.0f);
+	glBegin(GL_QUADS);
+		glVertex2f(x + bwSize, y - bhSize);
+		glVertex2f(x + bwSize, y - (h - bhSize));
+		glVertex2f(x + width, y - (h - bhSize));
+		glVertex2f(x + width, y - bhSize);
+	glEnd();
+
+	for (int i = 1; i < m_units.size(); i++){
+		int posx = x + ((w / m_units.size()) * i);
+
+		glColor3f(0.0f, 0.0f, 0.0f);
+		glBegin(GL_QUADS);
+			glVertex2f(posx, y);
+			glVertex2f(posx, y - h);
+			glVertex2f(posx + bhSize, y - h);
+			glVertex2f(posx + bhSize, y);
+		glEnd();
 	}
 }

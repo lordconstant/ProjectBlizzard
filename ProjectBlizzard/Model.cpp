@@ -4,12 +4,20 @@ Model::Model(){
 	m_scale = 1;
 	m_pos.x = m_pos.y = m_pos.z = 0;
 	m_collider = new BoxCollider();
+	m_VAO = 0;
+	m_buffers[0] = 0;
+	m_buffers[1] = 0;
+	setDimensions(1, 1, 1);
 }
 
 Model::Model(float scale){
 	m_scale = scale;
 	m_pos.x = m_pos.y = m_pos.z = 0;
 	m_collider = new BoxCollider();
+	m_VAO = 0;
+	m_buffers[0] = 0;
+	m_buffers[1] = 0;
+	setDimensions(1, 1, 1);
 }
 
 Model::~Model(){

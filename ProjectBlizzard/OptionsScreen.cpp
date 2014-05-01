@@ -23,6 +23,7 @@ void OptionsScreen::update(float mouseX, float mouseY){
 }
 
 void OptionsScreen::render(){
+	m_cam->update();
 	m_btn->render();
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "Unit.h"
 #include "Weapon.h"
+#include "BFont.h"
 
 #include <vector>
 
@@ -11,6 +12,7 @@ private:
 	vector<Unit*> m_units;
 	vector<Weapon*> m_weapons;
 	string m_name;
+	BFont* m_font;
 	bool m_dead;
 public:
 	Team(int teamID);
@@ -40,5 +42,7 @@ public:
 
 	void update();
 	void render();
+
+	void renderHealthBar(HDC hdc,float x, float y, float w, float h);
 };
 
