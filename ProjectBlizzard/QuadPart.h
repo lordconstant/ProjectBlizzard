@@ -38,7 +38,7 @@ private:
 	QuadPart* child[4];
 
 	/// A collection of game objects
-	vector<Collider*> objects;
+	vector<BoxCollider*> objects;
 
 	BoxCollider* area;
 
@@ -86,7 +86,7 @@ public:
 	Adds a cube to the partition tree
 	@param obj the cube to add.
 	*/
-	void addObject(Collider* obj);
+	void addObject(BoxCollider* obj);
 
 	/**
 	Determines whether the object can be totally contained by the
@@ -95,14 +95,13 @@ public:
 	@param obj the cube to test
 	@returns true it fits inside the partition else false
 	*/
-	bool contains(Collider* obj);
+	bool contains(BoxCollider* obj);
 	bool contains(Vector pos);
 
 	/**
 	Remove an object from this partition based on its unique id number.
 	@param id the unique id number of the object to remove.
 	*/
-	void removeObject(int id);
 	bool removeObject(Vector pos);
 	/**
 	Recursive function (starting with the leaf nodes) to process all 

@@ -3,16 +3,19 @@
 
 Button3D::Button3D(char* img, float width, float height, float length){
 	char s[255];
-	sprintf(s, "Images/Buttons/%s.bmp", img);
+	sprintf_s(s, "Images/Buttons/%s.bmp", img);
 	m_cuboid = new Cuboid(1, width, height, length);
 
-	m_img = img;
+	sprintf_s(m_img, "%s", img);
 
 	m_cuboid->setTexture(s);
 }
 
 
 Button3D::~Button3D(){
+	if (m_cuboid){
+		delete m_cuboid;
+	}
 }
 
 void Button3D::render(){
@@ -26,16 +29,16 @@ void Button3D::update(float mouseX, float mouseY){
 
 			m_cuboid->setPos(m_cuboid->getPos().x, m_cuboid->getPos().y, m_cuboid->getPos().z - 0.05);
 			char s[255];
-			sprintf(s, "Images/Buttons/%s_hover.bmp", m_img);
-			m_cuboid->setFaceTexture(s, LEFT_FACE);
+			sprintf_s(s, "Images/Buttons/%s_hover.bmp", m_img);
+			m_cuboid->setFaceTexture(s, FRONT_FACE);
 		}
 		return;
 	}
 
 	if (m_hover){
 		char a[255];
-		sprintf(a, "Images/Buttons/%s.bmp", m_img);
-		m_cuboid->setFaceTexture(a, LEFT_FACE);
+		sprintf_s(a, "Images/Buttons/%s.bmp", m_img);
+		m_cuboid->setFaceTexture(a, FRONT_FACE);
 		m_cuboid->setPos(m_cuboid->getPos().x, m_cuboid->getPos().y, m_cuboid->getPos().z + 0.05);
 	}
 

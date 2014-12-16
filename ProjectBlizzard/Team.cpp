@@ -6,12 +6,31 @@ Team::Team(int teamID){
 	m_ID = teamID;
 	m_dead = false;
 	char s[255];
-	sprintf(s, "Team%i", m_ID);
+	sprintf_s(s, "Team %i", m_ID);
 	m_name = s;
 	m_font = NULL;
 }
 
 Team::~Team(void){
+	if (m_units.size() > 0){
+		for (int i = 0; i < m_units.size(); i++){
+			delete m_units[i];
+		}
+
+		m_units.clear();
+	}
+
+	if (m_weapons.size() > 0){
+		for (int i = 0; i < m_weapons.size(); i++){
+			delete m_weapons[i];
+		}
+
+		m_weapons.clear();
+	}
+
+	if (m_font){
+		delete m_font;
+	}
 }
 
 int Team::getMaxHealth(){
@@ -161,7 +180,7 @@ void Team::renderHealthBar(HDC hdc, float x, float y, float w, float h){
 
 	m_font->setColor(0.0f, 0.0f, 1.0f);
 	char s[255];
-	strcpy(s, m_name.c_str());
+	strcpy_s(s, m_name.c_str());
 	m_font->printString(x - (m_name.size() * (h / 1.95f)) - bwSize, y - (h / 4), s);
 
 	glColor3f(1.0f, 1.0f, 1.0f);

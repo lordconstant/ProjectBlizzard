@@ -3,9 +3,8 @@
 #include "Model.h"
 
 class Cube: public Model{
-	float m_VBVerts[24];
+	float m_VBVerts[24], m_scale;
 	unsigned int m_indices[24];
-	int m_scale;
 public:
 
 	Cube(void);

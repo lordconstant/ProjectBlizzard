@@ -11,14 +11,14 @@
 class Model{
 	Vector m_pos, m_color;
 	float m_scale, m_width, m_height, m_length;
-	BoxCollider* m_collider;
+	BoxCollider m_collider;
 	GLuint m_VAO, m_buffers[2];
 
 public:
 	Model();
 	Model(float scale);
 
-	~Model();
+	virtual ~Model();
 
 	Vector getPos();
 	Vector getColor();
@@ -31,7 +31,7 @@ public:
 	GLuint getVAO();
 	GLuint* getBuffer();
 
-	Collider* getCollider();
+	BoxCollider getCollider();
 
 	void setScale(float scale);
 	void setDimensions(float width, float height, float length);

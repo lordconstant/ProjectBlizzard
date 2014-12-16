@@ -17,6 +17,7 @@ Cuboid::Cuboid(float scale, float width, float height, float length) : Model(sca
 }
 
 Cuboid::~Cuboid(void){
+	glDeleteTextures(6, m_texture);
 }
 
 void Cuboid::Render(){

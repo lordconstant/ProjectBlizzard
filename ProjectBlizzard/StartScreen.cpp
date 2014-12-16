@@ -5,10 +5,12 @@ StartScreen::StartScreen(HDC hdc) : Scene(hdc){
 }
 
 StartScreen::~StartScreen(){
-	for(int i = 0; i < m_btns.size(); i++){
-		if(m_btns[i]){
+	if (m_btns.size() > 0){
+		for (int i = 0; i < m_btns.size(); i++){
 			delete m_btns[i];
 		}
+
+		m_btns.clear();
 	}
 
 	if(m_cam){

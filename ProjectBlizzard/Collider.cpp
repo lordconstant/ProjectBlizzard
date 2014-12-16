@@ -2,6 +2,7 @@
 
 
 Collider::Collider(){
+	m_rot = m_pos = Vector(0, 0, 0);
 }
 
 Collider::Collider(float x, float y, float z){
@@ -19,10 +20,6 @@ Vector Collider::getRotation(){
 	return m_rot;
 }
 
-int Collider::getID(){
-	return m_id;
-}
-
 void Collider::setPos(Vector pos){
 	m_pos = pos;
 }
@@ -37,8 +34,4 @@ void Collider::setRot(Vector rot){
 
 void Collider::setRot(float x, float y, float z){
 	setRot(Vector(x, y, z));
-}
-
-void Collider::setID(int id){
-	m_id = id;
 }

@@ -42,6 +42,17 @@ Weapon::Weapon(string name, Model* model, Model* ammo, int damage, int amount){
 }
 
 Weapon::~Weapon(){
+	if (m_model){
+		delete m_model;
+	}
+
+	if (m_ammo){
+		delete m_ammo;
+	}
+
+	if (m_curShot){
+		delete m_curShot;
+	}
 }
 
 int Weapon::getDamage(){
@@ -191,35 +202,9 @@ bool Weapon::useWeapon(){
 }
 
 bool Weapon::hitObject(Vector pos, float width, float height){
-	/*if(!m_curShot){
-		return false;
-	}
-
-	Vector tempPos;
-	tempPos = m_curShot->getModel()->getPos();
-
-	Vector objAMin, objBMin, objAMax, objBMax;
-	objAMin.x = tempPos.x - (m_curShot->getModel()->getScale() / 2);
-	objAMax.x = tempPos.x + (m_curShot->getModel()->getScale() / 2);
-
-	objBMin.x = pos.x - (width / 2);
-	objBMax.x = pos.x + (width / 2);
-
-	objAMin.y = tempPos.y - (m_curShot->getModel()->getScale() / 2);
-	objAMax.y = tempPos.y + (m_curShot->getModel()->getScale() / 2);
-
-	objBMin.y = pos.y - (height / 2);
-	objBMax.y = pos.y + (height / 2);
-
-	if (objAMin.x < objBMax.x && objAMax.x > objBMin.x){
-		if (objAMin.y < objBMax.y && objAMax.y > objBMin.y){*/
-			delete m_curShot;
-			m_curShot = NULL;
-			return true;
-		/*}
-	}
-	return false;
-	*/
+	delete m_curShot;
+	m_curShot = NULL;
+	return true;
 }
 
 bool Weapon::checkAhead(Vector pos, float width, float height){

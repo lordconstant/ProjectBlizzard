@@ -21,7 +21,7 @@ protected:
 	HDC m_hdc;
 public:
 	Scene(HDC& hdc);
-	~Scene();
+	virtual ~Scene();
 
 	void initialiseSound();
 

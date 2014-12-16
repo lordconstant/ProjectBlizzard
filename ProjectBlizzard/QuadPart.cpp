@@ -34,7 +34,21 @@ QuadPart::~QuadPart(void){
 		delete child[3];
 	}
 
-	objects.clear();
+	if (objects.size() > 0){
+		for (int i = 0; i < objects.size(); i++){
+			delete objects[i];
+		}
+
+		objects.clear();
+	}
+
+	if (area){
+		delete area;
+	}
+
+	if (parent){
+		parent = NULL;
+	}
 }
 
 QuadPart* QuadPart::getRoot(){
@@ -44,7 +58,7 @@ QuadPart* QuadPart::getRoot(){
 		return parent->getRoot();
 }
 
-bool QuadPart::contains(Collider* obj){
+bool QuadPart::contains(BoxCollider* obj){
 	return area->checkCollision(obj);
 }
 
@@ -52,7 +66,7 @@ bool QuadPart::contains(Vector pos){
 	return area->checkCollision(pos);
 }
 
-void QuadPart::addObject(Collider *obj){
+void QuadPart::addObject(BoxCollider *obj){
 	if(!hasChildren()){
 		objects.push_back(obj);
 		return;
@@ -83,16 +97,6 @@ void QuadPart::addObject(Collider *obj){
 	}
 	else {
 		objects.push_back(obj);
-	}
-}
-
-void QuadPart::removeObject(int id){
-	vector<Collider*>::iterator it;
-	for(it = objects.begin(); it != objects.end(); ++it){
-		if((*it)->getID() == id){
-			objects.erase(it);
-			break;
-		}
 	}
 }
 
@@ -132,7 +136,7 @@ Collider* QuadPart::processCollisions(Model* obj){
 	Collider* tempCol;
 	tempCol = NULL;
 
-	if (contains(obj->getCollider())){
+	if (contains(&obj->getCollider())){
 		if (hasChildren()){
 			tempCol = child[0]->processCollisions(obj);
 			if (tempCol){
@@ -216,13 +220,13 @@ Collider* QuadPart::processBorderCollisions(QuadPart* part, Model* obj){
 	int n = objects.size();
 
 	for (int i = 0; i < n; i++){
-		if (objects[i]->checkCollision(obj->getCollider())){
+		if (objects[i]->checkCollision(&obj->getCollider())){
 			return objects[i];
 		}
 	}
 
 	for (int i = 0; i < nPart; i++){
-		if (part->objects[i]->checkCollision(obj->getCollider())){
+		if (part->objects[i]->checkCollision(&obj->getCollider())){
 			return part->objects[i];
 		}
 	}
@@ -286,7 +290,7 @@ void QuadPart::render(){
 	}
 
 	for (int i = 0; i < objects.size(); i++){
-		BoxCollider* temp = (BoxCollider*)objects[i];
+		BoxCollider* temp = objects[i];
 		temp->render();
 	}
 }

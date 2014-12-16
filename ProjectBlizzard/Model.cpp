@@ -3,7 +3,6 @@
 Model::Model(){
 	m_scale = 1;
 	m_pos.x = m_pos.y = m_pos.z = 0;
-	m_collider = new BoxCollider();
 	m_VAO = 0;
 	m_buffers[0] = 0;
 	m_buffers[1] = 0;
@@ -13,7 +12,6 @@ Model::Model(){
 Model::Model(float scale){
 	m_scale = scale;
 	m_pos.x = m_pos.y = m_pos.z = 0;
-	m_collider = new BoxCollider();
 	m_VAO = 0;
 	m_buffers[0] = 0;
 	m_buffers[1] = 0;
@@ -21,16 +19,12 @@ Model::Model(float scale){
 }
 
 Model::~Model(){
-	if (&m_VAO){
+	if (m_VAO != 0){
 		glDeleteVertexArrays(1, &m_VAO);
 	}
 
-	if (m_buffers){
+	if (m_buffers[0] != 0){
 		glDeleteBuffers(3, m_buffers);
-	}
-
-	if (m_collider){
-		delete m_collider;
 	}
 }
 
@@ -66,7 +60,7 @@ GLuint* Model::getBuffer(){
 	return m_buffers;
 }
 
-Collider* Model::getCollider(){
+BoxCollider Model::getCollider(){
 	return m_collider;
 }
 
@@ -77,7 +71,7 @@ void Model::setScale(float scale){
 
 	m_scale = scale;
 
-	m_collider->setDimension(m_width * m_scale, m_height * m_scale, m_length * m_scale);
+	m_collider.setDimension(m_width * m_scale, m_height * m_scale, m_length * m_scale);
 }
 
 void Model::setDimensions(float width, float height, float length){
@@ -85,13 +79,13 @@ void Model::setDimensions(float width, float height, float length){
 	m_height = height;
 	m_length = length;
 
-	m_collider->setDimension(width * m_scale, height * m_scale, length * m_scale);
+	m_collider.setDimension(width * m_scale, height * m_scale, length * m_scale);
 }
 
 void Model::setPos(Vector pos){
 	m_pos = pos;
 
-	m_collider->setPos(m_pos);
+	m_collider.setPos(m_pos);
 }
 
 void Model::setPos(float x, float y, float z){

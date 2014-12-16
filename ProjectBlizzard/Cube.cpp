@@ -4,21 +4,21 @@ Cube::Cube(void) :Model(0.2f){
 	setColor(1.0f, 1.0f, 1.0f);
 	setSize(0.2f);
 	createVAO();
-	setDimensions(0.2f, 0.2f, 0.2f);
+	setDimensions(1, 1, 1);
 }
 
 Cube::Cube(float scale) :Model(scale){
 	setColor(1.0f, 1.0f, 1.0f);
 	setSize(scale);
 	createVAO();
-	setDimensions(scale, scale, scale);
+	setDimensions(1, 1, 1);
 }
 
 Cube::Cube(float scale, float r, float g, float b) :Model(scale){
 	setColor(r, g, b);
 	setSize(scale);
 	createVAO();
-	setDimensions(scale, scale, scale);
+	setDimensions(1, 1, 1);
 }
 
 Cube::~Cube(void){
@@ -78,9 +78,12 @@ unsigned int* Cube::getIndicesArr(){
 	return m_indices;
 }
 
-
 void Cube::createVAO(){
 	GLuint vao, buffers[2];
+
+	vao = 0;
+	buffers[0] = 0;
+	buffers[1] = 0;
 
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);

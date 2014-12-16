@@ -3,7 +3,7 @@
 #include "DebugPrint.h"
 
 class Button3D{
-	char* m_img;
+	char m_img[255];
 	Cuboid* m_cuboid;
 	bool m_hover;
 public:

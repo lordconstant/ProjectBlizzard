@@ -8,8 +8,9 @@ Explosion::Explosion(vector<Vector>& terrain, vector<Team*>& teams){
 }
 
 
-Explosion::~Explosion()
-{
+Explosion::~Explosion(){
+	m_terrain = NULL;
+	m_teams = NULL;
 }
 
 void Explosion::circularExplosion(Vector pos, float radius, int damage, QuadTree& quadTree){
@@ -18,20 +19,6 @@ void Explosion::circularExplosion(Vector pos, float radius, int damage, QuadTree
 	radius *= radius;
 
 	for (int i = 0; i < m_terrain->size(); i++){
-		/*if (pos.x + radius*2 < m_terrain->at(i).x){
-			continue;
-		}
-		else if (pos.x - radius*2 > m_terrain->at(i).x){
-			continue;
-		}
-		
-		if (pos.y + radius*2 < m_terrain->at(i).y){
-			continue;
-		}
-		else if (pos.y - radius*2 > m_terrain->at(i).y){
-			continue;
-		}*/
-
 		float dist;
 		dist = pos.Dist2(m_terrain->at(i));
 

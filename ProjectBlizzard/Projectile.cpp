@@ -2,13 +2,12 @@
 
 
 Projectile::Projectile(){
-	m_model = new Cube(0.5f);
+	m_model = NULL;
 	m_phys = new Physics(&m_pos);
 }
 
 Projectile::Projectile(Model* model){
-	m_model = new Cube(0.1f);
-	*m_model = *model;
+	m_model = model;
 
 	if (!m_model){
 		m_model = new Cube(0.1f);
@@ -18,6 +17,13 @@ Projectile::Projectile(Model* model){
 }
 
 Projectile::~Projectile(){
+	if (m_model){
+		m_model = NULL;
+	}
+
+	if (m_phys){
+		delete m_phys;
+	}
 }
 
 void Projectile::setPos(Vector pos){

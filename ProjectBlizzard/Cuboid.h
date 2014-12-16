@@ -1,7 +1,7 @@
 #pragma once
 #include "model.h"
 
-enum { LEFT_FACE = 0, RIGHT_FACE, TOP_FACE, BOTTOM_FACE, FRONT_FACE, BACK_FACE };
+enum { FRONT_FACE = 0, RIGHT_FACE, TOP_FACE, BOTTOM_FACE, LEFT_FACE, BACK_FACE };
 
 class Cuboid: public Model{
 	float m_scale, m_width, m_height, m_length;

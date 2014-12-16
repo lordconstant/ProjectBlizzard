@@ -7,7 +7,9 @@ SceneSelect::SceneSelect(HDC hdc){
 
 
 SceneSelect::~SceneSelect(){
-	delete m_curScene;
+	if (m_curScene){
+		delete m_curScene;
+	}
 }
 
 SceneSelect& SceneSelect::getInstance(HDC hdc){

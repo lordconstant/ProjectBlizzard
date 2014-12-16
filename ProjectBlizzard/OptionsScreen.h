@@ -7,6 +7,7 @@
 class OptionsScreen :public Scene{
 	Button3D* m_btn;
 	Camera* m_cam;
+	BFont* m_font;
 public:
 	OptionsScreen(HDC hdc);
 	~OptionsScreen(void);

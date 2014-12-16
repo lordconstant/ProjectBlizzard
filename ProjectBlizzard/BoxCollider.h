@@ -1,7 +1,7 @@
 #pragma once
 #include "Collider.h"
 #include "DebugPrint.h"
-#include <gl\GLU.h>;
+#include <gl\GLU.h>
 #include <gl\GL.h>
 
 class BoxCollider :public Collider{
@@ -16,7 +16,7 @@ public:
 
 	void setDimension(float width, float height, float length);
 
-	bool checkCollision(Collider* col);
+	bool checkCollision(BoxCollider* col);
 	bool checkCollision(Vector pos);
 
 	bool hitLeft(BoxCollider* col);

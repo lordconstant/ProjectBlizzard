@@ -1,7 +1,9 @@
 #include "BoxCollider.h"
 
-
 BoxCollider::BoxCollider(){
+	m_width = 0;
+	m_height = 0;
+	m_length = 0;
 }
 
 BoxCollider::~BoxCollider(){
@@ -25,21 +27,20 @@ void BoxCollider::setDimension(float width, float height, float length){
 	m_length = length;
 }
 
-bool BoxCollider::checkCollision(Collider* col){
+bool BoxCollider::checkCollision(BoxCollider* col){
 	Vector objAMin, objBMin, objAMax, objBMax;
-	BoxCollider* bCol = (BoxCollider*)col;
 
 	objAMin.x = this->getPos().x - m_width / 2;
 	objAMax.x = this->getPos().x + m_width / 2;
 
-	objBMin.x = bCol->getPos().x - bCol->getWidth() / 2;
-	objBMax.x = bCol->getPos().x + bCol->getWidth() / 2;
+	objBMin.x = col->getPos().x - col->getWidth() / 2;
+	objBMax.x = col->getPos().x + col->getWidth() / 2;
 
 	objAMin.y = this->getPos().y - m_height / 2;
 	objAMax.y = this->getPos().y + m_height / 2;
 
-	objBMin.y = bCol->getPos().y - bCol->getHeight() / 2;
-	objBMax.y = bCol->getPos().y + bCol->getHeight() / 2;
+	objBMin.y = col->getPos().y - col->getHeight() / 2;
+	objBMax.y = col->getPos().y + col->getHeight() / 2;
 
 	if (objAMin.x < objBMax.x && objAMax.x > objBMin.x){
 		if (objAMin.y < objBMax.y && objAMax.y > objBMin.y){
@@ -173,7 +174,7 @@ void BoxCollider::render(){
 
 	glPushMatrix();
 		glTranslatef(getPos().x, getPos().y, getPos().z);
-		glColor3f(1.0f, 1.0f, 1.0f);
+		glColor3f(0.0f, 0.0f, 0.0f);
 		glLineWidth(5.0f);
 		glBegin(GL_LINE_LOOP);
 			glVertex3f(-w, h, l);

@@ -1,6 +1,5 @@
 #include "TerrainGenerator.h"
 
-
 TerrainGenerator::TerrainGenerator(void){
 }
 

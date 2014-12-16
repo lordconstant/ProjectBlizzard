@@ -22,7 +22,7 @@ Collider* QuadTree::processCollisions(Model* obj, Vector pos){
 	return root->processCollisions(obj, pos);
 }
 
-void QuadTree::addObject(Collider *obj){
+void QuadTree::addObject(BoxCollider *obj){
 	root->addObject(obj);
 }
 

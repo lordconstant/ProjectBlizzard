@@ -10,6 +10,7 @@ Water::Water(char* image, float width, float length){
 
 
 Water::~Water(){
+	glDeleteTextures(1, &m_texture);
 }
 
 float Water::getWidth(){

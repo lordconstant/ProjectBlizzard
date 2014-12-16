@@ -61,21 +61,27 @@
     <Filter Include="Header Files\Cameras">
       <UniqueIdentifier>{9cb34dba-d1f5-4ce6-a14a-7997eee3ae8e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Collider">
+    <Filter Include="Source Files\Terrain Generation">
+      <UniqueIdentifier>{a2ccd4c8-0691-4d16-951b-02505c6e4a16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Collision">
+      <UniqueIdentifier>{c2f83b47-83d3-470c-ab8e-5202e7c0c33d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Collision">
       <UniqueIdentifier>{ee79f4c1-da51-4d13-8398-efbe5d4fa5f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Collider">
-      <UniqueIdentifier>{c2f83b47-83d3-470c-ab8e-5202e7c0c33d}</UniqueIdentifier>
+    <Filter Include="Header Files\Terrain Generation">
+      <UniqueIdentifier>{c2739a9c-1430-42f7-957e-e981a2501162}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UnitTest++">
+      <UniqueIdentifier>{79a691ce-78bf-4df0-af1c-995806ea7d8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tests">
+      <UniqueIdentifier>{76da34ba-b39f-4777-8709-1024e658a8e9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Explosion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadTextures.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Cube.cpp">
@@ -135,18 +141,6 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\Cameras</Filter>
     </ClCompile>
-    <ClCompile Include="TerrainGenerator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QuadPart.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QuadTree.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Cuboid.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
@@ -154,26 +148,107 @@
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Collider.cpp">
-      <Filter>Source Files\Collider</Filter>
-    </ClCompile>
-    <ClCompile Include="BoxCollider.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="noiseutils.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Collision</Filter>
     </ClCompile>
     <ClCompile Include="EndScreen.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>Source Files\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadTextures.cpp">
+      <Filter>Source Files\Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="TerrainGenerator.cpp">
+      <Filter>Source Files\Terrain Generation</Filter>
+    </ClCompile>
+    <ClCompile Include="noiseutils.cpp">
+      <Filter>Source Files\Terrain Generation</Filter>
     </ClCompile>
     <ClCompile Include="Water.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source Files\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadPart.cpp">
+      <Filter>Source Files\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="QuadTree.cpp">
+      <Filter>Source Files\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="TestAll.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTest++\src\AssertException.cpp">
+      <Filter>UnitTest++</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTest++\src\Checks.cpp">
+      <Filter>UnitTest++</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTest++\src\CurrentTest.cpp">
+      <Filter>UnitTest++</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTest++\src\DeferredTestReporter.cpp">
+      <Filter>UnitTest++</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTest++\src\DeferredTestResult.cpp">
+      <Filter>UnitTest++</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTest++\src\MemoryOutStream.cpp">
+      <Filter>UnitTest++</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTest++\src\ReportAssert.cpp">
+      <Filter>UnitTest++</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTest++\src\Test.cpp">
+      <Filter>UnitTest++</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTest++\src\TestDetails.cpp">
+      <Filter>UnitTest++</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTest++\src\TestList.cpp">
+      <Filter>UnitTest++</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTest++\src\TestReporter.cpp">
+      <Filter>UnitTest++</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTest++\src\TestReporterStdout.cpp">
+      <Filter>UnitTest++</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTest++\src\TestResults.cpp">
+      <Filter>UnitTest++</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTest++\src\TestRunner.cpp">
+      <Filter>UnitTest++</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTest++\src\TimeConstraint.cpp">
+      <Filter>UnitTest++</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTest++\src\TimeHelpers.cpp">
+      <Filter>UnitTest++</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitTest++\src\XmlTestReporter.cpp">
+      <Filter>UnitTest++</Filter>
+    </ClCompile>
+    <ClCompile Include="TestCollider.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="TestBoxCollider.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="TestUnit.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="TestTeams.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Explosion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadTextures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
@@ -202,9 +277,6 @@
     </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>Header Files\Weapons</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BaseGame.h">
       <Filter>Header Files\Miscellaneous</Filter>
@@ -245,18 +317,6 @@
     <ClInclude Include="Camera.h">
       <Filter>Header Files\Cameras</Filter>
     </ClInclude>
-    <ClInclude Include="TerrainGenerator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QuadPart.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="QuadTree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Cuboid.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
@@ -264,18 +324,108 @@
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
-      <Filter>Header Files\Collider</Filter>
+      <Filter>Header Files\Collision</Filter>
     </ClInclude>
     <ClInclude Include="BoxCollider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="noiseutils.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Collision</Filter>
     </ClInclude>
     <ClInclude Include="EndScreen.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadTextures.h">
+      <Filter>Header Files\Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Header Files\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadPart.h">
+      <Filter>Header Files\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="QuadTree.h">
+      <Filter>Header Files\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Water.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="noiseutils.h">
+      <Filter>Header Files\Terrain Generation</Filter>
+    </ClInclude>
+    <ClInclude Include="TerrainGenerator.h">
+      <Filter>Header Files\Terrain Generation</Filter>
+    </ClInclude>
+    <ClInclude Include="TestAll.h">
+      <Filter>Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\AssertException.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\CheckMacros.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\Checks.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\Config.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\CurrentTest.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\DeferredTestReporter.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\DeferredTestResult.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\ExecuteTest.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\MemoryOutStream.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\ReportAssert.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\Test.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\TestDetails.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\TestList.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\TestMacros.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\TestReporter.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\TestReporterStdout.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\TestResults.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\TestRunner.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\TestSuite.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\TimeConstraint.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\TimeHelpers.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\UnitTest++.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTest++\src\XmlTestReporter.h">
+      <Filter>UnitTest++</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -13,6 +13,7 @@
 #include "QuadTree.h"
 #include "Timer.h"
 #include "Water.h"
+#include "Log.h"
 
 using namespace timer;
 
@@ -34,9 +35,9 @@ class GameScreen :public Scene{
 	vector<Team*> m_teams;
 	Unit* m_curUnit;
 	Cube* m_landCube;
-	float m_width, m_height, *vertArray, *byteArray, *colArray;
+	float m_width, m_height;
 	BFont* m_largeFont;
-	bool m_fired, m_hitTerrain;
+	bool m_fired, m_hitTerrain, m_delayTest;
 	Sphere* m_skySphere;
 	QuadTree* m_quadTree;
 	Water* m_water;

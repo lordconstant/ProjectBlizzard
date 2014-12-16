@@ -60,7 +60,7 @@ public:
 	Add a cube to the binary tree. <br>
 	*/
 
-	void addObject(Collider* obj);
+	void addObject(BoxCollider* obj);
 	void removeObject(Vector pos);
 
 	/**

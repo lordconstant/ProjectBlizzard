@@ -39,6 +39,14 @@ Unit::~Unit(void){
 		delete m_wep;
 		m_wep = NULL;
 	}
+
+	if (m_pos){
+		delete m_pos;
+	}
+
+	if (m_phys){
+		delete m_phys;
+	}
 }
 
 int Unit::getMaxHealth(){

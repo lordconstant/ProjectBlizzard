@@ -19,6 +19,8 @@ Sphere::~Sphere(){
 	if (m_sphere){
 		gluDeleteQuadric(m_sphere);
 	}
+
+	glDeleteTextures(1, &m_texture);
 }
 
 void Sphere::Render(){

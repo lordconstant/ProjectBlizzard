@@ -6,11 +6,16 @@ EndScreen::EndScreen(HDC hdc) : Scene(hdc){
 
 
 EndScreen::~EndScreen(void){
-	delete m_largeFont;
-	delete m_cam;
-	
 	for (int i = 0; i < NBR_BTNS; i++){
 		delete m_btns[i];
+	}
+
+	if (m_largeFont){
+		delete m_largeFont;
+	}
+
+	if (m_cam){
+		delete m_cam;
 	}
 }
 
@@ -52,11 +57,11 @@ void EndScreen::render2D(){
 	txt3 = "CONGRATULATIONS";
 
 	char s[255];
-	strcpy(s, txt2.c_str());
+	strcpy_s(s, txt2.c_str());
 	int px = m_sWidth / 2 - (txt2.size() * 29) / 2;
 	m_largeFont->printString(px, m_sHeight / 2 - m_sHeight / 3, s);
 
-	strcpy(s, txt3.c_str());
+	strcpy_s(s, txt3.c_str());
 	m_largeFont->printString(m_sWidth / 2 - (txt3.size() * 29) / 2, m_sHeight / 2 - m_sHeight / 4, s);
 }
 
